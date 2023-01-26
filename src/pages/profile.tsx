@@ -58,8 +58,8 @@ const ProfilePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="flex flex-col">
             <CardBox className="mb-6">
-              <FormField label="Avatar" help="Max 500kb">
-                <FormFilePicker label="Upload" color="info" icon={mdiUpload} />
+              <FormField label="تصویر پروفایل" help="Max 500kb">
+                <FormFilePicker label="بارگذاری" color="info" icon={mdiUpload} />
               </FormField>
             </CardBox>
 
@@ -71,26 +71,25 @@ const ProfilePage = () => {
                 <Form className="flex flex-col flex-1">
                   <CardBoxComponentBody>
                     <FormField
-                      label="Name"
-                      help="Required. Your name"
+                      label="نام"
+                      help="این فیلد اجباریست"
                       labelFor="name"
                       icons={[mdiAccount]}
                     >
-                      <Field name="name" id="name" placeholder="Name" />
+                      <Field name="name" id="name" placeholder="نام کاربر" />
                     </FormField>
                     <FormField
-                      label="E-mail"
-                      help="Required. Your e-mail"
+                      label="ایمیل"
+                      help="این فیلد اجباریست"
                       labelFor="email"
                       icons={[mdiMail]}
                     >
-                      <Field name="email" id="email" placeholder="E-mail" />
+                      <Field name="email" id="email" placeholder="ایمیل کاربر" />
                     </FormField>
                   </CardBoxComponentBody>
                   <CardBoxComponentFooter>
                     <BaseButtons>
-                      <BaseButton color="info" type="submit" label="Submit" />
-                      <BaseButton color="info" label="Options" outline />
+                      <BaseButton color="info" type="submit" label="تایید نهایی" />
                     </BaseButtons>
                   </CardBoxComponentFooter>
                 </Form>
@@ -110,8 +109,8 @@ const ProfilePage = () => {
               <Form className="flex flex-col flex-1">
                 <CardBoxComponentBody>
                   <FormField
-                    label="Current password"
-                    help="Required. Your current password"
+                    label="رمز عبور فعلی"
+                    help="این فیلد اجباریست"
                     labelFor="currentPassword"
                     icons={[mdiAsterisk]}
                   >
@@ -126,8 +125,8 @@ const ProfilePage = () => {
                   <BaseDivider />
 
                   <FormField
-                    label="New password"
-                    help="Required. New password"
+                    label="رمز عبور جدید"
+                    help="این فیلد اجباریست"
                     labelFor="newPassword"
                     icons={[mdiFormTextboxPassword]}
                   >
@@ -140,8 +139,8 @@ const ProfilePage = () => {
                   </FormField>
 
                   <FormField
-                    label="Confirm password"
-                    help="Required. New password one more time"
+                    label="تکرار رمز عبور جدید"
+                    help="این فیلد اجباریست"
                     labelFor="newPasswordConfirmation"
                     icons={[mdiFormTextboxPassword]}
                   >
@@ -156,8 +155,7 @@ const ProfilePage = () => {
 
                 <CardBoxComponentFooter>
                   <BaseButtons>
-                    <BaseButton color="info" type="submit" label="Submit" />
-                    <BaseButton color="info" label="Options" outline />
+                    <BaseButton color="info" type="submit" label="تایید نهایی" />
                   </BaseButtons>
                 </CardBoxComponentFooter>
               </Form>

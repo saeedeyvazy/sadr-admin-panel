@@ -18,50 +18,50 @@ const menuAside: MenuAsideItem[] = [
   {
     href: '/dashboard',
     icon: mdiMonitor,
-    label: 'Dashboard',
-  },
-  {
-    href: '/tables',
-    label: 'Tables',
-    icon: mdiTable,
+    label: 'داشبورد',
   },
   {
     href: '/forms',
-    label: 'Forms',
+    label: 'جستجوی افراد',
+    icon: mdiTable,
+  },
+  {
+    href: '/tables',
+    label: 'آخرین دوره ها',
     icon: mdiSquareEditOutline,
   },
   {
     href: '/ui',
-    label: 'UI',
+    label: 'تعریف دوره ها',
     icon: mdiTelevisionGuide,
   },
   {
     href: '/responsive',
-    label: 'Responsive',
+    label: 'کاربران',
     icon: mdiResponsive,
   },
   {
     href: '/',
-    label: 'Styles',
+    label: 'تایید مدارک',
     icon: mdiPalette,
   },
   {
     href: '/profile',
-    label: 'Profile',
+    label: 'پروفایل کاربر',
     icon: mdiAccountCircle,
   },
   {
     href: '/login',
-    label: 'Login',
+    label: 'اطلاعات ثبت شده',
     icon: mdiLock,
   },
   {
     href: '/error',
-    label: 'Error',
+    label: 'گزارش کلاسها',
     icon: mdiAlertCircle,
   },
   {
-    label: 'Dropdown',
+    label: 'بانکهای اطلاعات',
     icon: mdiViewList,
     menu: [
       {
@@ -74,13 +74,13 @@ const menuAside: MenuAsideItem[] = [
   },
   {
     href: 'https://github.com/justboil/admin-one-react-tailwind',
-    label: 'GitHub',
+    label: 'موسسات قرآنی',
     icon: mdiGithub,
     target: '_blank',
   },
   {
     href: 'https://github.com/justboil/admin-one-vue-tailwind',
-    label: 'Vue version',
+    label: 'گزارشات',
     icon: mdiVuejs,
     target: '_blank',
   },

@@ -41,9 +41,8 @@ const AsideMenuItem = ({ item, isDropdownList = false }: Props) => {
         <BaseIcon path={item.icon} className={`flex-none ${activeClassAddon}`} w="w-16" size="18" />
       )}
       <span
-        className={`grow text-ellipsis line-clamp-1 ${
-          item.menu ? '' : 'pr-12'
-        } ${activeClassAddon}`}
+        className={`grow text-ellipsis line-clamp-1 ${item.menu ? '' : 'pl-12'
+          } ${activeClassAddon}`}
       >
         {item.label}
       </span>
@@ -80,9 +79,8 @@ const AsideMenuItem = ({ item, isDropdownList = false }: Props) => {
       {item.menu && (
         <AsideMenuList
           menu={item.menu}
-          className={`${asideMenuDropdownStyle} ${
-            isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden'
-          }`}
+          className={`${asideMenuDropdownStyle} ${isDropdownActive ? 'block dark:bg-slate-800/50' : 'hidden'
+            }`}
           isDropdownList
         />
       )}

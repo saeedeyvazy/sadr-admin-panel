@@ -24,7 +24,7 @@ export default function LayoutAuthenticated({ children }: Props) {
   useEffect(() => {
     dispatch(
       setUser({
-        name: 'John Doe',
+        name: 'سعید عیوضی',
         email: 'john@example.com',
         avatar:
           'https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93',
@@ -54,18 +54,17 @@ export default function LayoutAuthenticated({ children }: Props) {
     }
   }, [router.events, dispatch])
 
-  const layoutAsidePadding = 'xl:pl-60'
+  const layoutAsidePadding = 'xl:pr-60'
 
   return (
-    <div className={`${darkMode ? 'dark' : ''} overflow-hidden lg:overflow-visible`}>
+    <div className={`${darkMode ? 'dark' : ''} overflow-hidden  lg:overflow-visible`} style={{ direction: "rtl", fontFamily: 'Vazir' || 'sans-serif' }}>
       <div
-        className={`${layoutAsidePadding} ${
-          isAsideMobileExpanded ? 'ml-60 lg:ml-0' : ''
-        } pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100`}
+        className={`${layoutAsidePadding} ${isAsideMobileExpanded ? 'mr-60 lg:mr-0' : ''
+          } pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100`}
       >
         <NavBar
           menu={menuNavBar}
-          className={`${layoutAsidePadding} ${isAsideMobileExpanded ? 'ml-60 lg:ml-0' : ''}`}
+          className={`${layoutAsidePadding} ${isAsideMobileExpanded ? 'mr-60 lg:mr-0' : ''}`}
         >
           <NavBarItemPlain
             display="flex lg:hidden"
@@ -88,7 +87,7 @@ export default function LayoutAuthenticated({ children }: Props) {
             >
               <Form>
                 <FormField isBorderless isTransparent>
-                  <Field name="search" placeholder="Search" />
+                  <Field name="search" placeholder="جستجو" />
                 </FormField>
               </Form>
             </Formik>

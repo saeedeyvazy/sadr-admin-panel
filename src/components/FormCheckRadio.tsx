@@ -12,7 +12,7 @@ const FormCheckRadio = (props: Props) => {
     <label className={`${props.type} ${props.className}`}>
       {props.children}
       <span className="check" />
-      <span className="pl-2">{props.label}</span>
+      <span className="pr-2">{props.label}</span>
     </label>
   )
 }

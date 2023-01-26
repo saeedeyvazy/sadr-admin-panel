@@ -19,9 +19,8 @@ export default function AsideMenu({
     <>
       <AsideMenuLayer
         menu={props.menu}
-        className={`${isAsideMobileExpanded ? 'left-0' : '-left-60 lg:left-0'} ${
-          !isAsideLgActive ? 'lg:hidden xl:flex' : ''
-        }`}
+        className={`${isAsideMobileExpanded ? 'right-0' : '-right-60 lg:right-0'} ${!isAsideLgActive ? 'lg:hidden xl:flex' : ''
+          }`}
         onAsideLgCloseClick={props.onAsideLgClose}
       />
       {isAsideLgActive && <OverlayLayer zIndex="z-30" onClick={props.onAsideLgClose} />}

@@ -35,42 +35,36 @@ const TableSampleClients = () => {
   return (
     <>
       <CardBoxModal
-        title="Sample modal"
+        title="تایید درخواست"
         buttonColor="info"
-        buttonLabel="Done"
+        buttonLabel="تایید"
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <p>آیا از انجام عملیات مورد نظراطمینان دارید؟</p>
       </CardBoxModal>
 
       <CardBoxModal
-        title="Please confirm"
+        title="تایید درخواست"
         buttonColor="danger"
-        buttonLabel="Confirm"
+        buttonLabel="تایید"
         isActive={isModalTrashActive}
         onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
-        <p>
-          Lorem ipsum dolor sit amet <b>adipiscing elit</b>
-        </p>
-        <p>This is sample modal</p>
+        <p>آیا از انجام عملیات مورد نظراطمینان دارید؟</p>
       </CardBoxModal>
 
       <table>
         <thead>
           <tr>
             <th />
-            <th>Name</th>
-            <th>Company</th>
-            <th>City</th>
-            <th>Progress</th>
-            <th>Created</th>
+            <th>نام</th>
+            <th>سطح</th>
+            <th>شهر</th>
+            <th>درصد پیشرفت</th>
+            <th>زمان ایجاد</th>
             <th />
           </tr>
         </thead>

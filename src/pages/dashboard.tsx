@@ -47,7 +47,7 @@ const Dashboard = () => {
         <title>{getPageTitle('Dashboard')}</title>
       </Head>
       <SectionMain>
-        <SectionTitleLineWithButton icon={mdiChartTimelineVariant} title="Overview" main>
+        <SectionTitleLineWithButton icon={mdiChartTimelineVariant} title="نگاه اجمالی" main>
           <BaseButton
             href="https://github.com/justboil/admin-one-react-tailwind"
             target="_blank"
@@ -67,7 +67,7 @@ const Dashboard = () => {
             icon={mdiAccountMultiple}
             iconColor="success"
             number={512}
-            label="Clients"
+            label="موسسات"
           />
           <CardBoxWidget
             trendLabel="16%"
@@ -76,49 +76,49 @@ const Dashboard = () => {
             icon={mdiCartOutline}
             iconColor="info"
             number={7770}
-            numberPrefix="$"
-            label="Sales"
+            numberPrefix=""
+            label="دوره ها"
           />
           <CardBoxWidget
             trendLabel="Overflow"
-            trendType="warning"
-            trendColor="warning"
+            trendType="up"
+            trendColor="success"
             icon={mdiChartTimelineVariant}
             iconColor="danger"
             number={256}
-            numberSuffix="%"
-            label="Performance"
+            numberSuffix=""
+            label="مدارک تایید شده"
           />
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          <div className="flex flex-col justify-between">
+          {/* <div className="flex flex-col justify-between">
             {transactions.map((transaction: Transaction) => (
               <CardBoxTransaction key={transaction.id} transaction={transaction} />
             ))}
-          </div>
-          <div className="flex flex-col justify-between">
+          </div> */}
+          {/* <div className="flex flex-col justify-between">
             {clientsListed.map((client: Client) => (
               <CardBoxClient key={client.id} client={client} />
             ))}
-          </div>
+          </div> */}
         </div>
 
-        <div className="my-6">
+        {/* <div className="my-6">
           <SectionBannerStarOnGitHub />
-        </div>
+        </div> */}
 
-        <SectionTitleLineWithButton icon={mdiChartPie} title="Trends overview">
+        <SectionTitleLineWithButton icon={mdiChartPie} title="آمارها">
           <BaseButton icon={mdiReload} color="whiteDark" onClick={fillChartData} />
         </SectionTitleLineWithButton>
 
         <CardBox className="mb-6">{chartData && <ChartLineSample data={chartData} />}</CardBox>
 
-        <SectionTitleLineWithButton icon={mdiAccountMultiple} title="Clients" />
+        <SectionTitleLineWithButton icon={mdiAccountMultiple} title="اساتید" />
 
-        <NotificationBar color="info" icon={mdiMonitorCellphone}>
+        {/* <NotificationBar color="info" icon={mdiMonitorCellphone}>
           <b>Responsive table.</b> Collapses on mobile
-        </NotificationBar>
+        </NotificationBar> */}
 
         <CardBox hasTable>
           <TableSampleClients />

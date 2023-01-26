@@ -16,22 +16,22 @@ import { MenuNavBarItem } from './interfaces'
 const menuNavBar: MenuNavBarItem[] = [
   {
     icon: mdiMenu,
-    label: 'Sample menu',
+    label: 'انجمن ها',
     menu: [
       {
         icon: mdiClockOutline,
-        label: 'Item One',
+        label: 'کانون ها',
       },
       {
         icon: mdiCloud,
-        label: 'Item Two',
+        label: 'انجمن',
       },
       {
         isDivider: true,
       },
       {
         icon: mdiCrop,
-        label: 'Item Last',
+        label: 'گروه ها',
       },
     ],
   },
@@ -40,23 +40,23 @@ const menuNavBar: MenuNavBarItem[] = [
     menu: [
       {
         icon: mdiAccount,
-        label: 'My Profile',
+        label: 'پروفابل من',
         href: '/profile',
       },
       {
         icon: mdiCogOutline,
-        label: 'Settings',
+        label: 'تنظیمات',
       },
       {
         icon: mdiEmail,
-        label: 'Messages',
+        label: 'پیام ها',
       },
       {
         isDivider: true,
       },
       {
         icon: mdiLogout,
-        label: 'Log Out',
+        label: 'خروج سایت',
         isLogout: true,
       },
     ],

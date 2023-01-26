@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <Provider store={store}>
       {getLayout(
-        <>
+        <div style={{ direction: "rtl" }}>
           <Head>
             <meta name="description" content={description} />
 
@@ -56,6 +56,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             <meta property="twitter:image:height" content={imageHeight} />
 
             <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
+            <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
           </Head>
 
           <Script
@@ -73,9 +74,10 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
           </Script>
 
           <Component {...pageProps} />
-        </>
-      )}
-    </Provider>
+        </div>
+      )
+      }
+    </Provider >
   )
 }
 

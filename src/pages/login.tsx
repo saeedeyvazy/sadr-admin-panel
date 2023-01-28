@@ -42,7 +42,7 @@ export default function Error() {
       <SectionFullScreen bg="bg-hero-pattern">
         <CardBox className="w-11/12 md:w-7/12 lg:w-6/12 xl:w-4/12 shadow-2xl z-50">
           <div className='flex justify-center items-center'>
-            <Image className='bg-cover w-full h-24' src={title} alt='' />
+            <Image className='bg-cover w-full h-full' src={title} alt='' />
           </div>
           <Formik
             initialValues={{ login: '9121234587', password: 'bG1sL9eQ1uD2sK3b', remember: true }}

@@ -12,13 +12,12 @@ export default function FooterBar({ children }: Props) {
   return (
     <footer className={`py-2 px-6 ${containerMaxW}`}>
       <div className="block md:flex items-center justify-between">
-        <div className="text-center md:text-left mb-6 md:mb-0">
+        <div className="text-center md:text-right mb-6 md:mb-0">
           <b>
-            &copy;{year},{` `}
-            <a href="https://justboil.me/" rel="noreferrer" target="_blank">
-              JustBoil.me
+            {year}&copy;{` `}
+            <a href="" rel="noreferrer" target="_blank">
+              Developed by m.eslahi & s.eyvazy
             </a>
-            .
           </b>
           {` `}
           {children}

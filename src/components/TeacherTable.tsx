@@ -1,5 +1,4 @@
-import { mdiEye, mdiTrashCan, mdiLoading } from '@mdi/js'
-
+import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
 import { Teacher } from '../interfaces'
 import BaseButton from './BaseButton'
@@ -7,9 +6,8 @@ import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import UserAvatar from './UserAvatar'
 import { useTeacher } from '../hooks/useTeacher'
-import BaseIcon from './BaseIcon'
 import { Loading } from './Loading'
-import Image from 'next/image'
+
 
 export const TeacherTable = () => {
   const { data, error, isLoading } = useTeacher()

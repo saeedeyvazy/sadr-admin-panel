@@ -14,7 +14,7 @@ const TableSampleClients = () => {
   useEffect(() => {
     async function fetchSampleTeacherList() {
       try {
-        const response = await iaxios.get(API_GENERAL_TEACHER_SEARCH)
+        const response = await iaxios.get(API_GENERAL_TEACHER_SEARCH, { params: { page: 0, size: 5 } })
         console.log(response)
 
       } catch (error) {
@@ -140,7 +140,7 @@ const TableSampleClients = () => {
             ))}
           </BaseButtons>
           <small className="mt-6 md:mt-0">
-            Page {currentPage + 1} of {numPages}
+            Page {currentPage + 1} از {numPages}
           </small>
         </div>
       </div>

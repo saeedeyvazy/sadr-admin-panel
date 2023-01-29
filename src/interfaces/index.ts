@@ -68,6 +68,20 @@ export type Client = {
   created_mm_dd_yyyy: string
 }
 
+
+export type Teacher = {
+  id: number
+  fname: string
+  lname: string
+  jensiyatName: string
+  codemelli: string
+  mob: string
+  taholName: string
+  address: string
+  pic: string,
+  mahalsodor: string
+}
+
 export type StyleKey = 'white' | 'basic'
 
 export type UserForm = {

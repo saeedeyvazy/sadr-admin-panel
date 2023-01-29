@@ -16,6 +16,7 @@ import SectionTitle from '../components/SectionTitle'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle } from '../config'
 import TableSampleClients from '../components/TableSampleClients'
+import { TeacherTable } from '../components/TeacherTable'
 
 const FormsPage = () => {
   return (
@@ -64,7 +65,7 @@ const FormsPage = () => {
               <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
               <CardBox hasTable>
-                <TableSampleClients />
+                <TeacherTable />
               </CardBox>
               {/* <FormField
                 label="With help line and labelFor"

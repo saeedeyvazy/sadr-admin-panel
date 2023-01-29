@@ -22,7 +22,7 @@ export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap
 
 const defaultOptions = {
     headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
     },
 }
 

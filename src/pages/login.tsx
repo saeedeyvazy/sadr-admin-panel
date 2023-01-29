@@ -32,14 +32,16 @@ export default function Error() {
   }
   const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
-    new Cookies().set('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6ImFkbWluIn1dLCJpYXQiOjE2NzQ5NjA1MDksImV4cCI6MTY3NDk2MzUwOX0.x64zgogy96np40qcfCU7msQSKRxmjjo2MlUgQ7Lpeng")
-    router.push('/dashboard')
-    // try {
-    //   const response = await axios.post(API_LOGIN_URL, { username: e.login, password: e.password }, { withCredentials: true })
-
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      const response = await axios.post(API_LOGIN_URL, { username: e.login, password: e.password })
+      console.log(response)
+      if (response.data.success) {
+        new Cookies().set('token', response.data.data.token)
+        router.push('/dashboard')
+      }
+    } catch (error) {
+      console.log(error)
+    }
 
   }
 

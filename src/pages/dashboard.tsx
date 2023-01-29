@@ -26,6 +26,7 @@ import ChartLineSample from '../components/ChartLineSample'
 import NotificationBar from '../components/NotificationBar'
 import TableSampleClients from '../components/TableSampleClients'
 import { getPageTitle } from '../config'
+import { TeacherTable } from '../components/TeacherTable'
 
 const Dashboard = () => {
   const { clients } = useSampleClients()
@@ -121,7 +122,7 @@ const Dashboard = () => {
         </NotificationBar> */}
 
         <CardBox hasTable>
-          <TableSampleClients />
+          <TeacherTable />
         </CardBox>
       </SectionMain>
     </>

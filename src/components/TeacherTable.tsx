@@ -26,7 +26,8 @@ export const TeacherTable = () => {
     mob: '',
     taholName: '',
     address: '',
-    pic: ''
+    pic: '',
+    mahalsodor: ''
   })
 
   const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))

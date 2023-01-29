@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import type { ReactElement } from 'react'
 import Head from 'next/head'
 import BaseButton from '../components/BaseButton'
@@ -18,16 +18,29 @@ import { useAppDispatch } from '../stores/hooks'
 import im from "../assets/images/2.jpg"
 import title from "../assets/images/title.jpg"
 import Image from 'next/image'
+import axios from "axios"
+import { API_LOGIN_URL } from '../constants'
+import Cookies from 'universal-cookie'
 
 export default function Error() {
   const router = useRouter()
   const dispatch = useAppDispatch()
+
+
   const handleStylePick = (e: React.MouseEvent, style: StyleKey) => {
     dispatch(setStyle(style))
   }
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
+    new Cookies().set('token', "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOlt7ImF1dGhvcml0eSI6ImFkbWluIn1dLCJpYXQiOjE2NzQ5NjA1MDksImV4cCI6MTY3NDk2MzUwOX0.x64zgogy96np40qcfCU7msQSKRxmjjo2MlUgQ7Lpeng")
     router.push('/dashboard')
+    // try {
+    //   const response = await axios.post(API_LOGIN_URL, { username: e.login, password: e.password }, { withCredentials: true })
+
+    // } catch (error) {
+    //   console.log(error)
+    // }
+
   }
 
   return (

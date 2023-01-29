@@ -1,13 +1,29 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSampleClients } from '../hooks/sampleData'
 import { Client } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import UserAvatar from './UserAvatar'
+import axios from 'axios'
+import { iaxios } from '../config'
+import { API_GENERAL_TEACHER_SEARCH } from '../constants'
 
 const TableSampleClients = () => {
+  useEffect(() => {
+    async function fetchSampleTeacherList() {
+      try {
+        const response = await iaxios.get(API_GENERAL_TEACHER_SEARCH)
+        console.log(response)
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fetchSampleTeacherList()
+  }, [])
   const { clients } = useSampleClients()
 
   const perPage = 5

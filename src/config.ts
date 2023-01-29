@@ -1,3 +1,7 @@
+
+import axios from 'axios'
+import Cookie from 'universal-cookie'
+
 export const localStorageDarkModeKey = 'darkMode'
 
 export const localStorageStyleKey = 'style'
@@ -14,3 +18,21 @@ export const currentPageTitleMap: Record<string, string> = {
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`
+
+
+const defaultOptions = {
+    headers: {
+        'Content-Type': 'application/json',
+    },
+}
+
+const iaxios = axios.create(defaultOptions)
+// Set the AUTH token for any request
+iaxios.interceptors.request.use(function (config) {
+    const cookie = new Cookie()
+    const token = cookie.get('token')
+    config.headers.Authorization = token ? `Bearer ${token}` : ''
+    return config
+})
+
+export { iaxios }

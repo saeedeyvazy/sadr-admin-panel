@@ -13,6 +13,7 @@ type Props = {
   buttonLabel: string
   isActive: boolean
   children: ReactNode
+  innerModalClassName?: string
   onConfirm: () => void
   onCancel?: () => void
 }
@@ -23,6 +24,7 @@ const CardBoxModal = ({
   buttonLabel,
   isActive,
   children,
+  innerModalClassName,
   onConfirm,
   onCancel,
 }: Props) => {
@@ -40,7 +42,7 @@ const CardBoxModal = ({
   return (
     <OverlayLayer onClick={onCancel} className={onCancel ? 'cursor-pointer' : ''}>
       <CardBox
-        className={`transition-transform shadow-lg overflow-scroll max-h-modal w-11/12  z-50`}
+        className={`transition-transform shadow-lg overflow-auto max-h-modal z-50 w-auto ${innerModalClassName}`}
         isModal
         footer={footer}
       >

@@ -88,6 +88,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
         isActive={isModalDetailActive}
         onConfirm={handleCloseDetailModal}
         onCancel={handleCloseDetailModal}
+        innerModalClassName='md:w-11/12'
       >
         <BaseDivider />
         <BaseDivider />
@@ -160,7 +161,9 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
                   <td>{item.moadel}</td>
                   <td>{item.sal_akhz}</td>
                   <td>{item.mahal_dore}</td>
-                  <td></td>
+                  <td>
+                    {item.pic ? <img src={`data:image/jpeg;base64,${item.pic}`} alt='' className='w-24 h-24' /> : 'تصویر ندارد'}
+                  </td>
                 </tr>)
               }
             </tbody>
@@ -183,7 +186,6 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
             <tbody>
               {teacherDetail?.eshteghalList?.map(item =>
                 <tr className='[&>*]:text-right'>
-                  <td className='whitespace-nowrap'>{item.onvan_dore}</td>
                   <td>{item.noshoghl}</td>
                   <td>{item.nogharardad}</td>
                   <td>{item.mahalkar}</td>

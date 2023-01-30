@@ -79,7 +79,9 @@ export type Teacher = {
   taholName: string
   address: string
   pic: string,
-  mahalsodor: string
+  mahalsodor: string,
+  tkmelli: string,
+  ttmoalem: string
 }
 
 export type StyleKey = 'white' | 'basic'

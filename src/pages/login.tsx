@@ -60,7 +60,7 @@ export default function Error() {
             <Image className='bg-cover w-full h-full' src={title} alt='' />
           </div>
           <Formik
-            initialValues={{ login: '9121234587', password: 'bG1sL9eQ1uD2sK3b', remember: true }}
+            initialValues={{ login: 'admin', password: '3457', remember: true }}
             onSubmit={(e) => handleSubmit(e)}
           >
             <Form className='z-50'>

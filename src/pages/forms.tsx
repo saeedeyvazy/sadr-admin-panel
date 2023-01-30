@@ -1,24 +1,46 @@
-import { mdiAccount, mdiBallotOutline, mdiGithub, mdiMail, mdiUpload, mdiSearchWeb } from '@mdi/js'
+import { mdiAccount, mdiBallotOutline, mdiMail, mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import BaseButton from '../components/BaseButton'
-import BaseButtons from '../components/BaseButtons'
 import BaseDivider from '../components/BaseDivider'
 import CardBox from '../components/CardBox'
-import FormCheckRadio from '../components/FormCheckRadio'
-import FormCheckRadioGroup from '../components/FormCheckRadioGroup'
 import FormField from '../components/FormField'
-import FormFilePicker from '../components/FormFilePicker'
 import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
-import SectionTitle from '../components/SectionTitle'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import { getPageTitle } from '../config'
-import TableSampleClients from '../components/TableSampleClients'
+import { getPageTitle, iaxios } from '../config'
 import { TeacherTable } from '../components/TeacherTable'
+import { useTeacher } from '../hooks/useTeacher'
+import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
+import { Teacher } from '../interfaces'
 
 const FormsPage = () => {
+  const { data, error, isLoading } = useTeacher()
+  const [specificSearch, setSpecificSearch] = useState(false)
+  const [searchResult, setSearchResult] = useState([{}])
+  const [searchLoading, setSearchLoading] = useState(false)
+
+  async function handleSubmit(values) {
+    try {
+      setSearchLoading(true)
+      const response = await iaxios.post(API_SPECIFIC_TEACHER_SEARCH, {
+        firstName: values.fname,
+        nationalCode: values.nationalCode
+      }, {
+        params: {
+          page: 0,
+          size: 5
+        }
+      })
+      setSearchLoading(false)
+      setSpecificSearch(true)
+      setSearchResult(response.data.data)
+      console.log(response.data.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <>
       <Head>
@@ -27,36 +49,26 @@ const FormsPage = () => {
 
       <SectionMain>
         <SectionTitleLineWithButton icon={mdiBallotOutline} title="جستجوی افراد" main>
-          {/* <BaseButton
-            href="https://github.com/justboil/admin-one-react-tailwind"
-            target="_blank"
-            icon={mdiGithub}
-            label="Star on GitHub"
-            color="contrast"
-            roundedFull
-            small
-          /> */}
         </SectionTitleLineWithButton>
 
         <CardBox>
           <Formik
             initialValues={{
-              fullname: '',
-              email: '',
-              phone: '',
-              color: 'green',
-              textarea: 'Hello',
+              fname: '',
+              lname: '',
+              nationalCode: '',
+              mobile: '',
             }}
-            onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+            onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
               <FormField label="آیتمهای جستجو" icons={[mdiAccount, mdiMail]}>
-                <Field name="fullname" placeholder="نام" />
-                <Field name="email" placeholder="نام خانوادگی" />
+                <Field name="fname" placeholder="نام" />
+                <Field name="lname" placeholder="نام خانوادگی" />
               </FormField>
               <FormField>
-                <Field name="fullname" placeholder="کد ملی" />
-                <Field name="email" placeholder="شماره همراه" />
+                <Field name="nationalCode" placeholder="کد ملی" />
+                <Field name="mobile" placeholder="شماره همراه" />
               </FormField>
               <BaseButton type="submit" color="info" label="جستجو" />
               <BaseDivider />
@@ -65,7 +77,10 @@ const FormsPage = () => {
               <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
               <CardBox hasTable>
-                <TeacherTable />
+                {!specificSearch ? <TeacherTable clients={data} isLoading={isLoading} error={error} />
+                  :
+                  <TeacherTable clients={searchResult} isLoading={searchLoading} error={error} />
+                }
               </CardBox>
               {/* <FormField
                 label="With help line and labelFor"

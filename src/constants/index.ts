@@ -4,3 +4,4 @@ const API_PREFIX = `${API_IP}:${API_PORT}`
 
 export const API_LOGIN_URL = `${API_PREFIX}/api/auth/signin`
 export const API_GENERAL_TEACHER_SEARCH = `${API_PREFIX}/api/teacher`
+export const API_SPECIFIC_TEACHER_SEARCH = `${API_PREFIX}/api/teacher/search`

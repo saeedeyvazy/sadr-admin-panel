@@ -11,6 +11,7 @@ import axios from 'axios'
 import { API_GENERAL_TEACHER_SEARCH } from '../constants'
 import SectionTitleLineWithButton from './SectionTitleLineWithButton'
 import BaseDivider from './BaseDivider'
+import { iaxios } from '../config'
 
 export const TeacherTable = ({ clients, isLoading, error }) => {
 
@@ -53,6 +54,16 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
   const handleCloseDetailModal = () => {
     setTeacherDetail({})
     setIsModalDetailActive(false)
+  }
+
+  const handleDelModalAction = async () => {
+    try {
+      await iaxios.delete(API_GENERAL_TEACHER_SEARCH + "/" + selectedClient.id)
+      setIsModalTrashActive(false)
+    } catch (error) {
+      alert(error)
+      console.log(error)
+    }
   }
 
   async function fetchDetail(id) {
@@ -229,14 +240,14 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
       </CardBoxModal>
 
       <CardBoxModal
-        title="تایید درخواست"
+        title="حذف فرد انتخاب شده"
         buttonColor="danger"
         buttonLabel="تایید"
         isActive={isModalTrashActive}
-        onConfirm={handleModalAction}
+        onConfirm={handleDelModalAction}
         onCancel={handleModalAction}
       >
-        <p>آیا از انجام عملیات مورد نظراطمینان دارید؟</p>
+        <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
       </CardBoxModal>
       {isLoading ? <Loading />
         :
@@ -274,7 +285,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
                     <BaseButton
                       color="danger"
                       icon={mdiTrashCan}
-                      onClick={() => setIsModalTrashActive(true)}
+                      onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
                       small
                     />
                     <BaseButton

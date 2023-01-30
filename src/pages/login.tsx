@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import type { ReactElement } from 'react'
 import Head from 'next/head'
 import BaseButton from '../components/BaseButton'
@@ -21,11 +21,12 @@ import Image from 'next/image'
 import axios from "axios"
 import { API_LOGIN_URL } from '../constants'
 import Cookies from 'universal-cookie'
+import { Loading } from '../components/Loading'
 
 export default function Error() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleStylePick = (e: React.MouseEvent, style: StyleKey) => {
     dispatch(setStyle(style))
@@ -33,14 +34,17 @@ export default function Error() {
   const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
     try {
+      setIsLoading(true)
       const response = await axios.post(API_LOGIN_URL, { username: e.login, password: e.password })
       console.log(response)
+      setIsLoading(false)
       if (response.data.success) {
         new Cookies().set('token', response.data.data.token)
         router.push('/dashboard')
       }
     } catch (error) {
       console.log(error)
+      setIsLoading(true)
     }
 
   }
@@ -79,7 +83,7 @@ export default function Error() {
               <BaseDivider />
 
               <BaseButtons>
-                <BaseButton type="submit" label="ورود به سامانه" color="info" />
+                <BaseButton isLoading={isLoading} type="submit" label="ورود به سامانه" color="info" />
               </BaseButtons>
             </Form>
           </Formik>

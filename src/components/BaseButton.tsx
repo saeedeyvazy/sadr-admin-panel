@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { getButtonColor } from '../colors'
 import BaseIcon from './BaseIcon'
 import type { ColorButtonKey } from '../interfaces'
+import { Loading } from './Loading'
 
 type Props = {
   label?: string
@@ -19,6 +20,7 @@ type Props = {
   active?: boolean
   disabled?: boolean
   roundedFull?: boolean
+  isLoading?: boolean
   onClick?: (e: React.MouseEvent) => void
 }
 
@@ -37,6 +39,7 @@ export default function BaseButton({
   active = false,
   disabled = false,
   roundedFull = false,
+  isLoading = false,
   onClick,
 }: Props) {
   const componentClass = [
@@ -72,7 +75,7 @@ export default function BaseButton({
   const componentChildren = (
     <>
       {icon && <BaseIcon path={icon} size={iconSize} />}
-      {label && <span className={small && icon ? 'px-1' : 'px-2'}>{label}</span>}
+      {label && <span className={small && icon ? 'px-1' : 'px-2'}>{isLoading ? <Loading /> : label}</span>}
     </>
   )
 

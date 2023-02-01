@@ -13,6 +13,7 @@ import { getPageTitle, iaxios } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { Organ } from '../components/Organ'
+import MultiSelect from '../components/MultiSelect'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -81,7 +82,7 @@ const FormsPage = () => {
           </Formik>
         </CardBox>
 
-        <SectionTitleLineWithButton icon={mdiBallotOutline} title="دوره های آموزشی معتبر" main />
+        <SectionTitleLineWithButton icon={mdiBallotOutline} title="مدارک" main />
         <CardBox>
           <Formik
             initialValues={{
@@ -96,7 +97,7 @@ const FormsPage = () => {
               <FormField>
                 <Organ />
                 <FormField label='مدرک انتخاب شده'>
-                  <Field label="" name="test" placeholder="نام" />
+                  <Field label="" name="test" placeholder="نوع مدرک" />
                 </FormField>
               </FormField>
               <FormField>
@@ -113,6 +114,7 @@ const FormsPage = () => {
             </Form>
           </Formik>
         </CardBox>
+
       </SectionMain>
     </>
   )

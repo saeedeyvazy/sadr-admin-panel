@@ -99,3 +99,7 @@
     color: #f8fafc;
     /*.text-grey-lightest*/
 }
+
+.dropdown-container {
+    width: 300px;
+}

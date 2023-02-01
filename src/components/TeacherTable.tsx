@@ -6,10 +6,8 @@ import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import UserAvatar from './UserAvatar'
 import { Loading } from './Loading'
-import { Accordion } from "./Accordion"
 import axios from 'axios'
 import { API_GENERAL_TEACHER_SEARCH } from '../constants'
-import SectionTitleLineWithButton from './SectionTitleLineWithButton'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 
@@ -298,13 +296,6 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
                   </BaseButtons>
 
                 </td>
-                {/* <td>
-                  <Accordion onClick={() => fetchDetail(client.id)} id={client.id} title='Accordion'>
-                    {teacherDetail?.bankhaList?.map(item => <div>
-                      <span>{`${item.onvan} - ${item.zir_onvan}`}</span>
-                    </div>)}
-                  </Accordion>
-                </td> */}
               </tr>
             ))
             }

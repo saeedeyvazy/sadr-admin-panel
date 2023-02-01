@@ -31,7 +31,7 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiSquareEditOutline,
   },
   {
-    href: '/ui',
+    href: '/learning',
     label: 'تعریف دوره ها',
     icon: mdiTelevisionGuide,
   },

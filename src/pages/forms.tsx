@@ -13,7 +13,6 @@ import { getPageTitle, iaxios } from '../config'
 import { TeacherTable } from '../components/TeacherTable'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
-import { Teacher } from '../interfaces'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()

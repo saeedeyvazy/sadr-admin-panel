@@ -13,7 +13,7 @@ import { getPageTitle, iaxios } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { Organ } from '../components/Organ'
-import MultiSelect from '../components/MultiSelect'
+import { DoreSelect } from '../components/DoreSelect'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -110,7 +110,50 @@ const FormsPage = () => {
                 <BaseButton type="submit" color="danger" label="حذف مدرک" />
               </div>
               <BaseDivider />
+            </Form>
+          </Formik>
+        </CardBox>
 
+
+        <SectionTitleLineWithButton icon={mdiBallotOutline} title="دوره های آموزشی معتبر" main />
+        <CardBox>
+          <Formik
+            initialValues={{
+              fname: '',
+              lname: '',
+              nationalCode: '',
+              mobile: '',
+            }}
+            onSubmit={(values) => handleSubmit(values)}
+          >
+            <Form>
+              <FormField>
+                <DoreSelect />
+              </FormField>
+              <FormField label='امضای اول'>
+                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Field label="" name="test" placeholder="نام" />
+                <Field label="" name="test" placeholder="سمت" />
+              </FormField>
+              <FormField label='امضای دوم'>
+                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Field label="" name="test" placeholder="نام" />
+                <Field label="" name="test" placeholder="سمت" />
+              </FormField>
+              <FormField label='امضای سوم'>
+                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Field label="" name="test" placeholder="نام" />
+                <Field label="" name="test" placeholder="سمت" />
+              </FormField>
+              <FormField label='اطلاعات دوره آموزشی'>
+                <Field label="" name="test" placeholder="عنوان گواهینامه" />
+                <Field label="" name="test" placeholder="گرایش" />
+                <Field label="" name="test" placeholder="ساعت آموزشی" />
+              </FormField>
+              <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
+                <BaseButton type="submit" color="info" label="تایید تغییرات" />
+              </div>
+              <BaseDivider />
             </Form>
           </Formik>
         </CardBox>

@@ -12,10 +12,11 @@ export default function MultiSelect({ optionList }) {
             <div className="max-w-full border-gray-700 rounded w-full dark:placeholder-gray-400 focus:ring focus:ring-blue-600 focus:border-blue-600 focus:outline-none h-10 border bg-white dark:bg-slate-800 ">
                 <Select
                     className="w-full h-full [&>div]:border-none [&>div]:z-50"
-                    options={optionList}
+                    options={[{ value: '0', label: 'هیچکدام' }].concat(optionList)}
                     value={selectedOptions}
                     onChange={handleSelect}
                     isSearchable={true}
+                    placeholder='هیچکدام'
                 // isMulti
                 />
             </div>

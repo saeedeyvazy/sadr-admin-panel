@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import Select from "react-select"
 
-export default function MultiSelect({ optionList }) {
+export default function MultiSelect({ optionList, signal }) {
     const [selectedOptions, setSelectedOptions] = useState([{}])
 
     function handleSelect(data) {
+        console.log(data)
+        signal(data)
         setSelectedOptions(data)
     }
     return (

@@ -20,7 +20,8 @@ const FormsPage = () => {
   const [specificSearch, setSpecificSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
-
+  const [e1Onvan, setE1Onvan] = useState("")
+  const [selectedOption, setSelectedOption] = useState({})
   async function handleSubmit(values) {
     try {
       setSearchLoading(true)
@@ -41,6 +42,7 @@ const FormsPage = () => {
       console.log(error)
     }
   }
+
   return (
     <>
       <Head>
@@ -127,28 +129,28 @@ const FormsPage = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField>
-                <DoreSelect />
+              <FormField label='نام دوره'>
+                <DoreSelect signal={(selected) => setSelectedOption(selected.value)} />
               </FormField>
               <FormField label='امضای اول'>
                 <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
-                <Field label="" name="test" placeholder="نام" />
-                <Field label="" name="test" placeholder="سمت" />
+                <Field label="" name="e1_onvan" placeholder="نام" value={selectedOption?.e1_onvan} />
+                <Field label="" name="e1_semat" placeholder="سمت" value={selectedOption?.e1_semat} />
               </FormField>
               <FormField label='امضای دوم'>
                 <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
-                <Field label="" name="test" placeholder="نام" />
-                <Field label="" name="test" placeholder="سمت" />
+                <Field label="" name="test" placeholder="نام" value={selectedOption?.e2_onvan} />
+                <Field label="" name="test" placeholder="سمت" value={selectedOption?.e2_semat} />
               </FormField>
               <FormField label='امضای سوم'>
                 <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
-                <Field label="" name="test" placeholder="نام" />
-                <Field label="" name="test" placeholder="سمت" />
+                <Field label="" name="test" placeholder="نام" value={selectedOption?.e3_onvan} />
+                <Field label="" name="test" placeholder="سمت" value={selectedOption?.e3_semat} />
               </FormField>
               <FormField label='اطلاعات دوره آموزشی'>
-                <Field label="" name="test" placeholder="عنوان گواهینامه" />
-                <Field label="" name="test" placeholder="گرایش" />
-                <Field label="" name="test" placeholder="ساعت آموزشی" />
+                <Field label="" name="test" placeholder="عنوان گواهینامه" value={selectedOption?.onvan_govahi} />
+                <Field label="" name="test" placeholder="گرایش" value={selectedOption?.gerayesh} />
+                <Field label="" name="test" placeholder="ساعت آموزشی" value={selectedOption?.saat} />
               </FormField>
               <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
                 <BaseButton type="submit" color="info" label="تایید تغییرات" />

@@ -14,6 +14,7 @@ import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { Organ } from '../components/Organ'
 import { DoreSelect } from '../components/DoreSelect'
+import { Position } from '../components/Position'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -102,10 +103,6 @@ const FormsPage = () => {
                   <Field label="" name="test" placeholder="نوع مدرک" />
                 </FormField>
               </FormField>
-              <FormField>
-                {/* <Field name="nationalCode" placeholder="کد ملی" /> */}
-                {/* <Field name="mobile" placeholder="شماره همراه" /> */}
-              </FormField>
               <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
                 <BaseButton type="submit" color="info" label="افزودن" />
                 <BaseButton type="submit" color="warning" label="ویرایش" />
@@ -133,17 +130,17 @@ const FormsPage = () => {
                 <DoreSelect signal={(selected) => setSelectedOption(selected.value)} />
               </FormField>
               <FormField label='امضای اول'>
-                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Position name='pos1' />
                 <Field label="" name="e1_onvan" placeholder="نام" value={selectedOption?.e1_onvan} />
                 <Field label="" name="e1_semat" placeholder="سمت" value={selectedOption?.e1_semat} />
               </FormField>
               <FormField label='امضای دوم'>
-                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Position name='pos2' />
                 <Field label="" name="test" placeholder="نام" value={selectedOption?.e2_onvan} />
                 <Field label="" name="test" placeholder="سمت" value={selectedOption?.e2_semat} />
               </FormField>
               <FormField label='امضای سوم'>
-                <Field style={{ textAlign: 'center' }} name="" placeholder='' component="select" />
+                <Position name='pos3' />
                 <Field label="" name="test" placeholder="نام" value={selectedOption?.e3_onvan} />
                 <Field label="" name="test" placeholder="سمت" value={selectedOption?.e3_semat} />
               </FormField>

@@ -7,3 +7,4 @@ export const API_GENERAL_TEACHER_SEARCH = `${API_PREFIX}/api/teacher`
 export const API_SPECIFIC_TEACHER_SEARCH = `${API_PREFIX}/api/teacher/search`
 export const API_ORGAN_LIST = `${API_PREFIX}/api/organha`
 export const API_DOREH_LIST = `${API_PREFIX}/api/doreha-amozeshi`
+export const API_POSITION_LIST = `${API_PREFIX}/api/doreha-amozeshi/semat`

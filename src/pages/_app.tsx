@@ -7,6 +7,7 @@ import Head from 'next/head'
 import { store } from '../stores/store'
 import { Provider } from 'react-redux'
 import '../css/main.css'
+import { SnackbarProvider } from 'notistack'
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -34,49 +35,54 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
   return (
     <Provider store={store}>
-      {getLayout(
-        <div style={{ direction: "rtl" }}>
-          <Head>
-            <meta name="description" content={description} />
+      <SnackbarProvider className='text-right' style={{ textAlign: 'right' }} anchorOrigin={{
+        vertical: 'bottom',
+        horizontal: 'right',
+      }}>
+        {getLayout(
+          <div style={{ direction: "rtl" }}>
+            <Head>
+              <meta name="description" content={description} />
 
-            <meta property="og:url" content={url} />
-            <meta property="og:site_name" content="JustBoil.me" />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
-            <meta property="og:image" content={image} />
-            <meta property="og:image:type" content="image/png" />
-            <meta property="og:image:width" content={imageWidth} />
-            <meta property="og:image:height" content={imageHeight} />
+              <meta property="og:url" content={url} />
+              <meta property="og:site_name" content="JustBoil.me" />
+              <meta property="og:title" content={title} />
+              <meta property="og:description" content={description} />
+              <meta property="og:image" content={image} />
+              <meta property="og:image:type" content="image/png" />
+              <meta property="og:image:width" content={imageWidth} />
+              <meta property="og:image:height" content={imageHeight} />
 
-            <meta property="twitter:card" content="summary_large_image" />
-            <meta property="twitter:title" content={title} />
-            <meta property="twitter:description" content={description} />
-            <meta property="twitter:image:src" content={image} />
-            <meta property="twitter:image:width" content={imageWidth} />
-            <meta property="twitter:image:height" content={imageHeight} />
+              <meta property="twitter:card" content="summary_large_image" />
+              <meta property="twitter:title" content={title} />
+              <meta property="twitter:description" content={description} />
+              <meta property="twitter:image:src" content={image} />
+              <meta property="twitter:image:width" content={imageWidth} />
+              <meta property="twitter:image:height" content={imageHeight} />
 
-            <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
-            <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
-          </Head>
+              <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
+              <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+            </Head>
 
-          <Script
-            src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"
-            strategy="afterInteractive"
-          />
+            <Script
+              src="https://www.googletagmanager.com/gtag/js?id=UA-130795909-1"
+              strategy="afterInteractive"
+            />
 
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
               gtag('config', 'UA-130795909-1');
             `}
-          </Script>
+            </Script>
 
-          <Component {...pageProps} />
-        </div>
-      )
-      }
+            <Component {...pageProps} />
+          </div>
+        )
+        }
+      </SnackbarProvider>
     </Provider >
   )
 }

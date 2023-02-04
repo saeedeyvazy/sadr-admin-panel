@@ -10,12 +10,14 @@
     "format": "prettier '{components,pages,src,interfaces,hooks}/**/*.{tsx,ts,js}' --write"
   },
   "dependencies": {
+    "@emotion/styled": "^11.10.5",
     "@mdi/js": "^7.0.96",
     "@reduxjs/toolkit": "^1.8.5",
     "axios": "^1.2.6",
     "chart.js": "^3.9.1",
     "formik": "^2.2.9",
     "next": "^13.0.4",
+    "notistack": "^2.0.8",
     "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",

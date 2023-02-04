@@ -103,3 +103,8 @@
 .dropdown-container {
     width: 300px;
 }
+
+simple-snack-bar span {
+    margin: auto;
+    text-align: center !important;
+}

@@ -1,7 +1,7 @@
 import { mdiAccount, mdiBallotOutline, mdiMail, mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useReducer, useRef, useState } from 'react'
 import BaseButton from '../components/BaseButton'
 import BaseDivider from '../components/BaseDivider'
 import CardBox from '../components/CardBox'
@@ -11,18 +11,20 @@ import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
-import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
+import { API_ORGAN_LIST, API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { Organ } from '../components/Organ'
 import { DoreSelect } from '../components/DoreSelect'
 import { Position } from '../components/Position'
+import { useSnackbar } from 'notistack'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
   const [specificSearch, setSpecificSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
-  const [e1Onvan, setE1Onvan] = useState("")
   const [selectedOption, setSelectedOption] = useState({})
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const organRef = useRef()
   async function handleSubmit(values) {
     try {
       setSearchLoading(true)
@@ -44,6 +46,29 @@ const FormsPage = () => {
     }
   }
 
+  async function handleOrganSubmit(organValueObj) {
+    try {
+      const response = await iaxios.post(API_ORGAN_LIST, { name_organ: organValueObj.newOrgan, namayesh: true })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+
+  }
+
+  async function handleOrganDelete(organId) {
+
+    try {
+      console.log(organId)
+      console.log('sdlfjsdfsjdfsjd')
+      const response = await iaxios.delete(`${API_ORGAN_LIST}/${organId}`)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+
+  }
+
   return (
     <>
       <Head>
@@ -58,30 +83,26 @@ const FormsPage = () => {
           <Formik
             initialValues={{
               fname: '',
-              lname: '',
-              nationalCode: '',
-              mobile: '',
+              newOrgan: '',
+              organ: ''
             }}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => handleOrganSubmit(values)}
           >
-            <Form>
-              <FormField>
-                <Organ />
-                <FormField label='ارگان انتخاب شده'>
-                  <Field label="" name="test" placeholder="نام" />
+            {({ values, setFieldValue }) => (
+              <Form>
+                <FormField>
+                  <Organ setFieldValue={setFieldValue} />
+                  <FormField label='ارگان انتخاب شده'>
+                    <Field label="" name="newOrgan" placeholder="نام ارگان" />
+                  </FormField>
                 </FormField>
-              </FormField>
-              <FormField>
-                {/* <Field name="nationalCode" placeholder="کد ملی" /> */}
-                {/* <Field name="mobile" placeholder="شماره همراه" /> */}
-              </FormField>
-              <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
-                <BaseButton type="submit" color="info" label="افزودن" />
-                <BaseButton type="submit" color="warning" label="ویرایش" />
-                <BaseButton type="submit" color="danger" label="حذف ارگان" />
-              </div>
-              <BaseDivider />
-            </Form>
+                <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
+                  <BaseButton type="submit" color="info" label="افزودن" />
+                  <BaseButton color="warning" label="ویرایش" />
+                  <BaseButton onClick={() => handleOrganDelete(values.organ)} color="danger" label="حذف ارگان" />
+                </div>
+                <BaseDivider />
+              </Form>)}
           </Formik>
         </CardBox>
 
@@ -98,7 +119,7 @@ const FormsPage = () => {
           >
             <Form>
               <FormField>
-                <Organ />
+                <Organ setFieldValue={() => { }} />
                 <FormField label='مدرک انتخاب شده'>
                   <Field label="" name="test" placeholder="نوع مدرک" />
                 </FormField>

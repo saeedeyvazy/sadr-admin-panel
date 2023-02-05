@@ -1,35 +1,29 @@
-import { mdiCardAccountDetails, mdiDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
-import { Teacher } from '../interfaces'
+import { Organization, Teacher } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
-import UserAvatar from './UserAvatar'
 import { Loading } from './Loading'
 import axios from 'axios'
 import { API_GENERAL_TEACHER_SEARCH } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 
-export const TeacherTable = ({ clients, isLoading, error }) => {
+export const OrganizationTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState({})
 
-  const [selectedClient, setSelectedClient] = useState<Teacher>({
-    id: 0,
-    fname: '',
-    lname: '',
-    jensiyatName: '',
-    codemelli: '',
-    mob: '',
-    taholName: '',
-    address: '',
-    pic: '',
-    mahalsodor: '',
-    ttmoalem: '',
-    tkmelli: ''
+  const [selectedClient, setSelectedClient] = useState<Organization>({
+    id_organ: 0,
+    shahrestan: '',
+    onvan_raiis: '',
+    name_raiis: '',
+    onvan_karshenas: '',
+    name_karshenas: '',
+    id: 0
   })
 
   const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
@@ -84,11 +78,6 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
         onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
-        <div className='flex justify-around items-center'>
-          <img src={`data:image/jpeg;base64,${selectedClient.pic}`} alt='' className='w-14 h-14' />
-          <img src={`data:image/jpeg;base64,${selectedClient.tkmelli}`} alt='' className='w-14 h-14' />
-          <img src={`data:image/jpeg;base64,${selectedClient.ttmoalem}`} alt='' className='w-14 h-14' />
-        </div>
       </CardBoxModal>
       <CardBoxModal
         title="جزییات"
@@ -251,27 +240,21 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
         :
         <table>
           <thead>
-            <tr className='[&>*]:text-right'>
-              <th />
-              <th>نام و نام خانوادگی</th>
-              <th>کد ملی</th>
-              <th>جنسیت</th>
-              <th>محل صدور</th>
-              <th>شماره همراه</th>
+            <tr className='[&>*]:text-right [&>*]:whitespace-nowrap'>
+              <th>عنوان مسئول</th>
+              <th>نام مسئول</th>
+              <th>عنوان کارشناس</th>
+              <th>نام کارشناس</th>
               <th />
             </tr>
           </thead>
           <tbody>
-            {clientsPaginated.map((client: Teacher) => (
-              <tr key={client.id} className='[&>*]:text-right'>
-                <td className="border-b-0 lg:w-6 before:hidden">
-                  <UserAvatar username={''} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-                </td>
-                <td data-label="نام و نام خانوادگی">{`${client.fname} ${client.lname}`}</td>
-                <td data-label="کد ملی" className='text-sm'>{client.codemelli}</td>
-                <td data-label="جنسیت">{client.jensiyatName}</td>
-                <td data-label="محل صدور" className="lg:w-32">{client.mahalsodor}</td>
-                <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">{client.mob}</td>
+            {clientsPaginated.map((client: Organization) => (
+              <tr key={client.id} className='[&>*]:text-right [&>*]:text-sm [&>*]:whitespace-nowrap'>
+                <td data-label="کد ملی">{client.onvan_raiis}</td>
+                <td data-label="جنسیت">{client.name_raiis}</td>
+                <td data-label="محل صدور" className="lg:w-32">{client.onvan_karshenas}</td>
+                <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">{client.name_karshenas}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>
                     <BaseButton

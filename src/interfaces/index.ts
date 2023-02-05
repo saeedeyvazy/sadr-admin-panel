@@ -84,6 +84,16 @@ export type Teacher = {
   ttmoalem: string
 }
 
+export type Organization = {
+  id_organ: number
+  shahrestan: string
+  onvan_raiis: string
+  name_raiis: string
+  onvan_karshenas: string
+  name_karshenas: string
+  id: number
+}
+
 export type StyleKey = 'white' | 'basic'
 
 export type UserForm = {

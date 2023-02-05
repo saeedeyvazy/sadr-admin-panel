@@ -10,3 +10,5 @@ export const API_DOREH_LIST = `${API_PREFIX}/api/doreha-amozeshi`
 export const API_POSITION_LIST = `${API_PREFIX}/api/doreha-amozeshi/semat`
 export const API_MADRAK_LIST = `${API_PREFIX}/api/doreha?page=0&size=1000`
 export const API_MADRAK = `${API_PREFIX}/api/doreha`
+export const API_GROUP_LIST = `${API_DOREH_LIST}/groh`
+export const API_ORGANIZATION_LIST = `${API_PREFIX}/api/organ-shahrestani`

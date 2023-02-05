@@ -17,6 +17,7 @@ import { DoreSelect } from '../components/DoreSelect'
 import { Position } from '../components/Position'
 import { useSnackbar } from 'notistack'
 import { Madrak } from '../components/Madrak'
+import { Group } from '../components/Group'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -174,9 +175,10 @@ const FormsPage = () => {
           <Formik
             initialValues={{
               fname: '',
-              lname: '',
-              nationalCode: '',
-              mobile: '',
+              pos3: '',
+              pos2: '',
+              pos1: '',
+              group: ''
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
@@ -203,6 +205,10 @@ const FormsPage = () => {
                 <Field label="" name="test" placeholder="عنوان گواهینامه" value={selectedOption?.onvan_govahi} />
                 <Field label="" name="test" placeholder="گرایش" value={selectedOption?.gerayesh} />
                 <Field label="" name="test" placeholder="ساعت آموزشی" value={selectedOption?.saat} />
+              </FormField>
+              <FormField>
+                <Group />
+                <Organ />
               </FormField>
               <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
                 <BaseButton type="submit" color="info" label="تایید تغییرات" />

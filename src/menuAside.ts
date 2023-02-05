@@ -36,9 +36,22 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiTelevisionGuide,
   },
   {
-    href: '/responsive',
     label: 'کاربران',
     icon: mdiResponsive,
+    menu: [
+      {
+        label: 'بازیابی رمز عبور',
+        href: '/',
+      },
+      {
+        label: 'بازیابی رمز موسسات',
+        href: '/'
+      },
+      {
+        label: 'ادارات شهرستان',
+        href: '/office'
+      },
+    ],
   },
   {
     href: '/',
@@ -63,14 +76,6 @@ const menuAside: MenuAsideItem[] = [
   {
     label: 'بانکهای اطلاعات',
     icon: mdiViewList,
-    menu: [
-      {
-        label: 'Item One',
-      },
-      {
-        label: 'Item Two',
-      },
-    ],
   },
   {
     href: 'https://github.com/justboil/admin-one-react-tailwind',

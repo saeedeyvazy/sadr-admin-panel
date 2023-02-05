@@ -8,6 +8,7 @@ export function Organ({ setFieldValue }) {
     return (
         <FormField label="ارگان صادر کننده مدرک" labelFor="organ">
             <Field onChange={(e) => { setFieldValue('newOrgan', e.target.options[e.target.selectedIndex].text); setFieldValue('organ', e.target.value) }} style={{ textAlign: 'center' }} name="organ" id="organ" component="select">
+                <option value='0'>هیچکدام</option>
                 {
                     !loading && response?.map((item) => <option value={item.id} key={item.id}>{item.name_organ}</option>)
                 }

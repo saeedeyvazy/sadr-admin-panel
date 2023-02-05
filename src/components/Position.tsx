@@ -5,7 +5,7 @@ import { API_POSITION_LIST } from "../constants"
 
 export function Position({ name }) {
     const { response, error, loading } = useAxios({ url: API_POSITION_LIST, method: 'get' })
-    console.log(response)
+
     return (
         <FormField label="" labelFor={name}>
             <Field style={{ textAlign: 'center' }} name={name} id={name} component="select">

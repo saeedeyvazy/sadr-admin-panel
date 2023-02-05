@@ -11,11 +11,12 @@ import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
-import { API_ORGAN_LIST, API_SPECIFIC_TEACHER_SEARCH } from '../constants'
+import { API_DOREH_LIST, API_MADRAK, API_ORGAN_LIST, API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { Organ } from '../components/Organ'
 import { DoreSelect } from '../components/DoreSelect'
 import { Position } from '../components/Position'
 import { useSnackbar } from 'notistack'
+import { Madrak } from '../components/Madrak'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -57,16 +58,31 @@ const FormsPage = () => {
   }
 
   async function handleOrganDelete(organId) {
-
     try {
-      console.log(organId)
-      console.log('sdlfjsdfsjdfsjd')
       const response = await iaxios.delete(`${API_ORGAN_LIST}/${organId}`)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }
 
+  }
+
+  async function handleMadrakSubmit(values) {
+    try {
+      const response = await iaxios.post(API_MADRAK, { ID: values.id_organ, id_organ: values.id_organ, onvan_dore: values.newMadrak })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+  }
+
+  async function handleMadrakDelete(id) {
+    try {
+      const response = await iaxios.delete(`${API_MADRAK}/${id}`)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
   }
 
   return (
@@ -110,27 +126,28 @@ const FormsPage = () => {
         <CardBox>
           <Formik
             initialValues={{
-              fname: '',
-              lname: '',
-              nationalCode: '',
-              mobile: '',
+              newMadrak: '',
+              madrak: '',
+              id_organ: '',
             }}
-            onSubmit={(values) => handleSubmit(values)}
+            onSubmit={(values) => handleMadrakSubmit(values)}
           >
-            <Form>
-              <FormField>
-                <Organ setFieldValue={() => { }} />
-                <FormField label='مدرک انتخاب شده'>
-                  <Field label="" name="test" placeholder="نوع مدرک" />
+            {({ values, setFieldValue }) => (
+              <Form>
+                <FormField>
+                  <Madrak setFieldValue={setFieldValue} />
+                  <FormField label='مدرک انتخاب شده'>
+                    <Field label="" name="newMadrak" placeholder="نوع مدرک" />
+                  </FormField>
                 </FormField>
-              </FormField>
-              <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
-                <BaseButton type="submit" color="info" label="افزودن" />
-                <BaseButton type="submit" color="warning" label="ویرایش" />
-                <BaseButton type="submit" color="danger" label="حذف مدرک" />
-              </div>
-              <BaseDivider />
-            </Form>
+                <Field name='id_organ' style={{ visibility: 'hidden', width: '0' }} />
+                <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
+                  <BaseButton type="submit" color="info" label="افزودن" />
+                  <BaseButton color="warning" label="ویرایش" />
+                  <BaseButton color="danger" label="حذف مدرک" onClick={() => handleMadrakDelete(values.madrak)} />
+                </div>
+                <BaseDivider />
+              </Form>)}
           </Formik>
         </CardBox>
 

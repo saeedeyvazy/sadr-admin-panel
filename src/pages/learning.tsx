@@ -85,6 +85,15 @@ const FormsPage = () => {
     }
   }
 
+  async function handleMadrakUpdate(values) {
+    try {
+      const response = await iaxios.put(`${API_MADRAK}`, { ID: values.madrak, id: values.madrak, id_organ: values.id_organ, onvan_dore: values.newMadrak })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+  }
+
   return (
     <>
       <Head>
@@ -143,7 +152,7 @@ const FormsPage = () => {
                 <Field name='id_organ' style={{ visibility: 'hidden', width: '0' }} />
                 <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
                   <BaseButton type="submit" color="info" label="افزودن" />
-                  <BaseButton color="warning" label="ویرایش" />
+                  <BaseButton color="warning" label="ویرایش" onClick={() => handleMadrakUpdate(values)} />
                   <BaseButton color="danger" label="حذف مدرک" onClick={() => handleMadrakDelete(values.madrak)} />
                 </div>
                 <BaseDivider />

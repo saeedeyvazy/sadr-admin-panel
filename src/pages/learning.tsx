@@ -94,6 +94,15 @@ const FormsPage = () => {
     }
   }
 
+  async function handleOrganUpdate(values) {
+    try {
+      const response = await iaxios.put(`${API_ORGAN_LIST}`, { name_organ: values.newOrgan, namayesh: true, id: values.organ })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+  }
+
   return (
     <>
       <Head>
@@ -107,7 +116,6 @@ const FormsPage = () => {
         <CardBox>
           <Formik
             initialValues={{
-              fname: '',
               newOrgan: '',
               organ: ''
             }}
@@ -123,7 +131,7 @@ const FormsPage = () => {
                 </FormField>
                 <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
                   <BaseButton type="submit" color="info" label="افزودن" />
-                  <BaseButton color="warning" label="ویرایش" />
+                  <BaseButton onClick={() => handleOrganUpdate(values)} color="warning" label="ویرایش" />
                   <BaseButton onClick={() => handleOrganDelete(values.organ)} color="danger" label="حذف ارگان" />
                 </div>
                 <BaseDivider />

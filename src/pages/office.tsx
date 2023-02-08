@@ -27,7 +27,7 @@ const OfficePage = () => {
       setSearchLoading(true)
       await iaxios.post(API_ORGANIZATION_LIST, {
         id_organ: values.organ,
-        shahrestan: values.shahrestan,
+        shahrestan: values.town,
         onvan_raiis: values.bossTitle,
         name_raiis: values.bossName,
         onvan_karshenas: values.onvan_karshenas,

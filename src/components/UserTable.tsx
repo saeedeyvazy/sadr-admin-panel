@@ -1,6 +1,6 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
-import { Organization, Teacher, User } from '../interfaces'
+import { User } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
@@ -163,11 +163,11 @@ export const UserTable = ({ clients, isLoading, error }) => {
                 <td data-label="">{client.username}</td>
                 <td data-label="">{client.userTypeName}</td>
                 <td className='grid grid-cols-1'>
-                  {client.roles.map(item => <span>{item.name}</span>)}
+                  {client?.roles?.map(item => <span>{item.name}</span>)}
                 </td>
                 <td data-label="" className="lg:w-32">{client.isActive === 'true' ? 'هست' : 'نیست'}</td>
-                <td>{client.createdAt.split('T')[0]}</td>
-                <td>{client.updatedAt.split('T')[0]}</td>
+                <td>{client?.createdAt?.split('T')[0]}</td>
+                <td>{client?.updatedAt?.split('T')[0]}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>
                     <BaseButton

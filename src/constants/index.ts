@@ -14,3 +14,4 @@ export const API_GROUP_LIST = `${API_DOREH_LIST}/groh`
 export const API_ORGANIZATION_LIST = `${API_PREFIX}/api/organ-shahrestani`
 export const API_TOWN_LIST = `${API_PREFIX}/api/address/guilan-shahr`
 export const API_USER = `${API_PREFIX}/api/user`
+export const API_USER_TYPE_LIST = `${API_PREFIX}/api/user/type`

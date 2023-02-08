@@ -16,6 +16,7 @@ import { Town } from '../components/Town'
 import { useSnackbar } from 'notistack'
 import { UserTable } from '../components/UserTable'
 import { useUser } from '../hooks/useUser'
+import { UserType } from '../components/UserType'
 
 const OfficePage = () => {
   const { data, error, isLoading } = useUser()
@@ -64,23 +65,21 @@ const OfficePage = () => {
             {({ values, setFieldValue }) => (
               <Form>
                 <FormField>
-                  <Organ setFieldValue={setFieldValue} />
-                  <Town name='town' label='شهرستان' />
+
                 </FormField>
 
-                <FormField label='رییس اداره شهرستان'>
-                  <Field name="bossTitle" placeholder="عنوان سمت" />
-                  <Field name="bossName" placeholder="نام و نام خانوادگی" />
+                <FormField label=' کاربری'>
+                  <Field name="username" placeholder="نام کاربری" />
+                  <Field name="password" placeholder="رمز عبور" type='password' />
+                  <Field name="confirmPassword" placeholder="تکرار رمز عبور" type='password' />
                 </FormField>
-                <FormField label='کارشناس قرآن شهرستان'>
-                  <Field name="onvan_karshenas" placeholder="عنوان سمت" />
+                <FormField label=''>
+                  <UserType name='userType' label='نوع کاربری' />
                   <Field name="name_karshenas" placeholder="نام و نام خانوادگی" />
                 </FormField>
-                <BaseButton type="submit" color="success" label="ایجاد" />
+                <BaseButton type="submit" color="success" label="ایجاد کاربر جدید" />
                 <BaseDivider />
-
                 <SectionTitleLineWithButton icon={mdiMonitorEye} title="اطلاعات کاربران" main />
-
                 <CardBox hasTable>
                   <UserTable clients={data} isLoading={isLoading} error={error} />
                 </CardBox>

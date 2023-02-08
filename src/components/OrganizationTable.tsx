@@ -78,7 +78,6 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
         title="ویرایش و مشاهده اطلاعات"
         buttonColor="warning"
         buttonLabel="ویرایش"
-
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
         onCancel={handleModalAction}

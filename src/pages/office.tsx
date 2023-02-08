@@ -10,35 +10,33 @@ import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
-import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
+import { API_ORGANIZATION_LIST } from '../constants'
 import { OrganizationTable } from '../components/OrganizationTable'
 import { useOrgan } from '../hooks/useOrgan'
 import { Organ } from '../components/Organ'
 import { Town } from '../components/Town'
+import { useSnackbar } from 'notistack'
 
 const OfficePage = () => {
   const { data, error, isLoading } = useOrgan()
-  const [specificSearch, setSpecificSearch] = useState(false)
-  const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   async function handleSubmit(values) {
     try {
       setSearchLoading(true)
-      const response = await iaxios.post(API_SPECIFIC_TEACHER_SEARCH, {
-        firstName: values.fname,
-        nationalCode: values.nationalCode
-      }, {
-        params: {
-          page: 0,
-          size: 5
-        }
+      await iaxios.post(API_ORGANIZATION_LIST, {
+        id_organ: values.organ,
+        shahrestan: values.shahrestan,
+        onvan_raiis: values.bossTitle,
+        name_raiis: values.bossName,
+        onvan_karshenas: values.onvan_karshenas,
+        name_karshenas: values.name_karshenas
       })
-      setSearchLoading(false)
-      setSpecificSearch(true)
-      setSearchResult(response.data.data)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
-
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+      console.log(error)
     }
   }
   return (
@@ -58,35 +56,36 @@ const OfficePage = () => {
               organ: '',
               bossTitle: '',
               bossName: '',
+              onvan_karshenas: '',
+              name_karshenas: ''
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
-            <Form>
-              <FormField>
-                <Organ setFieldValue={() => { }} />
-                <Town name='town' label='شهرستان' />
-              </FormField>
+            {({ values, setFieldValue }) => (
+              <Form>
+                <FormField>
+                  <Organ setFieldValue={setFieldValue} />
+                  <Town name='town' label='شهرستان' />
+                </FormField>
 
-              <FormField label='رییس اداره شهرستان'>
-                <Field name="bossTitle" placeholder="عنوان سمت" />
-                <Field name="bossName" placeholder="نام و نام خانوادگی" />
-              </FormField>
-              <FormField label='کارشناس قرآن شهرستان'>
-                <Field name="bossTitle" placeholder="عنوان سمت" />
-                <Field name="bossName" placeholder="نام و نام خانوادگی" />
-              </FormField>
-              <BaseButton type="submit" color="success" label="ایجاد" />
-              <BaseDivider />
+                <FormField label='رییس اداره شهرستان'>
+                  <Field name="bossTitle" placeholder="عنوان سمت" />
+                  <Field name="bossName" placeholder="نام و نام خانوادگی" />
+                </FormField>
+                <FormField label='کارشناس قرآن شهرستان'>
+                  <Field name="onvan_karshenas" placeholder="عنوان سمت" />
+                  <Field name="name_karshenas" placeholder="نام و نام خانوادگی" />
+                </FormField>
+                <BaseButton type="submit" color="success" label="ایجاد" />
+                <BaseDivider />
 
-              <SectionTitleLineWithButton icon={mdiMonitorEye} title="اطلاعات ادارات شهرستانی" main />
+                <SectionTitleLineWithButton icon={mdiMonitorEye} title="اطلاعات ادارات شهرستانی" main />
 
-              <CardBox hasTable>
-                {!specificSearch ? <OrganizationTable clients={data} isLoading={isLoading} error={error} />
-                  :
-                  <OrganizationTable clients={searchResult} isLoading={searchLoading} error={error} />
-                }
-              </CardBox>
-            </Form>
+                <CardBox hasTable>
+                  <OrganizationTable clients={data} isLoading={isLoading} error={error} />
+                </CardBox>
+              </Form>
+            )}
           </Formik>
         </CardBox>
       </SectionMain>

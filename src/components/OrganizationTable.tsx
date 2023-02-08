@@ -1,16 +1,16 @@
-import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
 import { Organization, Teacher } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
-import axios from 'axios'
-import { API_GENERAL_TEACHER_SEARCH } from '../constants'
+import { API_ORGANIZATION_LIST } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Field, Form, Formik } from 'formik'
 import FormField from './FormField'
+import { useSnackbar } from 'notistack'
 
 export const OrganizationTable = ({ clients, isLoading, error }) => {
 
@@ -39,6 +39,7 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
   const [isModalInfoActive, setIsModalInfoActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
   const handleModalAction = () => {
     setIsModalInfoActive(false)
@@ -52,26 +53,27 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
 
   const handleDelModalAction = async () => {
     try {
-      await iaxios.delete(API_GENERAL_TEACHER_SEARCH + "/" + selectedClient.id)
+      await iaxios.delete(API_ORGANIZATION_LIST + "/" + selectedClient.id)
       setIsModalTrashActive(false)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
-      alert(error)
-      console.log(error)
-    }
-  }
-
-  async function fetchDetail(id) {
-    try {
-      const response = await axios.get(API_GENERAL_TEACHER_SEARCH + "/" + id)
-      console.log(response)
-      setTeacherDetail(response.data.data)
-    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
       console.log(error)
     }
   }
 
   return (
     <>
+      <CardBoxModal
+        title="حذف اداره"
+        buttonColor="danger"
+        buttonLabel="تایید"
+        isActive={isModalTrashActive}
+        onConfirm={handleDelModalAction}
+        onCancel={handleModalAction}
+      >
+        <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
+      </CardBoxModal>
       <CardBoxModal
         title="ویرایش و مشاهده اطلاعات"
         buttonColor="warning"

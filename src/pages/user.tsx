@@ -17,6 +17,7 @@ import { useSnackbar } from 'notistack'
 import { UserTable } from '../components/UserTable'
 import { useUser } from '../hooks/useUser'
 import { UserType } from '../components/UserType'
+import { UserOffice } from '../components/USerOffice'
 
 const OfficePage = () => {
   const { data, error, isLoading } = useUser()
@@ -75,7 +76,7 @@ const OfficePage = () => {
                 </FormField>
                 <FormField label=''>
                   <UserType name='userType' label='نوع کاربری' />
-                  <Field name="name_karshenas" placeholder="نام و نام خانوادگی" />
+                  <UserOffice name='userOffice' label='موسسه' />
                 </FormField>
                 <BaseButton type="submit" color="success" label="ایجاد کاربر جدید" />
                 <BaseDivider />

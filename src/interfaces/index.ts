@@ -93,6 +93,24 @@ export type Organization = {
   name_karshenas: string
   id: number
 }
+type UserRole = {
+  id: number,
+  name: string,
+  authority: string
+}
+export type User = {
+  id: number
+  username: string
+  password: string
+  userType: string
+  userTypeName: string
+  isActive: string
+  typeCode: string
+  createdAt: string
+  updatedAt: string
+  roles: UserRole[]
+
+}
 
 export type StyleKey = 'white' | 'basic'
 

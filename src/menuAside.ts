@@ -40,12 +40,8 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiResponsive,
     menu: [
       {
-        label: 'بازیابی رمز عبور',
-        href: '/',
-      },
-      {
-        label: 'بازیابی رمز موسسات',
-        href: '/'
+        label: 'مدیریت کاربران',
+        href: '/user',
       },
       {
         label: 'ادارات شهرستان',

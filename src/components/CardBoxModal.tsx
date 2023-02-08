@@ -14,7 +14,7 @@ type Props = {
   isActive: boolean
   children: ReactNode
   innerModalClassName?: string
-  onConfirm: () => void
+  onConfirm?: () => void
   onCancel?: () => void
 }
 
@@ -34,7 +34,7 @@ const CardBoxModal = ({
 
   const footer = (
     <BaseButtons className='justify-around'>
-      <BaseButton label={buttonLabel} color={buttonColor} onClick={onConfirm} />
+      {!!onConfirm && <BaseButton label={buttonLabel} color={buttonColor} onClick={onConfirm} />}
       {!!onCancel && <BaseButton label="انصراف" color={buttonColor} outline onClick={onCancel} />}
     </BaseButtons>
   )

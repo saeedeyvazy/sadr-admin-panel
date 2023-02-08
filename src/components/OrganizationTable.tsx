@@ -9,6 +9,8 @@ import axios from 'axios'
 import { API_GENERAL_TEACHER_SEARCH } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
+import { Field, Form, Formik } from 'formik'
+import FormField from './FormField'
 
 export const OrganizationTable = ({ clients, isLoading, error }) => {
 
@@ -71,14 +73,39 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
   return (
     <>
       <CardBoxModal
-        title="جزییات"
-        buttonColor="info"
-        buttonLabel="تایید"
+        title="ویرایش و مشاهده اطلاعات"
+        buttonColor="warning"
+        buttonLabel="ویرایش"
+
         isActive={isModalInfoActive}
         onConfirm={handleModalAction}
         onCancel={handleModalAction}
       >
+        <BaseDivider />
+        <Formik onSubmit={() => { }} initialValues={{ shahrestan: selectedClient.shahrestan, name_karshenas: selectedClient.name_karshenas, onvan_karshenas: selectedClient.onvan_karshenas, onvan_raiis: selectedClient.onvan_raiis, name_raiis: selectedClient.name_raiis }} >
+          <Form className='text-sm whitespace-nowrap'>
+            <FormField label='شهرستان'>
+              <Field name='shahrestan' />
+              <FormField label='' >
+              </FormField>
+            </FormField>
+            <FormField label='نام مسئول'>
+              <Field name='name_raiis' ></Field>
+            </FormField>
+            <FormField label='عنوان کارشناس'>
+              <Field name='onvan_karshenas' />
+            </FormField>
+            <FormField label='نام کارشناس'>
+              <Field name='name_karshenas' />
+            </FormField>
+            <FormField label='عنوان مسئول'>
+              <Field name='onvan_raiis' ></Field>
+            </FormField>
+          </Form>
+
+        </Formik>
       </CardBoxModal>
+
       <CardBoxModal
         title="جزییات"
         buttonColor="info"
@@ -225,17 +252,6 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
         </div>
 
       </CardBoxModal>
-
-      <CardBoxModal
-        title="حذف فرد انتخاب شده"
-        buttonColor="danger"
-        buttonLabel="تایید"
-        isActive={isModalTrashActive}
-        onConfirm={handleDelModalAction}
-        onCancel={handleModalAction}
-      >
-        <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
-      </CardBoxModal>
       {isLoading ? <Loading />
         :
         <table>
@@ -267,13 +283,6 @@ export const OrganizationTable = ({ clients, isLoading, error }) => {
                       color="danger"
                       icon={mdiTrashCan}
                       onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
-                      small
-                    />
-                    <BaseButton
-                      color="info"
-                      icon={mdiCardAccountDetails}
-                      className='mr-3'
-                      onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
                       small
                     />
                   </BaseButtons>

@@ -1,4 +1,4 @@
-import { mdiAccount, mdiBallotOutline, mdiMail, mdiSearchWeb } from '@mdi/js'
+import { mdiAccount, mdiBallotOutline, mdiMail, mdiMonitorEye, mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
@@ -54,10 +54,10 @@ const OfficePage = () => {
         <CardBox>
           <Formik
             initialValues={{
-              fname: '',
-              lname: '',
-              nationalCode: '',
-              mobile: '',
+              town: '',
+              organ: '',
+              bossTitle: '',
+              bossName: '',
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
@@ -67,15 +67,18 @@ const OfficePage = () => {
                 <Town name='town' label='شهرستان' />
               </FormField>
 
-              <FormField>
-                <Field name="nationalCode" placeholder="کد ملی" />
-                <Field name="mobile" placeholder="شماره همراه" />
+              <FormField label='رییس اداره شهرستان'>
+                <Field name="bossTitle" placeholder="عنوان سمت" />
+                <Field name="bossName" placeholder="نام و نام خانوادگی" />
               </FormField>
-              <BaseButton type="submit" color="info" label="جستجو" />
-              <BaseDivider />
+              <FormField label='کارشناس قرآن شهرستان'>
+                <Field name="bossTitle" placeholder="عنوان سمت" />
+                <Field name="bossName" placeholder="نام و نام خانوادگی" />
+              </FormField>
+              <BaseButton type="submit" color="success" label="ایجاد" />
               <BaseDivider />
 
-              <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
+              <SectionTitleLineWithButton icon={mdiMonitorEye} title="اطلاعات ادارات شهرستانی" main />
 
               <CardBox hasTable>
                 {!specificSearch ? <OrganizationTable clients={data} isLoading={isLoading} error={error} />

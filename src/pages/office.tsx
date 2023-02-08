@@ -13,6 +13,8 @@ import { getPageTitle, iaxios } from '../config'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { OrganizationTable } from '../components/OrganizationTable'
 import { useOrgan } from '../hooks/useOrgan'
+import { Organ } from '../components/Organ'
+import { Town } from '../components/Town'
 
 const OfficePage = () => {
   const { data, error, isLoading } = useOrgan()
@@ -60,10 +62,11 @@ const OfficePage = () => {
             onSubmit={(values) => handleSubmit(values)}
           >
             <Form>
-              <FormField label="آیتمهای جستجو" icons={[mdiAccount, mdiMail]}>
-                <Field name="fname" placeholder="نام" />
-                <Field name="lname" placeholder="نام خانوادگی" />
+              <FormField>
+                <Organ setFieldValue={() => { }} />
+                <Town name='town' label='شهرستان' />
               </FormField>
+
               <FormField>
                 <Field name="nationalCode" placeholder="کد ملی" />
                 <Field name="mobile" placeholder="شماره همراه" />

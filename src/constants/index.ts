@@ -12,3 +12,4 @@ export const API_MADRAK_LIST = `${API_PREFIX}/api/doreha?page=0&size=1000`
 export const API_MADRAK = `${API_PREFIX}/api/doreha`
 export const API_GROUP_LIST = `${API_DOREH_LIST}/groh`
 export const API_ORGANIZATION_LIST = `${API_PREFIX}/api/organ-shahrestani`
+export const API_TOWN_LIST = `${API_PREFIX}/api/address/guilan-shahr`

@@ -1,4 +1,4 @@
-import { mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
 import React, { useState } from 'react'
 import { User } from '../interfaces'
 import BaseButton from './BaseButton'
@@ -8,12 +8,13 @@ import { Loading } from './Loading'
 import { API_USER } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
-import { Field, Form, Formik } from 'formik'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
 import FormField from './FormField'
 import { useSnackbar } from 'notistack'
 import { UserType } from './UserType'
 import FormCheckRadio from './FormCheckRadio'
 import FormCheckRadioGroup from './FormCheckRadioGroup'
+import * as Yup from 'yup'
 
 export const UserTable = ({ clients, isLoading, error }) => {
 
@@ -43,6 +44,7 @@ export const UserTable = ({ clients, isLoading, error }) => {
   }
 
   const [isModalInfoActive, setIsModalInfoActive] = useState(false)
+  const [isModalPasswordActive, setIsModalPasswordActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
@@ -50,13 +52,17 @@ export const UserTable = ({ clients, isLoading, error }) => {
   const handleModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
+    setIsModalPasswordActive(false)
   }
 
   const handleCloseDetailModal = () => {
     setTeacherDetail({})
     setIsModalDetailActive(false)
   }
-
+  const passValidationSchema = Yup.object().shape({
+    password: Yup.string().required('این فیلد اجباریست'),
+    repassword: Yup.string().required('این فیلد اجباریست').oneOf([Yup.ref('password'), null], 'رمزها یکسان نیستند')
+  })
   const handleDelModalAction = async () => {
     try {
       await iaxios.delete(API_USER + "/" + selectedClient.id)
@@ -80,6 +86,39 @@ export const UserTable = ({ clients, isLoading, error }) => {
       >
         <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
       </CardBoxModal>
+      <CardBoxModal
+        title="تغییر رمز عبور"
+        buttonColor="warning"
+        buttonLabel="ویرایش"
+        isActive={isModalPasswordActive}
+        // onConfirm={handleModalAction}
+        onCancel={handleModalAction}
+      >
+        <BaseDivider />
+        <Formik onSubmit={(values) => { console.log(values) }} initialValues={{ password: '', repassword: '' }} validationSchema={passValidationSchema} >
+          {({ values }) => (
+            <Form className='text-sm whitespace-nowrap'>
+              <FormField label='نام کاربری'>
+                <Field value={selectedClient.username} />
+                <FormField label='' >
+                </FormField>
+              </FormField>
+              <FormField label='رمز عبور' >
+                <Field name='password' type='password' />
+              </FormField>
+              <ErrorMessage component='div' className='text-red-500' name='password' />
+              <BaseDivider />
+              <FormField label='تکرار رمز عبور'>
+                <Field name='repassword' type='password' />
+              </FormField>
+              <ErrorMessage component='div' name='repassword' className='text-red-500' />
+              <BaseDivider />
+              <BaseButton type="submit" color="success" label="تایید" />
+            </Form>
+          )}
+        </Formik>
+      </CardBoxModal>
+
       <CardBoxModal
         title="ویرایش و مشاهده اطلاعات"
         buttonColor="warning"
@@ -181,6 +220,13 @@ export const UserTable = ({ clients, isLoading, error }) => {
                 <td>{client?.updatedAt?.split('T')[0]}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>
+                    <BaseButton
+                      color="info"
+                      icon={mdiUpdate}
+                      onClick={() => { setIsModalPasswordActive(true); setSelectedClient(client) }}
+                      small
+
+                    />
                     <BaseButton
                       color="info"
                       icon={mdiEye}

@@ -1,11 +1,11 @@
 import { mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { User } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
-import { API_USER } from '../constants'
+import { API_USER, API_USER_PASSWORD } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
@@ -48,13 +48,18 @@ export const UserTable = ({ clients, isLoading, error }) => {
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const updatePassFormRef = useRef()
 
   const handleModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
     setIsModalPasswordActive(false)
   }
-
+  const handleUpdatePassModalAction = () => {
+    if (updatePassFormRef.current) {
+      updatePassFormRef.current.handleSubmit()
+    }
+  }
   const handleCloseDetailModal = () => {
     setTeacherDetail({})
     setIsModalDetailActive(false)
@@ -73,7 +78,20 @@ export const UserTable = ({ clients, isLoading, error }) => {
       console.log(error)
     }
   }
-
+  const handleChangePass = async (values) => {
+    try {
+      await iaxios.put(API_USER_PASSWORD, {
+        id: selectedClient.id,
+        username: selectedClient.username,
+        password: values.password,
+      })
+      handleModalAction()
+      enqueueSnackbar('عملیات به روزرسانی با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+      console.log(error)
+    }
+  }
   return (
     <>
       <CardBoxModal
@@ -91,11 +109,11 @@ export const UserTable = ({ clients, isLoading, error }) => {
         buttonColor="warning"
         buttonLabel="ویرایش"
         isActive={isModalPasswordActive}
-        // onConfirm={handleModalAction}
+        onConfirm={handleUpdatePassModalAction}
         onCancel={handleModalAction}
       >
         <BaseDivider />
-        <Formik onSubmit={(values) => { console.log(values) }} initialValues={{ password: '', repassword: '' }} validationSchema={passValidationSchema} >
+        <Formik innerRef={updatePassFormRef} onSubmit={handleChangePass} initialValues={{ password: '', repassword: '' }} validationSchema={passValidationSchema} >
           {({ values }) => (
             <Form className='text-sm whitespace-nowrap'>
               <FormField label='نام کاربری'>
@@ -113,7 +131,6 @@ export const UserTable = ({ clients, isLoading, error }) => {
               </FormField>
               <ErrorMessage component='div' name='repassword' className='text-red-500' />
               <BaseDivider />
-              <BaseButton type="submit" color="success" label="تایید" />
             </Form>
           )}
         </Formik>
@@ -148,13 +165,6 @@ export const UserTable = ({ clients, isLoading, error }) => {
                   <Field type="radio" name="active" value="false" checked={!values.active} />
                 </FormCheckRadio>
               </FormCheckRadioGroup>
-
-              {/* <FormField label='نام کارشناس'>
-                <Field name='name_karshenas' />
-              </FormField>
-              <FormField label='عنوان مسئول'>
-                <Field name='onvan_raiis' ></Field>
-              </FormField> */}
             </Form>
           )}
         </Formik>

@@ -5,7 +5,7 @@ import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
-import { API_ORGANIZATION_LIST } from '../constants'
+import { API_ORGANIZATION_LIST, API_USER } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Field, Form, Formik } from 'formik'
@@ -59,7 +59,7 @@ export const UserTable = ({ clients, isLoading, error }) => {
 
   const handleDelModalAction = async () => {
     try {
-      await iaxios.delete(API_ORGANIZATION_LIST + "/" + selectedClient.id)
+      await iaxios.delete(API_USER + "/" + selectedClient.id)
       setIsModalTrashActive(false)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {

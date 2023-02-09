@@ -11,6 +11,9 @@ import { iaxios } from '../config'
 import { Field, Form, Formik } from 'formik'
 import FormField from './FormField'
 import { useSnackbar } from 'notistack'
+import { UserType } from './UserType'
+import FormCheckRadio from './FormCheckRadio'
+import FormCheckRadioGroup from './FormCheckRadioGroup'
 
 export const UserTable = ({ clients, isLoading, error }) => {
 
@@ -86,27 +89,35 @@ export const UserTable = ({ clients, isLoading, error }) => {
         onCancel={handleModalAction}
       >
         <BaseDivider />
-        <Formik onSubmit={() => { }} initialValues={{ shahrestan: selectedClient.shahrestan, name_karshenas: selectedClient.name_karshenas, onvan_karshenas: selectedClient.onvan_karshenas, onvan_raiis: selectedClient.onvan_raiis, name_raiis: selectedClient.name_raiis }} >
-          <Form className='text-sm whitespace-nowrap'>
-            <FormField label='شهرستان'>
-              <Field name='shahrestan' />
-              <FormField label='' >
+        <Formik onSubmit={() => { }} initialValues={{ active: selectedClient.isActive === 'true' ? true : false, username: selectedClient.username, userType: selectedClient.userType }} >
+          {({ values }) => (
+            <Form className='text-sm whitespace-nowrap'>
+              <FormField label='نام کاربری'>
+                <Field name='username' />
+                <FormField label='' >
+                </FormField>
               </FormField>
-            </FormField>
-            <FormField label='نام مسئول'>
-              <Field name='name_raiis' ></Field>
-            </FormField>
-            <FormField label='عنوان کارشناس'>
-              <Field name='onvan_karshenas' />
-            </FormField>
-            <FormField label='نام کارشناس'>
-              <Field name='name_karshenas' />
-            </FormField>
-            <FormField label='عنوان مسئول'>
-              <Field name='onvan_raiis' ></Field>
-            </FormField>
-          </Form>
+              <FormField label='نوع کاربری'>
+                <UserType name='userType' label='' />
+              </FormField>
 
+              <FormCheckRadioGroup>
+                <FormCheckRadio type="radio" label="فعال" >
+                  <Field type="radio" name="active" value="true" checked={values.active} />
+                </FormCheckRadio>
+                <FormCheckRadio type="radio" label="غیرفعال">
+                  <Field type="radio" name="active" value="false" checked={!values.active} />
+                </FormCheckRadio>
+              </FormCheckRadioGroup>
+
+              {/* <FormField label='نام کارشناس'>
+                <Field name='name_karshenas' />
+              </FormField>
+              <FormField label='عنوان مسئول'>
+                <Field name='onvan_raiis' ></Field>
+              </FormField> */}
+            </Form>
+          )}
         </Formik>
       </CardBoxModal>
 

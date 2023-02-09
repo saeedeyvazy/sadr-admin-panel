@@ -1,4 +1,4 @@
-import { mdiAccount, mdiBallotOutline, mdiMail, mdiMonitorEye, mdiSearchWeb } from '@mdi/js'
+import { mdiAccountBadge, mdiMonitorEye } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
@@ -11,13 +11,12 @@ import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
 import { API_ORGANIZATION_LIST } from '../constants'
-import { Organ } from '../components/Organ'
-import { Town } from '../components/Town'
 import { useSnackbar } from 'notistack'
 import { UserTable } from '../components/UserTable'
 import { useUser } from '../hooks/useUser'
 import { UserType } from '../components/UserType'
-import { UserOffice } from '../components/USerOffice'
+import { UserOffice } from '../components/UserOffice'
+import { UserRole } from '../components/UserRole'
 
 const OfficePage = () => {
   const { data, error, isLoading } = useUser()
@@ -48,27 +47,22 @@ const OfficePage = () => {
       </Head>
 
       <SectionMain>
-        <SectionTitleLineWithButton icon={mdiBallotOutline} title="کاربران" main>
+        <SectionTitleLineWithButton icon={mdiAccountBadge} title="کاربران" main>
         </SectionTitleLineWithButton>
 
         <CardBox>
           <Formik
             initialValues={{
-              town: '',
+              username: '',
               organ: '',
               bossTitle: '',
               bossName: '',
-              onvan_karshenas: '',
-              name_karshenas: ''
+              role: ''
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
             {({ values, setFieldValue }) => (
               <Form>
-                <FormField>
-
-                </FormField>
-
                 <FormField label=' کاربری'>
                   <Field name="username" placeholder="نام کاربری" />
                   <Field name="password" placeholder="رمز عبور" type='password' />
@@ -77,6 +71,9 @@ const OfficePage = () => {
                 <FormField label=''>
                   <UserType name='userType' label='نوع کاربری' />
                   <UserOffice name='userOffice' label='موسسه' />
+                </FormField>
+                <FormField label='نقش های کاربر'>
+                  <UserRole name='role' signal={() => { }} />
                 </FormField>
                 <BaseButton type="submit" color="success" label="ایجاد کاربر جدید" />
                 <BaseDivider />

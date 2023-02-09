@@ -14,17 +14,17 @@ import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import CardBoxWidget from '../components/CardBoxWidget'
-import { useSampleClients, useSampleTransactions } from '../hooks/sampleData'
+import { useSampleClients } from '../hooks/sampleData'
 import CardBox from '../components/CardBox'
 import { sampleChartData } from '../components/ChartLineSample/config'
 import ChartLineSample from '../components/ChartLineSample'
 import { getPageTitle } from '../config'
 import { TeacherTable } from '../components/TeacherTable'
-import { API_GENERAL_TEACHER_SEARCH } from '../constants'
+import { useTeacher } from '../hooks/useTeacher'
 
 const Dashboard = () => {
   const { clients } = useSampleClients()
-  const { transactions } = useSampleTransactions()
+  const { data, error, isLoading } = useTeacher()
 
   const clientsListed = clients.slice(0, 4)
 
@@ -75,7 +75,7 @@ const Dashboard = () => {
             label="دوره ها"
           />
           <CardBoxWidget
-            trendLabel="Overflow"
+            trendLabel="16%"
             trendType="up"
             trendColor="success"
             icon={mdiChartTimelineVariant}
@@ -86,22 +86,6 @@ const Dashboard = () => {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {/* <div className="flex flex-col justify-between">
-            {transactions.map((transaction: Transaction) => (
-              <CardBoxTransaction key={transaction.id} transaction={transaction} />
-            ))}
-          </div> */}
-          {/* <div className="flex flex-col justify-between">
-            {clientsListed.map((client: Client) => (
-              <CardBoxClient key={client.id} client={client} />
-            ))}
-          </div> */}
-        </div>
-
-        {/* <div className="my-6">
-          <SectionBannerStarOnGitHub />
-        </div> */}
 
         <SectionTitleLineWithButton icon={mdiChartPie} title="آمارها">
           <BaseButton icon={mdiReload} color="whiteDark" onClick={fillChartData} />
@@ -111,12 +95,8 @@ const Dashboard = () => {
 
         <SectionTitleLineWithButton icon={mdiAccountMultiple} title="اساتید" />
 
-        {/* <NotificationBar color="info" icon={mdiMonitorCellphone}>
-          <b>Responsive table.</b> Collapses on mobile
-        </NotificationBar> */}
-
         <CardBox hasTable>
-          {/* <TeacherTable url={API_GENERAL_TEACHER_SEARCH} /> */}
+          <TeacherTable clients={data} isLoading={isLoading} error={error} />
         </CardBox>
       </SectionMain>
     </>

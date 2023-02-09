@@ -10,7 +10,7 @@ import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
-import { API_ORGANIZATION_LIST } from '../constants'
+import { API_ORGANIZATION_LIST, API_USER } from '../constants'
 import { useSnackbar } from 'notistack'
 import { UserTable } from '../components/UserTable'
 import { useUser } from '../hooks/useUser'
@@ -25,14 +25,15 @@ const OfficePage = () => {
 
   async function handleSubmit(values) {
     try {
+      console.log(values)
       setSearchLoading(true)
-      await iaxios.post(API_ORGANIZATION_LIST, {
-        id_organ: values.organ,
-        shahrestan: values.town,
-        onvan_raiis: values.bossTitle,
-        name_raiis: values.bossName,
-        onvan_karshenas: values.onvan_karshenas,
-        name_karshenas: values.name_karshenas
+
+      await iaxios.post(API_USER, {
+        username: values.username,
+        password: values.password,
+        userType: values.userType,
+        typeCode: values.userOffice,
+        roles: values.roles.map(role => ({ id: role })),
       })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
@@ -54,10 +55,9 @@ const OfficePage = () => {
           <Formik
             initialValues={{
               username: '',
-              organ: '',
-              bossTitle: '',
-              bossName: '',
-              role: ''
+              userType: '',
+              userOffice: '',
+              roles: ''
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
@@ -73,7 +73,7 @@ const OfficePage = () => {
                   <UserOffice name='userOffice' label='موسسه' />
                 </FormField>
                 <FormField label='نقش های کاربر'>
-                  <UserRole name='role' signal={() => { }} />
+                  <UserRole name='roles' signal={(roleList) => setFieldValue('roles', roleList.map(role => role.value))} />
                 </FormField>
                 <BaseButton type="submit" color="success" label="ایجاد کاربر جدید" />
                 <BaseDivider />

@@ -48,9 +48,7 @@ const OfficePage = () => {
       </Head>
 
       <SectionMain>
-        <SectionTitleLineWithButton icon={mdiAccountBadge} title="کاربران" main>
-        </SectionTitleLineWithButton>
-
+        <SectionTitleLineWithButton icon={mdiAccountBadge} title="کاربران" main />
         <CardBox>
           <Formik
             initialValues={{
@@ -78,12 +76,12 @@ const OfficePage = () => {
                 <BaseButton type="submit" color="success" label="ایجاد کاربر جدید" />
                 <BaseDivider />
                 <SectionTitleLineWithButton icon={mdiMonitorEye} title="اطلاعات کاربران" main />
-                <CardBox hasTable>
-                  <UserTable clients={data} isLoading={isLoading} error={error} />
-                </CardBox>
               </Form>
             )}
           </Formik>
+        </CardBox>
+        <CardBox hasTable>
+          <UserTable clients={data} isLoading={isLoading} error={error} />
         </CardBox>
       </SectionMain>
     </>

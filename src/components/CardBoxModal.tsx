@@ -34,7 +34,7 @@ const CardBoxModal = ({
 
   const footer = (
     <BaseButtons className='justify-around'>
-      {!!onConfirm && <BaseButton label={buttonLabel} color={buttonColor} onClick={onConfirm} />}
+      {!!onConfirm && <BaseButton type='submit' label={buttonLabel} color={buttonColor} onClick={onConfirm} />}
       {!!onCancel && <BaseButton label="انصراف" color={buttonColor} outline onClick={onCancel} />}
     </BaseButtons>
   )

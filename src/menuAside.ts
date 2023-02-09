@@ -11,6 +11,11 @@ import {
   mdiResponsive,
   mdiPalette,
   mdiVuejs,
+  mdiReproduction,
+  mdiOfficeBuilding,
+  mdiInformation,
+  mdiFileDocumentAlert,
+  mdiCardSearch,
 } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
 
@@ -23,17 +28,17 @@ const menuAside: MenuAsideItem[] = [
   {
     href: '/forms',
     label: 'جستجوی افراد',
-    icon: mdiTable,
+    icon: mdiCardSearch,
   },
   {
     href: '/tables',
     label: 'آخرین دوره ها',
-    icon: mdiSquareEditOutline,
+    icon: mdiTelevisionGuide,
   },
   {
     href: '/learning',
     label: 'تعریف دوره ها',
-    icon: mdiTelevisionGuide,
+    icon: mdiSquareEditOutline,
   },
   {
     label: 'کاربران',
@@ -50,9 +55,10 @@ const menuAside: MenuAsideItem[] = [
     ],
   },
   {
-    href: '/',
+    href: '',
     label: 'تایید مدارک',
-    icon: mdiPalette,
+    icon: mdiFileDocumentAlert,
+    target: '_blank',
   },
   {
     href: '/profile',
@@ -60,29 +66,32 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiAccountCircle,
   },
   {
-    href: '/login',
+    href: '',
     label: 'اطلاعات ثبت شده',
     icon: mdiLock,
-  },
-  {
-    href: '/error',
-    label: 'گزارش کلاسها',
-    icon: mdiAlertCircle,
-  },
-  {
-    label: 'بانکهای اطلاعات',
-    icon: mdiViewList,
-  },
-  {
-    href: 'https://github.com/justboil/admin-one-react-tailwind',
-    label: 'موسسات قرآنی',
-    icon: mdiGithub,
     target: '_blank',
   },
   {
-    href: 'https://github.com/justboil/admin-one-vue-tailwind',
+    href: '',
+    label: 'گزارش کلاسها',
+    icon: mdiTable,
+    target: '_blank',
+  },
+  {
+    label: 'بانکهای اطلاعات',
+    icon: mdiInformation,
+    target: '_blank',
+  },
+  {
+    href: '',
+    label: 'موسسات قرآنی',
+    icon: mdiOfficeBuilding,
+    target: '_blank',
+  },
+  {
+    href: '',
     label: 'گزارشات',
-    icon: mdiVuejs,
+    icon: mdiTable,
     target: '_blank',
   },
 ]

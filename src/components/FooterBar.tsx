@@ -11,22 +11,18 @@ export default function FooterBar({ children }: Props) {
 
   return (
     <footer className={`py-2 px-6 ${containerMaxW}`}>
-      <div className="block md:flex items-center justify-between">
-        <div className="text-center md:text-right mb-6 md:mb-0">
+      <div className="block md:flex items-center justify-between md:justify-center">
+        <div className="text-center mb-6 md:mb-0">
           <b>
-            {year}&copy;{` `}
             <a href="" rel="noreferrer" target="_blank">
-              Developed by m.eslahi & s.eyvazy
+              کلیه حقوق مادی و معنوی این سامانه متعلق به موسسه تسنیم قرآن و عترت گیلان می باشد
             </a>
+            &copy;{` `}{year}
           </b>
           {` `}
           {children}
         </div>
-        <div className="md:py-2">
-          <a href="https://justboil.me" rel="noreferrer" target="_blank">
-            <JustboilLogo className="w-auto h-8 md:h-6 mx-auto" />
-          </a>
-        </div>
+
       </div>
     </footer>
   )

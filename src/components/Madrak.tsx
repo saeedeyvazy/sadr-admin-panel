@@ -10,7 +10,7 @@ export function Madrak({ setFieldValue }) {
             <Field onChange={(e) => { setFieldValue('id_organ', e.target.childNodes[e.target.selectedIndex].getAttribute('organId')); setFieldValue('newMadrak', e.target.options[e.target.selectedIndex].text); setFieldValue('madrak', e.target.value) }} style={{ textAlign: 'center' }} name="madrak" id="madrak" component="select">
                 <option value='0'>هیچکدام</option>
                 {
-                    !loading && response?.map((item) => <option value={item.id} organId={item.id_organ} key={item.id}>{item.onvan_dore}</option>)
+                    !loading && response?.map((item) => <option value={item.id} /*organId={item.id_organ}*/ key={item.id}>{item.onvan_dore}</option>)
                 }
             </Field>
         </FormField>

@@ -12,7 +12,7 @@ import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton
 import { getPageTitle, iaxios } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_MADRAK, API_ORGAN_LIST, API_SPECIFIC_TEACHER_SEARCH } from '../constants'
-import { Organ } from '../components/Organ'
+import { Organ } from '../components/Organ/Organ'
 import { DoreSelect } from '../components/DoreSelect'
 import { Position } from '../components/Position'
 import { useSnackbar } from 'notistack'

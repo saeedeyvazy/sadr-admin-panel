@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import styleReducer from './styleSlice'
 import mainReducer from './mainSlice'
-
+import organReducer from '../features/organ/organ.slice'
 export const store = configureStore({
   reducer: {
     style: styleReducer,
     main: mainReducer,
+    organ: organReducer
   },
 })
 

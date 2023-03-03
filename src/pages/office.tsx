@@ -13,7 +13,7 @@ import { getPageTitle, iaxios } from '../config'
 import { API_ORGANIZATION_LIST } from '../constants'
 import { OrganizationTable } from '../components/OrganizationTable'
 import { useOrgan } from '../hooks/useOrgan'
-import { Organ } from '../components/Organ'
+import { Organ } from '../components/Organ/Organ'
 import { Town } from '../components/Town'
 import { useSnackbar } from 'notistack'
 

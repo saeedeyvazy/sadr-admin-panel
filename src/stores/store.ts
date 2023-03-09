@@ -4,13 +4,16 @@ import mainReducer from './mainSlice'
 import organReducer from '../features/organ/organ.slice'
 import documentSlice from '../features/document/document.slice'
 import bankSlice from '../features/bank/bank.slice'
+import subbankSlice from '../features/subbank/subbank.slice'
+
 export const store = configureStore({
   reducer: {
     style: styleReducer,
     main: mainReducer,
     organ: organReducer,
     document: documentSlice,
-    bank: bankSlice
+    bank: bankSlice,
+    subbank: subbankSlice
   },
 })
 

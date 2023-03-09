@@ -11,6 +11,7 @@ import { API_GENERAL_TEACHER_SEARCH } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Bank } from './Bank/index'
+import { SubBank } from './SubBank/index'
 export const TeacherTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -122,6 +123,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
           </table>
         </div>
         <Bank />
+        <SubBank />
         <BaseDivider />
         <BaseDivider />
         <span className='font-bold text-blue-800'>سابقه تدریس</span>

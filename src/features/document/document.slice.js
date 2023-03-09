@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { callGetDocStatusListApi } from './document.api'
+import { callGetDocStatusListApi, callGetDocumentList } from './document.api'
 
 export const getDocStatusList = createAsyncThunk(
     'document/document-status',
@@ -13,7 +13,15 @@ export const selectDoc = createAsyncThunk(
     'document/select-doc-status', (docStatus) => {
         return docStatus
     }
+)//callGetDocumentList
+
+export const getDocumentList = createAsyncThunk(
+    'document/doc-list', async (status) => {
+        const response = await callGetDocumentList(status)
+        return response
+    }
 )
+
 // export const createorgan = createAsyncThunk(
 //     'organ/add-organ',
 //     async (organInfo) => {
@@ -33,6 +41,7 @@ const initialState = {
     status: 'idle',
     docStatusList: [],
     selectedDocStatus: 0,
+    docList: []
 }
 
 export const documentSlice = createSlice({
@@ -59,11 +68,21 @@ export const documentSlice = createSlice({
             .addCase(selectDoc.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.selectedDocStatus = action.payload
+            }).addCase(getDocumentList.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(getDocumentList.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(getDocumentList.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.docList = action.payload
             })
     },
 })
 
 export const docStatusList = (state) => state?.document?.docStatusList
+export const docList = (state) => state?.document?.docList
 export const isLoading = (state) => state?.document?.status === 'loading'
 
 export default documentSlice.reducer

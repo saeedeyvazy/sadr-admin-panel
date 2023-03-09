@@ -1,6 +1,6 @@
-import { mdiCardAccountDetails, mdiDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
-import { Teacher } from '../../interfaces'
+import { Document, Teacher } from '../../interfaces'
 import BaseButton from '../BaseButton'
 import BaseButtons from '../BaseButtons'
 import CardBoxModal from '../CardBoxModal'
@@ -17,19 +17,17 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState({})
 
-  const [selectedClient, setSelectedClient] = useState<Teacher>({
+  const [selectedClient, setSelectedDocument] = useState<Document>({
     id: 0,
-    fname: '',
-    lname: '',
-    jensiyatName: '',
-    codemelli: '',
-    mob: '',
-    taholName: '',
-    address: '',
-    pic: '',
-    mahalsodor: '',
-    ttmoalem: '',
-    tkmelli: ''
+    saat: "",
+    moadel: "",
+    sal_akhz: "",
+    codemelli: "",
+    vaziat: 0,
+    tozih: "",
+    onvan_dore: "",
+    pic: "",
+    mahal_dore: "",
   })
 
   const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
@@ -86,8 +84,6 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
       >
         <div className='flex justify-around items-center'>
           <img src={`data:image/jpeg;base64,${selectedClient.pic}`} alt='' className='w-14 h-14' />
-          <img src={`data:image/jpeg;base64,${selectedClient.tkmelli}`} alt='' className='w-14 h-14' />
-          <img src={`data:image/jpeg;base64,${selectedClient.ttmoalem}`} alt='' className='w-14 h-14' />
         </div>
       </CardBoxModal>
       <CardBoxModal
@@ -99,54 +95,6 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
         onCancel={handleCloseDetailModal}
         innerModalClassName='md:w-11/12'
       >
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>بانکهای اطلاعات</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>عنوان</th>
-                <th>زیر عنوان</th>
-                <th>کد</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail?.bankhaList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.onvan}</td>
-                  <td>{item.zir_onvan}</td>
-                  <td>{item.id}</td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>سابقه تدریس</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>عنوان</th>
-                <th>عنوان دوره</th>
-                <th>نام دوره</th>
-                <th>تاریخ</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail?.sabeqeList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.onvan}</td>
-                  <td>{item.onvan_dore}</td>
-                  <td>{item.nam}</td>
-                  <td>{`${item.tshs}/${item.tshm}/${item.tshr}`}</td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
         <BaseDivider />
         <BaseDivider />
         <span className='font-bold text-blue-800'>مدارک تخصصی</span>
@@ -178,67 +126,12 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
             </tbody>
           </table>
         </div>
-
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>وضعیت شغلی</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>نوع شغل</th>
-                <th>نوع قرارداد</th>
-                <th>محل کار</th>
-                <th>تلفن</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail?.eshteghalList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.noshoghl}</td>
-                  <td>{item.nogharardad}</td>
-                  <td>{item.mahalkar}</td>
-                  <td>{item.tell}</td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>وضعیت تحصیلی</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>مقطع</th>
-                <th>رشته</th>
-                <th>معدل</th>
-                <th>سال اخذ</th>
-                <th>تصویر</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail?.tahsiliList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.maghta}</td>
-                  <td>{item.reshte}</td>
-                  <td>{item.moadel}</td>
-                  <td>{item.sal_akhz}</td>
-                  <td>
-                    {item.tasvir ? <img src={`data:image/jpeg;base64,${item.tasvir}`} alt='' className='w-24 h-24' /> : 'تصویر ندارد'}
-                  </td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-
       </CardBoxModal>
 
       <CardBoxModal
-        title="حذف فرد انتخاب شده"
+        title="عدم تایید مدرک"
         buttonColor="danger"
         buttonLabel="تایید"
         isActive={isModalTrashActive}
@@ -252,38 +145,36 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
         <table>
           <thead>
             <tr className='[&>*]:text-right'>
-              <th />
+              <th>نام ارگان</th>
+              <th>عنوان دوره</th>
               <th>نام و نام خانوادگی</th>
               <th>کد ملی</th>
-              <th>جنسیت</th>
-              <th>محل صدور</th>
-              <th>شماره همراه</th>
+              <th>تصویر فرد</th>
               <th />
             </tr>
           </thead>
           <tbody>
-            {clientsPaginated.map((client: Teacher) => (
+            {clientsPaginated.map((client: Document) => (
               <tr key={client.id} className='[&>*]:text-right'>
-                <td className="border-b-0 lg:w-6 before:hidden">
-                  <UserAvatar username={''} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+                <td data-label="نام و نام خانوادگی">{``}</td>
+                <td data-label="کد ملی" className='text-sm'>{client.onvan_dore}</td>
+                <td data-label="جنسیت">{ }</td>
+                <td data-label="محل صدور" className="lg:w-32">{client.codemelli}</td>
+                <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">
+                  <img src={`data:image/jpeg;base64,${client.pic}`} alt='' className='w-14 h-14' />
                 </td>
-                <td data-label="نام و نام خانوادگی">{`${client.fname} ${client.lname}`}</td>
-                <td data-label="کد ملی" className='text-sm'>{client.codemelli}</td>
-                <td data-label="جنسیت">{client.jensiyatName}</td>
-                <td data-label="محل صدور" className="lg:w-32">{client.mahalsodor}</td>
-                <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">{client.mob}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>
                     <BaseButton
                       color="info"
                       icon={mdiEye}
-                      onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
+                      onClick={() => { setIsModalInfoActive(true); setSelectedDocument(client) }}
                       small
                     />
                     <BaseButton
                       color="danger"
                       icon={mdiTrashCan}
-                      onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
+                      onClick={() => { setIsModalTrashActive(true); setSelectedDocument(client) }}
                       small
                     />
                     <BaseButton

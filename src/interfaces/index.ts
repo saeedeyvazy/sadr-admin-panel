@@ -84,6 +84,22 @@ export type Teacher = {
   ttmoalem: string
 }
 
+
+export type Document = {
+  id: number
+  saat: string
+  moadel: string
+  sal_akhz: string
+  codemelli: string
+  vaziat: number
+  tozih: string
+  onvan_dore: string
+  pic: string,
+  mahal_dore: string,
+
+}
+
+
 export type Organization = {
   id_organ: number
   shahrestan: string

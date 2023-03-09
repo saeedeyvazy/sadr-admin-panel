@@ -55,10 +55,10 @@ const menuAside: MenuAsideItem[] = [
     ],
   },
   {
-    href: '',
+    href: '/document',
     label: 'تایید مدارک',
     icon: mdiFileDocumentAlert,
-    target: '_blank',
+    // target: '_blank',
   },
   {
     href: '/profile',

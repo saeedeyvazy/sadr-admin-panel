@@ -15,6 +15,7 @@ export const currentPageTitleMap: Record<string, string> = {
     "Dashboard": "داشبورد",
     "Login": "پنل مدیریت",
     "Forms": "جستجوی افراد",
+    "Document": "جستجوی مدارک",
     "Learning": 'تعریف دوره',
     "Office": 'ادارات شهرستان',
     "User": "کاربران"

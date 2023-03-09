@@ -10,6 +10,7 @@ export const API_DOREH_LIST = `${API_PREFIX}/api/doreha-amozeshi`
 export const API_DOC_STATUS_LIST = `${API_PREFIX}/api/tayid-madrak/vaziat`
 export const API_POSITION_LIST = `${API_PREFIX}/api/doreha-amozeshi/semat`
 export const API_MADRAK_LIST = `${API_PREFIX}/api/doreha?page=0&size=1000`
+export const API_UPPDATE_DOCUNENT = `${API_PREFIX}/api/tayid-madrak`
 export const API_DOC_LIST = `${API_PREFIX}/api/tayid-madrak?page=0&size=10&vaziat=STATUS`
 export const API_MADRAK = `${API_PREFIX}/api/doreha`
 export const API_GROUP_LIST = `${API_DOREH_LIST}/groh`

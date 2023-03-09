@@ -84,5 +84,6 @@ export const documentSlice = createSlice({
 export const docStatusList = (state) => state?.document?.docStatusList
 export const docList = (state) => state?.document?.docList
 export const isLoading = (state) => state?.document?.status === 'loading'
+export const selectedDocStatusId = (state) => state?.document?.selectedDocStatusId
 
 export default documentSlice.reducer

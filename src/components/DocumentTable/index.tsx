@@ -1,15 +1,15 @@
-import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiEye } from '@mdi/js'
 import React, { useState } from 'react'
 import { Document, Teacher } from '../../interfaces'
 import BaseButton from '../BaseButton'
 import BaseButtons from '../BaseButtons'
 import CardBoxModal from '../CardBoxModal'
-import UserAvatar from '../UserAvatar'
 import { Loading } from '../Loading'
 import axios from 'axios'
-import { API_GENERAL_TEACHER_SEARCH } from '../../constants'
+import { API_GENERAL_TEACHER_SEARCH, API_UPPDATE_DOCUNENT } from '../../constants'
 import BaseDivider from '../BaseDivider'
 import { iaxios } from '../../config'
+import { useSnackbar } from 'notistack'
 
 export const DocumentTable = ({ clients, isLoading, error }) => {
 
@@ -54,20 +54,32 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
 
   const handleDelModalAction = async () => {
     try {
-      await iaxios.delete(API_GENERAL_TEACHER_SEARCH + "/" + selectedClient.id)
+      confirmDoc(selectedClient.id, 3)
       setIsModalTrashActive(false)
     } catch (error) {
       alert(error)
       console.log(error)
     }
   }
-
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   async function fetchDetail(id) {
     try {
       const response = await axios.get(API_GENERAL_TEACHER_SEARCH + "/" + id)
-      console.log(response)
       setTeacherDetail(response.data.data)
     } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function confirmDoc(id, status) {
+    try {
+      await iaxios.put(API_UPPDATE_DOCUNENT, {
+        id,
+        vaziat: status
+      })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
       console.log(error)
     }
   }
@@ -168,20 +180,20 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
                     <BaseButton
                       color="info"
                       icon={mdiEye}
-                      onClick={() => { setIsModalInfoActive(true); setSelectedDocument(client) }}
+                      onClick={() => { setIsModalDetailActive(true); setSelectedDocument(client); fetchDetail(client.id) }}
                       small
                     />
                     <BaseButton
                       color="danger"
-                      icon={mdiTrashCan}
                       onClick={() => { setIsModalTrashActive(true); setSelectedDocument(client) }}
                       small
+                      label='عدم تایید'
                     />
                     <BaseButton
                       color="info"
-                      icon={mdiCardAccountDetails}
+                      label='تایید'
                       className='mr-3'
-                      onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
+                      onClick={() => { confirmDoc(client.id, 1) }}
                       small
                     />
                   </BaseButtons>

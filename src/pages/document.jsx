@@ -47,7 +47,6 @@ const FormsPage = () => {
                 <BaseDivider />
                 <BaseButton type="submit" color="info" label="جستجو" />
                 <BaseDivider />
-                <BaseDivider />
 
                 <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 

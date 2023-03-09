@@ -25,7 +25,6 @@ const OfficePage = () => {
 
   async function handleSubmit(values) {
     try {
-      console.log(values)
       setSearchLoading(true)
 
       await iaxios.post(API_USER, {

@@ -58,7 +58,6 @@ const menuAside: MenuAsideItem[] = [
     href: '/document',
     label: 'تایید مدارک',
     icon: mdiFileDocumentAlert,
-    // target: '_blank',
   },
   {
     href: '/profile',
@@ -66,10 +65,9 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiAccountCircle,
   },
   {
-    href: '',
+    href: '/forms',
     label: 'اطلاعات ثبت شده',
     icon: mdiLock,
-    target: '_blank',
   },
   {
     href: '',

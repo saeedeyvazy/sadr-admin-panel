@@ -8,6 +8,12 @@ export const getDocStatusList = createAsyncThunk(
         return response
     }
 )
+
+export const selectDoc = createAsyncThunk(
+    'document/select-doc-status', (docStatus) => {
+        return docStatus
+    }
+)
 // export const createorgan = createAsyncThunk(
 //     'organ/add-organ',
 //     async (organInfo) => {
@@ -26,6 +32,7 @@ export const getDocStatusList = createAsyncThunk(
 const initialState = {
     status: 'idle',
     docStatusList: [],
+    selectedDocStatus: 0,
 }
 
 export const documentSlice = createSlice({
@@ -43,6 +50,15 @@ export const documentSlice = createSlice({
             .addCase(getDocStatusList.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.docStatusList = action.payload
+            }).addCase(selectDoc.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(selectDoc.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(selectDoc.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.selectedDocStatus = action.payload
             })
     },
 })

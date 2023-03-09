@@ -13,7 +13,7 @@ import { getPageTitle, iaxios } from '../config'
 import { DocumentTable } from '../components/DocumentTable'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
-import { DocStatus } from '../components/DocStatus'
+import { DocStatus } from '../components/DocStatus/index'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useTeacher()
@@ -56,33 +56,34 @@ const FormsPage = () => {
               fname: '',
               lname: '',
               nationalCode: '',
-              mobile: '',
+              status: '',
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
-            <Form>
-              <DocStatus />
-              <FormField label="آیتمهای جستجو" icons={[mdiAccount, mdiMail]}>
-                <Field name="fname" placeholder="نام" />
-                <Field name="lname" placeholder="نام خانوادگی" />
-              </FormField>
-              <FormField>
-                <Field name="nationalCode" placeholder="کد ملی" />
-                <Field name="mobile" placeholder="شماره همراه" />
-              </FormField>
-              <BaseButton type="submit" color="info" label="جستجو" />
-              <BaseDivider />
-              <BaseDivider />
+            {({ values, setFieldValue }) => (
+              <Form>
+                <DocStatus onChange={setFieldValue} />
+                <FormField label="آیتمهای جستجو" icons={[mdiAccount, mdiMail]}>
+                  <Field name="fname" placeholder="نام" />
+                  <Field name="lname" placeholder="نام خانوادگی" />
+                </FormField>
+                <FormField>
+                  <Field name="nationalCode" placeholder="کد ملی" />
+                  <Field name="mobile" placeholder="شماره همراه" />
+                </FormField>
+                <BaseButton type="submit" color="info" label="جستجو" />
+                <BaseDivider />
+                <BaseDivider />
 
-              <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
+                <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
-              {/* <CardBox hasTable>
+                {/* <CardBox hasTable>
                 {!specificSearch ? <DocumentTable clients={data} isLoading={isLoading} error={error} />
                   :
                   <DocumentTable clients={searchResult} isLoading={searchLoading} error={error} />
                 }
               </CardBox> */}
-            </Form>
+              </Form>)}
           </Formik>
         </CardBox>
       </SectionMain>

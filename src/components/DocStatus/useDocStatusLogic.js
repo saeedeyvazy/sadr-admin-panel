@@ -2,6 +2,7 @@ import {
 	getDocStatusList,
 	docStatusList,
 	isLoading,
+	selectDoc,
 } from '../../features/document/document.slice'
 import { useSelector, useDispatch } from 'react-redux'
 import { useEffect } from 'react'

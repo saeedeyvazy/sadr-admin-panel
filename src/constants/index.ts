@@ -8,6 +8,7 @@ export const API_SPECIFIC_TEACHER_SEARCH = `${API_PREFIX}/api/teacher/search`
 export const API_ORGAN_LIST = `${API_PREFIX}/api/organha`
 export const API_DOREH_LIST = `${API_PREFIX}/api/doreha-amozeshi`
 export const API_DOC_STATUS_LIST = `${API_PREFIX}/api/tayid-madrak/vaziat`
+export const API_BANK_LIST = `${API_PREFIX}/api/bankha?page=0&size=20`
 export const API_POSITION_LIST = `${API_PREFIX}/api/doreha-amozeshi/semat`
 export const API_MADRAK_LIST = `${API_PREFIX}/api/doreha?page=0&size=1000`
 export const API_UPPDATE_DOCUNENT = `${API_PREFIX}/api/tayid-madrak`

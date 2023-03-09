@@ -15,7 +15,7 @@ import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 
 const FormsPage = () => {
-  const { data, error, isLoading } = useTeacher()
+  const { data, error, isLoading, totalTeacherLength } = useTeacher()
   const [specificSearch, setSpecificSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
@@ -46,7 +46,8 @@ const FormsPage = () => {
       </Head>
 
       <SectionMain>
-        <SectionTitleLineWithButton icon={mdiBallotOutline} title="جستجوی افراد" main>
+
+        <SectionTitleLineWithButton icon={null} title="جستجوی افراد" main>
         </SectionTitleLineWithButton>
 
         <CardBox>
@@ -71,8 +72,10 @@ const FormsPage = () => {
               <BaseButton type="submit" color="info" label="جستجو" />
               <BaseDivider />
               <BaseDivider />
-
-              <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
+              <div className='flex items-center justify-between'>
+                <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
+                <SectionTitleLineWithButton icon={null} title={`تعداد کل ${totalTeacherLength} نفر`} />
+              </div>
 
               <CardBox hasTable>
                 {!specificSearch ? <TeacherTable clients={data} isLoading={isLoading} error={error} />

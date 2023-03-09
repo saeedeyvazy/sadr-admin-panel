@@ -5,6 +5,7 @@ import { API_GENERAL_TEACHER_SEARCH } from "../constants"
 export function useTeacher() {
     const [data, setData] = useState([{}])
     const [error, setError] = useState("")
+    const [totalTeacherLength, setTotalTeacherLength] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
@@ -12,7 +13,7 @@ export function useTeacher() {
             try {
                 setIsLoading(true)
                 const response = await iaxios.get(API_GENERAL_TEACHER_SEARCH, { params: { page: 0, size: 5 } })
-                console.log(response.data)
+                setTotalTeacherLength(response.data.data.totalElements)
                 setData(response.data.data.content)
                 setIsLoading(false)
             } catch (error) {
@@ -23,5 +24,5 @@ export function useTeacher() {
         }
         fetchSampleTeacherList()
     }, [])
-    return { data, error, isLoading }
+    return { data, error, isLoading, totalTeacherLength }
 }

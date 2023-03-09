@@ -67,7 +67,6 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
   async function fetchDetail(id) {
     try {
       const response = await axios.get(API_GENERAL_TEACHER_SEARCH + "/" + id)
-      console.log(response)
       setTeacherDetail(response.data.data)
     } catch (error) {
       console.log(error)

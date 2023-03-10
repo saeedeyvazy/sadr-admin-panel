@@ -31,7 +31,7 @@ const OfficePage = () => {
       console.log({ jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
       await iaxios.post(API_SUB_BANK_LIST, { jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => { window.location.reload() }, 100000)
+      setTimeout(() => { window.location.reload() }, 1000)
     } catch (error) {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }

@@ -5,7 +5,7 @@ import BaseButton from '../BaseButton'
 import BaseButtons from '../BaseButtons'
 import CardBoxModal from '../CardBoxModal'
 import { Loading } from '../Loading'
-import { API_USER, API_USER_PASSWORD } from '../../constants'
+import { API_SUB_BANK_LIST, API_USER_PASSWORD } from '../../constants'
 import BaseDivider from '../BaseDivider'
 import { iaxios } from '../../config'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
@@ -70,9 +70,10 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
   })
   const handleDelModalAction = async () => {
     try {
-      await iaxios.delete(API_USER + "/" + selectedClient.id)
+      await iaxios.delete(API_SUB_BANK_LIST + "/" + selectedClient.id)
       setIsModalTrashActive(false)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+      setTimeout(() => { window.location.reload() }, 1000)
     } catch (error) {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
       console.log(error)
@@ -95,7 +96,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
   return (
     <>
       <CardBoxModal
-        title="حذف اداره"
+        title="حذف رکورد انتخاب شده"
         buttonColor="danger"
         buttonLabel="تایید"
         isActive={isModalTrashActive}

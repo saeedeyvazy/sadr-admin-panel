@@ -168,12 +168,12 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
           <tbody>
             {clientsPaginated.map((client: Document) => (
               <tr key={client.id} className='[&>*]:text-right'>
-                <td data-label="نام و نام خانوادگی">{``}</td>
+                <td data-label="نام و نام خانوادگی">{client.name_organ}</td>
                 <td data-label="کد ملی" className='text-sm'>{client.onvan_dore}</td>
-                <td data-label="جنسیت">{ }</td>
+                <td data-label="جنسیت">{`${client.fname} ${client.lname}`}</td>
                 <td data-label="محل صدور" className="lg:w-32">{client.codemelli}</td>
                 <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">
-                  <img src={`data:image/jpeg;base64,${client.pic}`} alt='' className='w-14 h-14' />
+                  <img src={`data:image/jpeg;base64,${client.codemelli_pic}`} alt='' className='w-14 h-14' />
                 </td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>

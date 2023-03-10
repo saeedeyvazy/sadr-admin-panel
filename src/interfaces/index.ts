@@ -95,7 +95,12 @@ export type Document = {
   tozih: string
   onvan_dore: string
   pic: string,
-  mahal_dore: string,
+  mahal_dore: string
+
+  fname: string
+  lname: string
+  name_organ: string
+  codemelli_pic: string
 
 }
 

@@ -13,12 +13,19 @@ export const selectBank = createAsyncThunk(
     'bank/select-bank', (bank) => {
         return bank
     }
-)//callGetDocumentList
+)
+
+export const selectBankName = createAsyncThunk(
+    'bank/select-bank-name', (bankName) => {
+        return bankName
+    }
+)
 
 const initialState = {
     status: 'idle',
     bankList: [],
-    selectedBank: ''
+    selectedBank: '',
+    selectedBankName: ''
 }
 
 export const bankSlice = createSlice({
@@ -45,6 +52,15 @@ export const bankSlice = createSlice({
             .addCase(selectBank.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.selectedBank = action.payload
+            }).addCase(selectBankName.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(selectBankName.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(selectBankName.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.selectedBankName = action.payload
             })
     },
 })
@@ -52,5 +68,5 @@ export const bankSlice = createSlice({
 export const bankList = (state) => state?.bank?.bankList
 export const selectedBank = (state) => state?.bank?.selectedBank
 export const isLoading = (state) => state?.bank?.status === 'loading'
-
+export const selectedBankName = (state) => state?.bank?.selectedBankName
 export default bankSlice.reducer

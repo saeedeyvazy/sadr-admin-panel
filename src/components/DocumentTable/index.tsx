@@ -161,7 +161,7 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
               <th>عنوان دوره</th>
               <th>نام و نام خانوادگی</th>
               <th>کد ملی</th>
-              <th>تصویر فرد</th>
+              <th>تصویر</th>
               <th />
             </tr>
           </thead>
@@ -173,7 +173,7 @@ export const DocumentTable = ({ clients, isLoading, error }) => {
                 <td data-label="جنسیت">{`${client.fname} ${client.lname}`}</td>
                 <td data-label="محل صدور" className="lg:w-32">{client.codemelli}</td>
                 <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">
-                  <img src={`data:image/jpeg;base64,${client.codemelli_pic}`} alt='' className='w-14 h-14' />
+                  {client.codemelli_pic ? <img src={`data:image/jpeg;base64,${client.codemelli_pic}`} alt='' className='w-14 h-14' /> : 'ندارد'}
                 </td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>

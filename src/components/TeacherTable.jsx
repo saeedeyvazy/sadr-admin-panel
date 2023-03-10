@@ -65,6 +65,21 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
       setIsModalDetailActive(false)
     }
   }
+
+  const deleteBank = async (bankId) => {
+    try {
+      await iaxios.delete(API_REPAIR + `/${bankId}`)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+      setTimeout(() => window.location.reload(), 1000)
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+    finally {
+      setIsModalInfoActive(false)
+      setIsModalDetailActive(false)
+    }
+  }
+
   const handleModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
@@ -129,6 +144,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
                 <th>عنوان</th>
                 <th>زیر عنوان</th>
                 <th>کد</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -137,6 +153,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
                   <td>{item.onvan}</td>
                   <td>{item.zir_onvan}</td>
                   <td>{item.id}</td>
+                  <td className='flex items-center justify-center'><BaseButton type="button" onClick={() => deleteBank(item.id)} color="danger" label="حذف" /></td>
                 </tr>)
               }
             </tbody>

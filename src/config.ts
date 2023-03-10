@@ -18,7 +18,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "Document": "جستجوی مدارک",
     "Learning": 'تعریف دوره',
     "Office": 'ادارات شهرستان',
-    "User": "کاربران"
+    "User": "کاربران",
+    "BankMng": "بانک اطلاعاتی"
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`
@@ -31,7 +32,6 @@ const defaultOptions = {
 }
 
 const iaxios = axios.create(defaultOptions)
-// Set the AUTH token for any request
 iaxios.interceptors.request.use(function (config) {
     const cookie = new Cookie()
     const token = cookie.get('token')

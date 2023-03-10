@@ -78,7 +78,7 @@ const menuAside: MenuAsideItem[] = [
   {
     label: 'بانکهای اطلاعات',
     icon: mdiInformation,
-    target: '_blank',
+    href: '/bankMng'
   },
   {
     href: '',

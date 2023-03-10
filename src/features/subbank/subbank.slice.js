@@ -9,6 +9,14 @@ export const getSubBankList = createAsyncThunk(
     }
 )
 
+export const getSubBankMngList = createAsyncThunk(
+    'subbank/mng-list',
+    async () => {
+        const response = await callGetSubBankMngListApi()
+        return response
+    }
+)
+
 export const selectSubBank = createAsyncThunk(
     'subbank/select-subbank', (subbank) => {
         return subbank
@@ -18,7 +26,8 @@ export const selectSubBank = createAsyncThunk(
 const initialState = {
     status: 'idle',
     subbankList: [],
-    selectedSubBank: ''
+    selectedSubBank: '',
+    subBankMngList: []
 }
 
 export const subbankSlice = createSlice({

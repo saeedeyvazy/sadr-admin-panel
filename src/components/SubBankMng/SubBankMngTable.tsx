@@ -105,37 +105,6 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
       >
         <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
       </CardBoxModal>
-      <CardBoxModal
-        title="تغییر رمز عبور"
-        buttonColor="warning"
-        buttonLabel="ویرایش"
-        isActive={isModalPasswordActive}
-        onConfirm={handleUpdatePassModalAction}
-        onCancel={handleModalAction}
-      >
-        <BaseDivider />
-        <Formik innerRef={updatePassFormRef} onSubmit={handleChangePass} initialValues={{ password: '', repassword: '' }} validationSchema={passValidationSchema} >
-          {({ values }) => (
-            <Form className='text-sm whitespace-nowrap'>
-              <FormField label='نام کاربری'>
-                <Field value={selectedClient.username} />
-                <FormField label='' >
-                </FormField>
-              </FormField>
-              <FormField label='رمز عبور' >
-                <Field name='password' type='password' />
-              </FormField>
-              <ErrorMessage component='div' className='text-red-500' name='password' />
-              <BaseDivider />
-              <FormField label='تکرار رمز عبور'>
-                <Field name='repassword' type='password' />
-              </FormField>
-              <ErrorMessage component='div' name='repassword' className='text-red-500' />
-              <BaseDivider />
-            </Form>
-          )}
-        </Formik>
-      </CardBoxModal>
 
       <CardBoxModal
         title="ویرایش و مشاهده اطلاعات"
@@ -223,13 +192,6 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
                 <td data-label="">{client.sharayet ? client.sharayet : 'ندارد'}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>
-                    <BaseButton
-                      color="info"
-                      icon={mdiUpdate}
-                      onClick={() => { setIsModalPasswordActive(true); setSelectedClient(client) }}
-                      small
-
-                    />
                     <BaseButton
                       color="info"
                       icon={mdiEye}

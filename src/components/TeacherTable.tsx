@@ -12,6 +12,7 @@ import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Bank } from './Bank/index'
 import { SubBank } from './SubBank/index'
+import { Form, Formik } from 'formik'
 export const TeacherTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -122,8 +123,18 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
             </tbody>
           </table>
         </div>
-        <Bank />
-        <SubBank />
+        <Formik
+          initialValues={{
+            bank: '',
+          }}
+          onSubmit={(values) => { }}
+        >
+          {({ values, setFieldValue }) => (
+            <Form>
+              <Bank onchange={setFieldValue} />
+              <SubBank />
+            </Form>)}
+        </Formik>
         <BaseDivider />
         <BaseDivider />
         <span className='font-bold text-blue-800'>سابقه تدریس</span>

@@ -5,6 +5,7 @@ import organReducer from '../features/organ/organ.slice'
 import documentSlice from '../features/document/document.slice'
 import bankSlice from '../features/bank/bank.slice'
 import subbankSlice from '../features/subbank/subbank.slice'
+import repairSlice from '../features/repair/repair.slice'
 
 export const store = configureStore({
   reducer: {
@@ -13,7 +14,8 @@ export const store = configureStore({
     organ: organReducer,
     document: documentSlice,
     bank: bankSlice,
-    subbank: subbankSlice
+    subbank: subbankSlice,
+    repair: repairSlice
   },
 })
 

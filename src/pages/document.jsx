@@ -1,7 +1,6 @@
 import { mdiBallotOutline, mdiSearchWeb } from '@mdi/js'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement } from 'react'
 import BaseDivider from '../components/BaseDivider'
 import CardBox from '../components/CardBox'
 import LayoutAuthenticated from '../layouts/Authenticated'

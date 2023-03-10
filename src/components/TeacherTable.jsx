@@ -1,25 +1,28 @@
-import { mdiCardAccountDetails, mdiDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useState } from 'react'
-import { Teacher } from '../interfaces'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import UserAvatar from './UserAvatar'
 import { Loading } from './Loading'
 import axios from 'axios'
-import { API_GENERAL_TEACHER_SEARCH } from '../constants'
+import { API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Bank } from './Bank/index'
 import { SubBank } from './SubBank/index'
 import { Form, Formik } from 'formik'
+import { useDispatch } from 'react-redux'
+import { useSnackbar } from 'notistack'
+import { useSelector } from 'react-redux'
+import { selectedSubBank } from '../features/subbank/subbank.slice'
 export const TeacherTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState({})
 
-  const [selectedClient, setSelectedClient] = useState<Teacher>({
+  const [selectedClient, setSelectedClient] = useState({
     id: 0,
     fname: '',
     lname: '',
@@ -46,6 +49,22 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const selectSubbank = useSelector(selectedSubBank)
+
+  const handleSubmit = async () => {
+    try {
+      await iaxios.post(API_REPAIR, { id_anavin: selectSubbank, codemelli_person: selectedClient.codemelli })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+      setTimeout(() => window.location.reload(), 1000)
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+    finally {
+      setIsModalInfoActive(false)
+      setIsModalDetailActive(false)
+    }
+  }
   const handleModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
@@ -126,13 +145,17 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
         <Formik
           initialValues={{
             bank: '',
+            subbank: ''
           }}
-          onSubmit={(values) => { }}
+          onSubmit={(values) => { handleSubmit(values) }}
         >
           {({ values, setFieldValue }) => (
             <Form>
-              <Bank onchange={setFieldValue} />
-              <SubBank />
+              <div className="bg-gray-200 p-4">
+                <Bank onchange={setFieldValue} />
+                <SubBank onchange={setFieldValue} />
+                <BaseButton type="button" onClick={() => handleSubmit()} color="info" label="سازماندهی" />
+              </div>
             </Form>)}
         </Formik>
         <BaseDivider />
@@ -275,7 +298,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
             </tr>
           </thead>
           <tbody>
-            {clientsPaginated.map((client: Teacher) => (
+            {clientsPaginated.map((client) => (
               <tr key={client.id} className='[&>*]:text-right'>
                 <td className="border-b-0 lg:w-6 before:hidden">
                   <UserAvatar username={''} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />

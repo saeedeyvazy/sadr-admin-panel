@@ -9,9 +9,16 @@ export const getSubBankList = createAsyncThunk(
     }
 )
 
+export const selectSubBank = createAsyncThunk(
+    'subbank/select-subbank', (subbank) => {
+        return subbank
+    }
+)
+
 const initialState = {
     status: 'idle',
     subbankList: [],
+    selectedSubBank: ''
 }
 
 export const subbankSlice = createSlice({
@@ -29,11 +36,20 @@ export const subbankSlice = createSlice({
             .addCase(getSubBankList.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.subbankList = action.payload
+            }).addCase(selectSubBank.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(selectSubBank.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(selectSubBank.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.selectedSubBank = action.payload
             })
     },
 })
 
 export const subbankList = (state) => state?.subbank?.subbankList
 export const isLoading = (state) => state?.subbank?.status === 'loading'
-
+export const selectedSubBank = (state) => state?.subbank?.selectedSubBank
 export default subbankSlice.reducer

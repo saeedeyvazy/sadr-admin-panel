@@ -1,26 +1,24 @@
 import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useRef, useState } from 'react'
-import { User } from '../../interfaces'
 import BaseButton from '../BaseButton'
 import BaseButtons from '../BaseButtons'
 import CardBoxModal from '../CardBoxModal'
 import { Loading } from '../Loading'
-import { API_SUB_BANK_LIST, API_USER_PASSWORD } from '../../constants'
+import { API_SUB_BANK_LIST } from '../../constants'
 import BaseDivider from '../BaseDivider'
 import { iaxios } from '../../config'
 import { Field, Form, Formik } from 'formik'
 import FormField from '../FormField'
 import { useSnackbar } from 'notistack'
-import { UserType } from '../UserType'
 import * as Yup from 'yup'
 import { Bank } from '../Bank'
-import { SubBank } from '../SubBank'
+import { useSelector } from 'react-redux'
+import { selectedBankName } from '../../features/bank/bank.slice'
 
 export const SubBankMngTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
   const [currentPage, setCurrentPage] = useState(0)
-  const [teacherDetail, setTeacherDetail] = useState({})
 
   const [selectedClient, setSelectedClient] = useState({})
 
@@ -35,24 +33,31 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
   const [isModalInfoActive, setIsModalInfoActive] = useState(false)
   const [isModalPasswordActive, setIsModalPasswordActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
-  const [isModalDetailActive, setIsModalDetailActive] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
-  const updatePassFormRef = useRef()
-
+  const formRef = useRef()
+  const bankOnvan = useSelector(selectedBankName)
   const handleModalAction = () => {
+
+    if (formRef.current) {
+      formRef.current.handleSubmit()
+    }
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
     setIsModalPasswordActive(false)
   }
-  const handleUpdatePassModalAction = () => {
-    if (updatePassFormRef.current) {
-      updatePassFormRef.current.handleSubmit()
+
+  const editZirBank = async (values) => {
+    try {
+      const { jayegah, zir_onvan, sharayet } = values
+      console.log({ id: selectedClient.id, jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
+      await iaxios.put(API_SUB_BANK_LIST, { id: selectedClient.id, jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+      setTimeout(() => { window.location.reload() }, 1000)
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }
   }
-  const handleCloseDetailModal = () => {
-    setTeacherDetail({})
-    setIsModalDetailActive(false)
-  }
+
   const passValidationSchema = Yup.object().shape({
     password: Yup.string().required('این فیلد اجباریست'),
     repassword: Yup.string().required('این فیلد اجباریست').oneOf([Yup.ref('password'), null], 'رمزها یکسان نیستند')
@@ -68,20 +73,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
       console.log(error)
     }
   }
-  const handleChangePass = async (values) => {
-    try {
-      await iaxios.put(API_USER_PASSWORD, {
-        id: selectedClient.id,
-        username: selectedClient.username,
-        password: values.password,
-      })
-      handleModalAction()
-      enqueueSnackbar('عملیات به روزرسانی با موفقیت انجام شد', { variant: 'success' })
-    } catch (error) {
-      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
-      console.log(error)
-    }
-  }
+
   return (
     <>
       <CardBoxModal
@@ -104,7 +96,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
         onCancel={handleModalAction}
       >
         <BaseDivider />
-        <Formik onSubmit={() => { }} initialValues={{ zir_onvan: '', bank: selectedClient.bank, subbank: selectedClient.subbank, sharayet: selectedClient.sharayet, jayegah: '' }} >
+        <Formik innerRef={formRef} onSubmit={editZirBank} initialValues={{ zir_onvan: '', bank: selectedClient.bank, subbank: selectedClient.subbank, sharayet: selectedClient.sharayet, jayegah: '' }} >
           {({ values, setFieldValue }) => (
             <Form className='text-sm whitespace-nowrap'>
               <FormField label=''>
@@ -122,7 +114,6 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
                 <FormField label="عنوان سطح" >
                   <Field name="zir_onvan" placeholder="" />
                 </FormField>
-
               </FormField>
             </Form>
           )}

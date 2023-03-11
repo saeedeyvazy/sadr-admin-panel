@@ -10,7 +10,7 @@ import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
-import { API_REPAIR, API_SUB_BANK_LIST, API_USER } from '../constants'
+import { API_SUB_BANK_LIST, API_USER } from '../constants'
 import { useSnackbar } from 'notistack'
 import { Bank } from '../components/Bank'
 import { SubBank } from '../components/SubBank'
@@ -18,17 +18,19 @@ import { SubBankMngTable } from '../components/SubBankMng/SubBankMngTable'
 import { useSubBankList } from '../components/SubBank/useSubBankLogic'
 import { useSelector } from 'react-redux'
 import { selectedBankName } from '../features/bank/bank.slice'
+import { useDispatch } from 'react-redux'
+import { searchBankMng } from '../features/subbank/subbank.slice'
 
 const OfficePage = () => {
   const { theSubBankList, isLoadingSubBank } = useSubBankList()
   const [searchLoading, setSearchLoading] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   const bankOnvan = useSelector(selectedBankName)
+  const dispatch = useDispatch()
 
   const createZirBank = async (values) => {
     try {
       const { jayegah, zir_onvan, sharayet } = values
-      console.log({ jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
       await iaxios.post(API_SUB_BANK_LIST, { jayegah, zir_onvan, sharayet, bankOnvan, id_bank: values.bank })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
       setTimeout(() => { window.location.reload() }, 1000)
@@ -39,15 +41,7 @@ const OfficePage = () => {
   async function handleSubmit(values) {
     try {
       setSearchLoading(true)
-
-      await iaxios.post(API_USER, {
-        username: values.username,
-        password: values.password,
-        userType: values.userType,
-        typeCode: values.userOffice,
-        roles: values.roles.map(role => ({ id: role })),
-      })
-      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+      dispatch(searchBankMng({ id_bank: values.bank }))
     } catch (error) {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
       console.log(error)
@@ -122,7 +116,7 @@ const OfficePage = () => {
   )
 }
 
-OfficePage.getLayout = function getLayout(page: ReactElement) {
+OfficePage.getLayout = function getLayout(page) {
   return <LayoutAuthenticated>{page}</LayoutAuthenticated>
 }
 

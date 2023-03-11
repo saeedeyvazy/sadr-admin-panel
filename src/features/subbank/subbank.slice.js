@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { callGetSubBankListApi } from './subbank.api'
+import { callGetSubBankListApi, callGetSubBankMngListApi, callSearchSubBankMngListApi } from './subbank.api'
 
 export const getSubBankList = createAsyncThunk(
     'subbank/list',
@@ -13,6 +13,16 @@ export const getSubBankMngList = createAsyncThunk(
     'subbank/mng-list',
     async () => {
         const response = await callGetSubBankMngListApi()
+        return response
+    }
+)
+
+
+
+export const searchBankMng = createAsyncThunk(
+    'subbank/search-bank-mng',
+    async (request) => {
+        const response = await callSearchSubBankMngListApi(request)
         return response
     }
 )
@@ -54,6 +64,15 @@ export const subbankSlice = createSlice({
             .addCase(selectSubBank.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.selectedSubBank = action.payload
+            }).addCase(searchBankMng.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(searchBankMng.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(searchBankMng.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.subbankList = action.payload
             })
     },
 })

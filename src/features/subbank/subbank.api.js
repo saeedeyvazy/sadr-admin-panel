@@ -28,3 +28,16 @@ export async function callGetSubBankMngListApi() {
         return response.data.data
     }
 }
+
+export async function callSearchSubBankMngListApi(request) {
+
+    const response = await iaxios.post(API_SUB_BANK_LIST + "/search?page=0&size=20", request)
+
+    if (response.data.data.content) {
+
+        return response.data.data.content
+    }
+    else {
+        return response.data.data
+    }
+}

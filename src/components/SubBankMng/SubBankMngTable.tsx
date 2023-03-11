@@ -1,4 +1,4 @@
-import { mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
+import { mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useRef, useState } from 'react'
 import { User } from '../../interfaces'
 import BaseButton from '../BaseButton'
@@ -8,13 +8,13 @@ import { Loading } from '../Loading'
 import { API_SUB_BANK_LIST, API_USER_PASSWORD } from '../../constants'
 import BaseDivider from '../BaseDivider'
 import { iaxios } from '../../config'
-import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import FormField from '../FormField'
 import { useSnackbar } from 'notistack'
 import { UserType } from '../UserType'
-import FormCheckRadio from '../FormCheckRadio'
-import FormCheckRadioGroup from '../FormCheckRadioGroup'
 import * as Yup from 'yup'
+import { Bank } from '../Bank'
+import { SubBank } from '../SubBank'
 
 export const SubBankMngTable = ({ clients, isLoading, error }) => {
 
@@ -22,18 +22,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState({})
 
-  const [selectedClient, setSelectedClient] = useState<User>({
-    id: 0,
-    username: '',
-    password: '',
-    userType: '',
-    userTypeName: '',
-    isActive: '',
-    typeCode: '',
-    createdAt: '',
-    updatedAt: '',
-    roles: [{ authority: '', id: 0, name: '' }]
-  })
+  const [selectedClient, setSelectedClient] = useState({})
 
   const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
   const numPages = Math.ceil(clients.length / perPage)
@@ -115,63 +104,29 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
         onCancel={handleModalAction}
       >
         <BaseDivider />
-        <Formik onSubmit={() => { }} initialValues={{ active: selectedClient.isActive === 'true' ? true : false, username: selectedClient.username, userType: selectedClient.userType }} >
-          {({ values }) => (
+        <Formik onSubmit={() => { }} initialValues={{ zir_onvan: '', bank: selectedClient.bank, subbank: selectedClient.subbank, sharayet: selectedClient.sharayet, jayegah: '' }} >
+          {({ values, setFieldValue }) => (
             <Form className='text-sm whitespace-nowrap'>
-              <FormField label='نام کاربری'>
-                <Field name='username' />
-                <FormField label='' >
+              <FormField label=''>
+                <Bank onchange={setFieldValue} />
+                <FormField label="جایگاه" >
+                  <Field component='select' name="jayegah" placeholder="" >
+                    {Array.from({ length: 100 }, (_, i) => i + 1).map(item => <option style={{ textAlign: 'center' }} value={item}>{item}</option>)}
+                  </Field>
                 </FormField>
               </FormField>
-              <FormField label='نوع کاربری'>
-                <UserType name='userType' label='' />
+              <FormField label="شرایط سطح" >
+                <Field name="sharayet" placeholder="" />
               </FormField>
+              <FormField label="" >
+                <FormField label="عنوان سطح" >
+                  <Field name="zir_onvan" placeholder="" />
+                </FormField>
 
-              <FormCheckRadioGroup>
-                <FormCheckRadio type="radio" label="فعال" >
-                  <Field type="radio" name="active" value="true" checked={values.active} />
-                </FormCheckRadio>
-                <FormCheckRadio type="radio" label="غیرفعال">
-                  <Field type="radio" name="active" value="false" checked={!values.active} />
-                </FormCheckRadio>
-              </FormCheckRadioGroup>
+              </FormField>
             </Form>
           )}
         </Formik>
-      </CardBoxModal>
-
-      <CardBoxModal
-        title="جزییات"
-        buttonColor="info"
-        buttonLabel="تایید"
-        isActive={isModalDetailActive}
-        onConfirm={handleCloseDetailModal}
-        onCancel={handleCloseDetailModal}
-        innerModalClassName='md:w-11/12'
-      >
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>بانکهای اطلاعات</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>عنوان</th>
-                <th>زیر عنوان</th>
-                <th>کد</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail?.bankhaList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.onvan}</td>
-                  <td>{item.zir_onvan}</td>
-                  <td>{item.id}</td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
       </CardBoxModal>
       {isLoading ? <Loading />
         :

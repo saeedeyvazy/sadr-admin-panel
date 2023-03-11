@@ -126,6 +126,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
             <tr className='[&>*]:text-right [&>*]:whitespace-nowrap'>
               <th>عنوان بانک</th>
               <th>زیر بانک</th>
+              <th>جایگاه</th>
               <th>شرایط</th>
               <th />
             </tr>
@@ -135,6 +136,7 @@ export const SubBankMngTable = ({ clients, isLoading, error }) => {
               <tr key={client.id} className='[&>*]:text-right [&>*]:text-sm [&>*]:whitespace-nowrap'>
                 <td data-label="">{client.bankOnvan}</td>
                 <td data-label="">{client.zir_onvan}</td>
+                <td data-label="">{client.jayegah}</td>
                 <td data-label="">{client.sharayet ? client.sharayet : 'ندارد'}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">
                   <BaseButtons type="justify-start lg:justify-between" noWrap>

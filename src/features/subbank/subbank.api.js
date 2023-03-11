@@ -31,7 +31,7 @@ export async function callGetSubBankMngListApi() {
 
 export async function callSearchSubBankMngListApi(request) {
 
-    const response = await iaxios.post(API_SUB_BANK_LIST + "/search?page=0&size=20", request)
+    const response = await iaxios.post(API_SUB_BANK_LIST + "/search?page=0&size=200", request)
 
     if (response.data.data.content) {
 

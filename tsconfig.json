@@ -25,7 +25,8 @@
     "**/*.tsx",
     "src/components/MultiSelect/index.jsx",
     "src/pages/document.jsx",
-    "src/pages/document.jsx"
+    "src/pages/document.jsx",
+    "src/pages/bankMng.jsx"
   ],
   "exclude": [
     "node_modules"

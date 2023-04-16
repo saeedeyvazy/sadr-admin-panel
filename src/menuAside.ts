@@ -70,10 +70,9 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiLock,
   },
   {
-    href: '',
     label: 'گزارش کلاسها',
     icon: mdiTable,
-    target: '_blank',
+    href: '/class-report'
   },
   {
     label: 'بانکهای اطلاعات',

@@ -1,4 +1,4 @@
-import { mdiAccount, mdiMail, mdiSearchWeb } from '@mdi/js'
+import { mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
@@ -10,14 +10,15 @@ import LayoutAuthenticated from '../layouts/Authenticated'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
-import { TeacherTable } from '../components/TeacherTable'
+import { ClassReportTable } from '../components/ClassReportTable'
 import { useTeacher } from '../hooks/useTeacher'
 import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
 import { UserOffice } from '../components/UserOffice'
 import { DoreSelect } from '../components/DoreSelect'
+import { useClassReport } from '../hooks/useClassReport'
 
 const FormsPage = () => {
-  const { data, error, isLoading, totalTeacherLength } = useTeacher()
+  const { data, error, isLoading } = useClassReport()
   const [specificSearch, setSpecificSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
@@ -88,9 +89,9 @@ const FormsPage = () => {
               <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
               <CardBox hasTable>
-                {!specificSearch ? <TeacherTable clients={data} isLoading={isLoading} error={error} />
+                {!specificSearch ? <ClassReportTable clients={data} isLoading={isLoading} error={error} />
                   :
-                  <TeacherTable clients={searchResult} isLoading={searchLoading} error={error} />
+                  <ClassReportTable clients={searchResult} isLoading={searchLoading} error={error} />
                 }
               </CardBox>
 

@@ -11,8 +11,7 @@ import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
 import { ClassReportTable } from '../components/ClassReportTable'
-import { useTeacher } from '../hooks/useTeacher'
-import { API_SPECIFIC_TEACHER_SEARCH } from '../constants'
+import { API_CLASS_REPORT } from '../constants'
 import { UserOffice } from '../components/UserOffice'
 import { DoreSelect } from '../components/DoreSelect'
 import { useClassReport } from '../hooks/useClassReport'
@@ -26,18 +25,22 @@ const FormsPage = () => {
   async function handleSubmit(values) {
     try {
       setSearchLoading(true)
-      const response = await iaxios.post(API_SPECIFIC_TEACHER_SEARCH, {
-        firstName: values.fname,
-        nationalCode: values.nationalCode
+      const response = await iaxios.post(API_CLASS_REPORT, {
+        name: values.name == '0' ? '' : values.name,
+        tshs: values.tshs,
+        lname: values.lname,
+        onvan_dore: values.onvan_dore,
+        codemelli: values.codemelli,
+        codek: values.codek
       }, {
         params: {
-          page: 0,
-          size: 5
+          page: 4,
+          size: 20
         }
       })
       setSearchLoading(false)
       setSpecificSearch(true)
-      setSearchResult(response.data.data)
+      setSearchResult(response.data.data.content)
     } catch (error) {
 
     }
@@ -65,37 +68,38 @@ const FormsPage = () => {
             }}
             onSubmit={(values) => handleSubmit(values)}
           >
-            <Form>
-              <FormField label="" >
-                <UserOffice name='name' label='موسسه' />
-                <FormField label="عنوان دوره" >
-                  <DoreSelect signal={() => { }} />
+            {({ values, setFieldValue }) => (
+              <Form>
+                <FormField label="" >
+                  <UserOffice name='name' label='موسسه' />
+                  <FormField label="عنوان دوره" >
+                    <DoreSelect name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.label) }} />
+                  </FormField>
                 </FormField>
-              </FormField>
 
-              <FormField>
-                <Field name="tshs" placeholder="سال" type={"number"} />
-                <Field name="lname" placeholder="نام مربی" />
-              </FormField>
+                <FormField>
+                  <Field name="tshs" placeholder="سال" type={"number"} />
+                  <Field name="lname" placeholder="نام مربی" />
+                </FormField>
 
-              <FormField>
-                <Field name="codemelli" placeholder="کد ملی" type={"number"} />
-                <Field name="codek" placeholder="کد کلاس" />
-              </FormField>
+                <FormField>
+                  <Field name="codemelli" placeholder="کد ملی" type={"number"} />
+                  <Field name="codek" placeholder="کد کلاس" />
+                </FormField>
 
-              <BaseButton type="submit" color="info" label="جستجو" />
-              <BaseDivider />
-              <BaseDivider />
-              <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
+                <BaseButton type="submit" color="info" label="جستجو" />
+                <BaseDivider />
+                <BaseDivider />
+                <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
-              <CardBox hasTable>
-                {!specificSearch ? <ClassReportTable clients={data} isLoading={isLoading} error={error} />
-                  :
-                  <ClassReportTable clients={searchResult} isLoading={searchLoading} error={error} />
-                }
-              </CardBox>
+                <CardBox hasTable>
+                  {!specificSearch ? <ClassReportTable clients={data} isLoading={isLoading} error={error} />
+                    :
+                    <ClassReportTable clients={searchResult} isLoading={searchLoading} error={error} />
+                  }
+                </CardBox>
 
-            </Form>
+              </Form>)}
           </Formik>
         </CardBox>
       </SectionMain>

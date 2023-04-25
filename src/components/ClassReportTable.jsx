@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
-import UserAvatar from './UserAvatar'
 import { Loading } from './Loading'
 import axios from 'axios'
 import { API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
@@ -305,8 +304,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
           <thead>
             <tr className='[&>*]:text-right'>
               <th>کد کلاس</th>
+              <th>نام موسسه</th>
               <th>عنوان دوره</th>
-              <th>نام کلاس</th>
               <th>کد مربی</th>
               <th>نام مربی</th>
               <th />
@@ -316,8 +315,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
             {clientsPaginated.map((client) => (
               <tr key={client.id} className='[&>*]:text-right'>
                 <td data-label="کد کلاس">{client.codek}</td>
+                <td data-label="نام موسسه">{client.name}</td>
                 <td data-label="کد قرآن" className='text-sm'>{client.onvan_dore}</td>
-                <td data-label="نام کلاس">{client.name}</td>
                 <td data-label="کد مربی" className="lg:w-32">{client.codeteacher}</td>
                 <td data-label="نام مربی" className="">{`${client.fname} ${client.lname}`}</td>
                 <td className="before:hidden lg:w-1 whitespace-nowrap">

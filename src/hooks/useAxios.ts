@@ -9,7 +9,6 @@ const useAxios = ({ url, method, body = null, headers = null }) => {
     const fetchData = () => {
         iaxios[method](url, JSON.parse(headers), JSON.parse(body))
             .then((res) => {
-                console.log(res.data.data)
                 if (res.data.data.content)
                     setResponse(res.data.data.content)
                 else

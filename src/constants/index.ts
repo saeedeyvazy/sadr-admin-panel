@@ -25,3 +25,5 @@ export const API_USER_ROLE_LIST = `${API_PREFIX}/api/user/role`
 export const API_SUB_BANK_LIST = `${API_PREFIX}/api/ziranavinbankha`
 export const API_REPAIR = `${API_PREFIX}/api/sazmandehi`
 export const API_CLASS_REPORT = `${API_PREFIX}/api/kelas-report`
+export const API_CLASS_STUDENT_INFO = `${API_PREFIX}/api/kelas-report/kelas-student`
+export const API_CLASS_INFO = `${API_PREFIX}/api/kelas-report/kelas-student-amar`

@@ -5,7 +5,7 @@ import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
 import axios from 'axios'
-import { API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
+import { API_CLASS_INFO, API_CLASS_REPORT, API_CLASS_STUDENT_INFO, API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Bank } from './Bank/index'
@@ -18,7 +18,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
   const [currentPage, setCurrentPage] = useState(0)
-  const [teacherDetail, setTeacherDetail] = useState({})
+  const [teacherDetail, setTeacherDetail] = useState()
+  const [classInfo, setClassInfo] = useState()
 
   const [selectedClient, setSelectedClient] = useState({
     id: 0,
@@ -84,7 +85,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   }
 
   const handleCloseDetailModal = () => {
-    setTeacherDetail({})
+    setTeacherDetail()
+    setClassInfo()
     setIsModalDetailActive(false)
   }
 
@@ -100,8 +102,11 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
 
   async function fetchDetail(id) {
     try {
-      const response = await axios.get(API_GENERAL_TEACHER_SEARCH + "/" + id)
+      const response = await iaxios.get(API_CLASS_STUDENT_INFO + "?codek=" + id)
+      const classInfoResponse = await iaxios.get(API_CLASS_INFO, { params: { codek: id } })
       setTeacherDetail(response.data.data)
+      console.group(classInfoResponse.data.data)
+      setClassInfo(classInfoResponse.data.data)
     } catch (error) {
       console.log(error)
     }
@@ -134,24 +139,52 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
       >
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>بانکهای اطلاعات</span>
+        <span className='font-bold text-blue-800'>آمار کلاس</span>
         <div className='bg-blue-200'>
           <table className='text-sm'>
             <thead>
               <tr className='[&>*]:text-right'>
-                <th>عنوان</th>
-                <th>زیر عنوان</th>
-                <th>کد</th>
-                <th />
+                <th>کد کلاس</th>
+                <th>تعداد</th>
+                <th>نتیجه</th>
+                <th>نام</th>
+                <th>عنوان دوره</th>
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.bankhaList?.map(item =>
-                <tr className='[&>*]:text-right'>
-                  <td>{item.onvan}</td>
-                  <td>{item.zir_onvan}</td>
-                  <td>{item.id}</td>
-                  <td className='flex items-center justify-center'><BaseButton type="button" onClick={() => deleteBank(item.id)} color="danger" label="حذف" /></td>
+              {classInfo?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
+                  <td>{item.codek}</td>
+                  <td>{item.count}</td>
+                  <td>{item.natije}</td>
+                  <td>{`${item.fname} ${item.lname}`}</td>
+                  <td>{item.onvan_dore}</td>
+                </tr>)}
+            </tbody>
+          </table>
+        </div>
+        <BaseDivider />
+        <BaseDivider />
+        <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
+        <div className='bg-blue-200'>
+          <table className='text-sm'>
+            <thead>
+              <tr className='[&>*]:text-right'>
+                <th>نام</th>
+                <th>نام پدر</th>
+                <th>نمره پایانی</th>
+                <th>کد ملی</th>
+                <th>نتیجه</th>
+              </tr>
+            </thead>
+            <tbody>
+              {teacherDetail && teacherDetail.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
+                  <td>{`${item.fname}`}</td>
+                  <td>{item.fthname}</td>
+                  <td>{item.payani}</td>
+                  <td>{item.codemelli}</td>
+                  <td>{item.natije}</td>
                 </tr>)
               }
             </tbody>
@@ -187,8 +220,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.sabeqeList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.sabeqeList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.onvan}</td>
                   <td>{item.onvan_dore}</td>
                   <td>{item.nam}</td>
@@ -214,8 +247,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.madrakList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.madrakList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td className='whitespace-nowrap'>{item.onvan_dore}</td>
                   <td>{item.saat}</td>
                   <td>{item.moadel}</td>
@@ -244,8 +277,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.eshteghalList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.eshteghalList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.noshoghl}</td>
                   <td>{item.nogharardad}</td>
                   <td>{item.mahalkar}</td>
@@ -337,7 +370,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                       color="info"
                       icon={mdiCardAccountDetails}
                       className='mr-3'
-                      onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
+                      onClick={() => { fetchDetail(client.codek); setIsModalDetailActive(true) }}
                       small
                     />
                   </BaseButtons>

@@ -27,5 +27,6 @@ export const API_REPAIR = `${API_PREFIX}/api/sazmandehi`
 export const API_CLASS_REPORT = `${API_PREFIX}/api/kelas-report`
 export const API_CLASS_STUDENT_INFO = `${API_PREFIX}/api/kelas-report/kelas-student`
 export const API_CLASS_INFO = `${API_PREFIX}/api/kelas-report/kelas-student-amar`
-export const API_UPDATE_CLASS_ONVAN_DORE = `${API_PREFIX}/api/kelas-onvan`
+export const API_UPDATE_CLASS_ONVAN_DORE = `${API_PREFIX}/api/kelas-report/kelas-onvan`
+export const API_UPDATE_CLASS_MOASSESE = `${API_PREFIX}/api/kelas-report/kelas-moassese`
 export const API_MKH = `${API_PREFIX}/api/mkh`

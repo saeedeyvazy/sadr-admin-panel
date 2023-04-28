@@ -80,6 +80,11 @@ const menuAside: MenuAsideItem[] = [
     href: '/bankMng'
   },
   {
+    label: 'درخت آموزشی',
+    icon: mdiInformation,
+    href: '/learning-tree'
+  },
+  {
     href: '',
     label: 'موسسات قرآنی',
     icon: mdiOfficeBuilding,

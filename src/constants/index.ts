@@ -29,4 +29,7 @@ export const API_CLASS_STUDENT_INFO = `${API_PREFIX}/api/kelas-report/kelas-stud
 export const API_CLASS_INFO = `${API_PREFIX}/api/kelas-report/kelas-student-amar`
 export const API_UPDATE_CLASS_ONVAN_DORE = `${API_PREFIX}/api/kelas-report/kelas-onvan`
 export const API_UPDATE_CLASS_MOASSESE = `${API_PREFIX}/api/kelas-report/kelas-moassese`
+export const API_LEARNING_RIGHT_SIDE = `${API_PREFIX}/api/amozeshi-tree/right-list`
+export const API_LEARNING_LEFT_SIDE = `${API_PREFIX}/api/amozeshi-tree/left-list`
+export const API_SAVE_LEARN_TREE = `${API_PREFIX}/api/amozeshi-tree/save`
 export const API_MKH = `${API_PREFIX}/api/mkh`

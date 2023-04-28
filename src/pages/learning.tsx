@@ -184,7 +184,7 @@ const FormsPage = () => {
           >
             <Form>
               <FormField label='نام دوره'>
-                <DoreSelect signal={(selected) => setSelectedOption(selected.value)} />
+                <DoreSelect isMulti={true} signal={(selected) => setSelectedOption(selected.value)} />
               </FormField>
               <FormField label='امضای اول'>
                 <Position name='pos1' />

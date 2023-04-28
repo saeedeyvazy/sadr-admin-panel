@@ -1,4 +1,4 @@
-import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
 import React, { useRef, useState } from 'react'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
@@ -106,16 +106,6 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   const updatePassFormRef = useRef()
   const updateMoasseseFormRef = useRef()
 
-  const handleDelModalAction = async () => {
-    try {
-      await iaxios.delete(API_GENERAL_TEACHER_SEARCH + "/" + selectedClient.id)
-      setIsModalTrashActive(false)
-    } catch (error) {
-      alert(error)
-      console.log(error)
-    }
-  }
-
   async function fetchDetail(id) {
     try {
       const response = await iaxios.get(API_CLASS_STUDENT_INFO + "?codek=" + id)
@@ -149,9 +139,8 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
           {({ values, setFieldValue }) => (
             <Form className="md:min-w-[300px] md:min-h-[300px]" >
               <FormField label="" >
-                {/* <UserOffice name='name' label='موسسه' /> */}
                 <FormField label="عنوان دوره" >
-                  <DoreSelect name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.value) }} />
+                  <DoreSelect isMulti={true} name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.value) }} />
                 </FormField>
               </FormField>
             </Form >)
@@ -279,19 +268,18 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                       <BaseButton
                         color="info"
                         icon={mdiEye}
-                        onClick={() => { setIsModalInfoActive(true); console.log(client); setSelectedClient(client) }}
+                        onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
                         small
                       />
                       <BaseButton
-                        color="danger"
-                        icon={mdiTrashCan}
+                        color="info"
+                        icon={mdiUpdate}
                         onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
                         small
                       />
                       <BaseButton
                         color="info"
                         icon={mdiCardAccountDetails}
-                        className='mr-3'
                         onClick={() => { fetchDetail(client.codek); setIsModalDetailActive(true) }}
                         small
                       />

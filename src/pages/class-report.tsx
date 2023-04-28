@@ -73,7 +73,7 @@ const FormsPage = () => {
                 <FormField label="" >
                   <UserOffice name='name' label='موسسه' />
                   <FormField label="عنوان دوره" >
-                    <DoreSelect name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.label) }} />
+                    <DoreSelect isMulti={true} name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.label) }} />
                   </FormField>
                 </FormField>
 

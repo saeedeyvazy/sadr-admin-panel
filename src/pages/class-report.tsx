@@ -26,7 +26,7 @@ const FormsPage = () => {
     try {
       setSearchLoading(true)
       const response = await iaxios.post(API_CLASS_REPORT, {
-        name: values.name == '0' ? '' : values.name,
+        codequran: values.codequran == '0' ? '' : values.codequran,
         tshs: values.tshs,
         lname: values.lname,
         onvan_dore: values.onvan_dore,
@@ -59,7 +59,7 @@ const FormsPage = () => {
         <CardBox>
           <Formik
             initialValues={{
-              name: '',
+              codequran: '',
               tshs: '',
               lname: '',
               onvan_dore: '',
@@ -71,7 +71,7 @@ const FormsPage = () => {
             {({ values, setFieldValue }) => (
               <Form>
                 <FormField label="" >
-                  <UserOffice name='name' label='موسسه' />
+                  <UserOffice name='codequran' label='موسسه' />
                   <FormField label="عنوان دوره" >
                     <DoreSelect isMulti={true} name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.label) }} />
                   </FormField>

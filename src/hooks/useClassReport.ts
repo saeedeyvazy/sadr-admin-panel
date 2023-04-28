@@ -13,7 +13,7 @@ export function useClassReport() {
             try {
                 setIsLoading(true)
                 const response = await iaxios.post(API_CLASS_REPORT, {
-                    "name": "",
+                    "codequran": "",
                     "tshs": "",
                     "lname": "",
                     "onvan_dore": "",

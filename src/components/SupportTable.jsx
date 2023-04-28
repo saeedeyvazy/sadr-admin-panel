@@ -1,10 +1,10 @@
-import { mdiCardAccountDetails, mdiEye, mdiUpdate } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
 import React, { useRef, useState } from 'react'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_SUPPORT_SEARCH, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
 import { Form, Formik } from 'formik'
@@ -104,6 +104,18 @@ export const SupportTable = ({ clients, isLoading, error }) => {
     setClassInfo()
     setIsModalDetailActive(false)
   }
+
+  const handleDelModalAction = async () => {
+    try {
+      await iaxios.delete(API_SUPPORT_SEARCH + "/" + selectedClient.id)
+      setIsModalTrashActive(false)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+      console.log(error)
+    }
+  }
+
   const updatePassFormRef = useRef()
   const updateMoasseseFormRef = useRef()
 
@@ -121,6 +133,16 @@ export const SupportTable = ({ clients, isLoading, error }) => {
 
   return (
     <>
+      <CardBoxModal
+        title="حذف دوره حمایتی"
+        buttonColor="danger"
+        buttonLabel="تایید"
+        isActive={isModalTrashActive}
+        onConfirm={handleDelModalAction}
+        onCancel={handleModalAction}
+      >
+        <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
+      </CardBoxModal>
       <CardBoxModal
         title="جزییات"
         buttonColor="info"
@@ -218,7 +240,6 @@ export const SupportTable = ({ clients, isLoading, error }) => {
         title="به روزرسانی موسسه"
         buttonColor="info"
         buttonLabel="تایید"
-        isActive={isModalTrashActive}
         onConfirm={handleMoasseseModalAction}
         onCancel={handleCancelModalAction}
       >
@@ -277,14 +298,14 @@ export const SupportTable = ({ clients, isLoading, error }) => {
                       />
                       <BaseButton
                         color="info"
-                        icon={mdiUpdate}
-                        onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
+                        icon={mdiCardAccountDetails}
+                        onClick={() => { fetchDetail(client.codek); setIsModalDetailActive(true) }}
                         small
                       />
                       <BaseButton
-                        color="info"
-                        icon={mdiCardAccountDetails}
-                        onClick={() => { fetchDetail(client.codek); setIsModalDetailActive(true) }}
+                        color="danger"
+                        icon={mdiTrashCan}
+                        onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
                         small
                       />
                     </BaseButtons>

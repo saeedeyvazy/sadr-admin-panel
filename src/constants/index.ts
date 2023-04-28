@@ -33,3 +33,4 @@ export const API_LEARNING_RIGHT_SIDE = `${API_PREFIX}/api/amozeshi-tree/right-li
 export const API_LEARNING_LEFT_SIDE = `${API_PREFIX}/api/amozeshi-tree/left-list`
 export const API_SAVE_LEARN_TREE = `${API_PREFIX}/api/amozeshi-tree/save`
 export const API_MKH = `${API_PREFIX}/api/mkh`
+export const API_SUPPORT_SEARCH = `${API_PREFIX}/api/dorehaye_hemayati`

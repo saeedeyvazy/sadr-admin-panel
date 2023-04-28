@@ -11,6 +11,9 @@ import {
   mdiInformation,
   mdiFileDocumentAlert,
   mdiCardSearch,
+  mdiHelp,
+  mdiSetCenter,
+  mdiHelpNetwork,
 } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
 
@@ -73,6 +76,11 @@ const menuAside: MenuAsideItem[] = [
     label: 'گزارش کلاسها',
     icon: mdiTable,
     href: '/class-report'
+  },
+  {
+    label: 'دوره های حمایتی',
+    icon: mdiHelpNetwork,
+    href: '/support'
   },
   {
     label: 'بانکهای اطلاعات',

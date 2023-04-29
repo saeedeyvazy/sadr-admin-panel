@@ -190,7 +190,6 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
             <thead>
               <tr className='[&>*]:text-right'>
                 <th>نام</th>
-                <th>نام پدر</th>
                 <th>نمره پایانی</th>
                 <th>کد ملی</th>
                 <th>نتیجه</th>
@@ -199,8 +198,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
             <tbody>
               {teacherDetail && teacherDetail.map((item, index) =>
                 <tr key={index} className='[&>*]:text-right'>
-                  <td>{`${item.fname}`}</td>
-                  <td>{item.fthname}</td>
+                  <td>{`${item.fname} ${item.lname}`}</td>
                   <td>{item.payani}</td>
                   <td>{item.codemelli}</td>
                   <td>{item.natije}</td>

@@ -7,12 +7,13 @@ import { Loading } from './Loading'
 import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_SUPPORT_SEARCH, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
 import BaseDivider from './BaseDivider'
 import { iaxios } from '../config'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import FormField from './FormField'
 import { DoreSelect } from './DoreSelect'
 import { UserOffice } from './UserOffice'
 import { Mkh } from './Mkh'
+import { Organ } from './Organ/Organ'
 export const SupportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -53,7 +54,7 @@ export const SupportTable = ({ clients, isLoading, error }) => {
   const handleSubmitOnvanDore = async (values) => {
     try {
 
-      await iaxios.put(API_UPDATE_CLASS_ONVAN_DORE, { codek: selectedClient.codek, onvan: values.onvan_dore })
+      await iaxios.put(API_SUPPORT_SEARCH, { ...values, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
       setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
@@ -153,8 +154,12 @@ export const SupportTable = ({ clients, isLoading, error }) => {
       >
         <Formik
           initialValues={{
-            name: selectedClient.name,
-            onvan_dore: selectedClient.onvan_dore
+            onvan_dore: selectedClient.onvan_dore,
+            onvan_emza: selectedClient.onvan_emza,
+            post_emza: selectedClient.post_emza,
+            zarfiat: selectedClient.zarfiat,
+            organ: 0,
+            id_dore: 0
           }}
           onSubmit={handleSubmitOnvanDore}
           innerRef={updatePassFormRef}
@@ -163,9 +168,23 @@ export const SupportTable = ({ clients, isLoading, error }) => {
             <Form className="md:min-w-[300px] md:min-h-[300px]" >
               <FormField label="" >
                 <FormField label="عنوان دوره" >
-                  <DoreSelect isMulti={true} name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.value) }} />
+                  <DoreSelect isMulti={false} name="id_dore" signal={(selected) => { setFieldValue('id_dore', selected.value.id) }} />
+                </FormField>
+                <FormField>
+                  <Organ setFieldValue={setFieldValue} />
                 </FormField>
               </FormField>
+              <FormField label="سمت امضا کننده">
+                <Field name="onvan_emza" placeholder="" />
+              </FormField>
+              <FormField label="نام امضا کننده">
+                <Field name="post_emza" placeholder="" />
+              </FormField>
+
+              <FormField label="ظرفیت حمایتی">
+                <Field name="zarfiat" placeholder="" />
+              </FormField>
+
             </Form >)
           }
         </Formik >

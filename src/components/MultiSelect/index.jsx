@@ -5,7 +5,6 @@ export default function MultiSelect({ optionList, signal, name, isMulti }) {
     const [selectedOptions, setSelectedOptions] = useState([{}])
 
     function handleSelect(data) {
-        console.log(data)
         signal(data)
         setSelectedOptions(data)
     }

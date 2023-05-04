@@ -14,12 +14,14 @@ import { DoreSelect } from './DoreSelect'
 import { UserOffice } from './UserOffice'
 import { Mkh } from './Mkh'
 import { Organ } from './Organ/Organ'
+import { DatePicker } from 'react-advance-jalaali-datepicker'
 export const SupportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState()
   const [classInfo, setClassInfo] = useState()
+  const [expDate, setExpDate] = useState(null)
 
   const [selectedClient, setSelectedClient] = useState({
     id: 0,
@@ -53,8 +55,11 @@ export const SupportTable = ({ clients, isLoading, error }) => {
 
   const handleSubmitOnvanDore = async (values) => {
     try {
+      const [mohlat_s, mohlat_m, mohlat_r] = values.exp_date.split("/")
+      // console.log({ ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
 
-      await iaxios.put(API_SUPPORT_SEARCH, { ...values, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
+      await iaxios.put(API_SUPPORT_SEARCH, { ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
+
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
       setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
@@ -98,12 +103,6 @@ export const SupportTable = ({ clients, isLoading, error }) => {
   const handleCancelModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
-  }
-
-  const handleCloseDetailModal = () => {
-    setTeacherDetail()
-    setClassInfo()
-    setIsModalDetailActive(false)
   }
 
   const handleDelModalAction = async () => {
@@ -159,7 +158,8 @@ export const SupportTable = ({ clients, isLoading, error }) => {
             post_emza: selectedClient.post_emza,
             zarfiat: selectedClient.zarfiat,
             organ: 0,
-            id_dore: 0
+            id_dore: 0,
+            exp_date: ''
           }}
           onSubmit={handleSubmitOnvanDore}
           innerRef={updatePassFormRef}
@@ -184,76 +184,23 @@ export const SupportTable = ({ clients, isLoading, error }) => {
               <FormField label="ظرفیت حمایتی">
                 <Field name="zarfiat" placeholder="" />
               </FormField>
+              <FormField>
 
+                <DatePicker
+                  inputComponent={(props) => <Field name='exp_date' className="popo" {...props} />}
+                  placeholder="انتخاب تاریخ"
+                  format="jYYYY/jMM/jDD"
+                  onChange={(unix, formatted) => setFieldValue("exp_date", formatted)}
+                  id="datePicker"
+                  preSelected="1396/05/15"
+                  name='exp_date'
+                />
+              </FormField>
             </Form >)
           }
         </Formik >
       </CardBoxModal >
-      <CardBoxModal
-        title="جزییات"
-        buttonColor="info"
-        buttonLabel="تایید"
-        isActive={isModalDetailActive}
-        onConfirm={handleCloseDetailModal}
-        onCancel={handleCloseDetailModal}
-        innerModalClassName='md:w-11/12'
-      >
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>آمار کلاس</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>کد کلاس</th>
-                <th>تعداد</th>
-                <th>نتیجه</th>
-                <th>نام</th>
-                <th>عنوان دوره</th>
-              </tr>
-            </thead>
-            <tbody>
-              {classInfo?.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{item.codek}</td>
-                  <td>{item.count}</td>
-                  <td>{item.natije}</td>
-                  <td>{`${item.fname} ${item.lname}`}</td>
-                  <td>{item.onvan_dore}</td>
-                </tr>)}
-            </tbody>
-          </table>
-        </div>
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>نام</th>
-                <th>نام پدر</th>
-                <th>نمره پایانی</th>
-                <th>کد ملی</th>
-                <th>نتیجه</th>
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail && teacherDetail.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{`${item.fname}`}</td>
-                  <td>{item.fthname}</td>
-                  <td>{item.payani}</td>
-                  <td>{item.codemelli}</td>
-                  <td>{item.natije}</td>
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-        <BaseDivider />
-        <BaseDivider />
-      </CardBoxModal>
+
 
       <CardBoxModal
         title="به روزرسانی موسسه"

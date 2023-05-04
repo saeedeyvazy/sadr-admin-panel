@@ -1,11 +1,10 @@
-import { mdiCardAccountDetails, mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
+import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
 import React, { useRef, useState } from 'react'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_SUPPORT_SEARCH, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
-import BaseDivider from './BaseDivider'
+import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_SUPPORT_SEARCH, API_UPDATE_CLASS_MOASSESE } from '../constants'
 import { iaxios } from '../config'
 import { Field, Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
@@ -56,12 +55,12 @@ export const SupportTable = ({ clients, isLoading, error }) => {
   const handleSubmitOnvanDore = async (values) => {
     try {
       const [mohlat_s, mohlat_m, mohlat_r] = values.exp_date.split("/")
-      // console.log({ ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
+      // console.log({ ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: +values.organ, faal: true, id: selectedClient.id, zarfiat: selectedClient.zarfiat })
 
-      await iaxios.put(API_SUPPORT_SEARCH, { ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: values.organ, baqimande: selectedClient.baqimande, faal: true, id: selectedClient.id })
+      await iaxios.put(API_SUPPORT_SEARCH, { ...values, mohlat_s: +mohlat_s, mohlat_m: +mohlat_m, mohlat_r: +mohlat_r, id_organ: +values.organ, faal: true, id: selectedClient.id, zarfiat: selectedClient.zarfiat })
 
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => window.location.reload(), 1000)
+      setTimeout(() => window.location.reload(), 900)
     } catch (error) {
       console.log(error)
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })

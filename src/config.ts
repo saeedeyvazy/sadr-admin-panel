@@ -1,6 +1,8 @@
 
 import axios from 'axios'
 import Cookie from 'universal-cookie'
+import instMenuAside from './InstMenuAside'
+import menuAside from './menuAside'
 
 export const localStorageDarkModeKey = 'darkMode'
 
@@ -27,6 +29,12 @@ export const currentPageTitleMap: Record<string, string> = {
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`
 
+export enum UserType { ADMIN, INSTITUTION }
+
+export const UserTypeMenu = new Map([
+    [UserType.ADMIN, menuAside],
+    [UserType.INSTITUTION, instMenuAside],
+])
 
 const defaultOptions = {
     headers: {
@@ -43,3 +51,4 @@ iaxios.interceptors.request.use(function (config) {
 })
 
 export { iaxios }
+

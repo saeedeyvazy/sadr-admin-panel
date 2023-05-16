@@ -1,19 +1,16 @@
 import {
   mdiAccountCircle,
-  mdiMonitor,
-  mdiGithub,
+  mdiCardSearch,
+  mdiFileDocumentAlert,
+  mdiHelpNetwork,
+  mdiInformation,
   mdiLock,
+  mdiMonitor,
+  mdiOfficeBuilding,
+  mdiResponsive,
   mdiSquareEditOutline,
   mdiTable,
-  mdiTelevisionGuide,
-  mdiResponsive,
-  mdiOfficeBuilding,
-  mdiInformation,
-  mdiFileDocumentAlert,
-  mdiCardSearch,
-  mdiHelp,
-  mdiSetCenter,
-  mdiHelpNetwork,
+  mdiTelevisionGuide
 } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
 
@@ -107,3 +104,5 @@ const menuAside: MenuAsideItem[] = [
 ]
 
 export default menuAside
+
+

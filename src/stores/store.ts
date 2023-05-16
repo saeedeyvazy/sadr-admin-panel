@@ -6,6 +6,7 @@ import documentSlice from '../features/document/document.slice'
 import bankSlice from '../features/bank/bank.slice'
 import subbankSlice from '../features/subbank/subbank.slice'
 import repairSlice from '../features/repair/repair.slice'
+import loginSlice from '../features/login/login.slice'
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,9 @@ export const store = configureStore({
     document: documentSlice,
     bank: bankSlice,
     subbank: subbankSlice,
-    repair: repairSlice
+    repair: repairSlice,
+    login: loginSlice
+
   },
 })
 

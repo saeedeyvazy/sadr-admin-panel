@@ -1,26 +1,25 @@
-import React, { ReactNode, useEffect } from 'react'
-import { useState } from 'react'
-import { mdiForwardburger, mdiBackburger, mdiMenu } from '@mdi/js'
-import menuAside from '../menuAside'
-import menuNavBar from '../menuNavBar'
-import BaseIcon from '../components/BaseIcon'
-import NavBar from '../components/NavBar'
-import NavBarItemPlain from '../components/NavBarItemPlain'
-import AsideMenu from '../components/AsideMenu'
-import FooterBar from '../components/FooterBar'
-import { setUser } from '../stores/mainSlice'
-import { useAppDispatch, useAppSelector } from '../stores/hooks'
-import FormField from '../components/FormField'
+import { mdiBackburger, mdiForwardburger, mdiMenu } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
-
+import { ReactNode, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import AsideMenu from '../components/AsideMenu'
+import BaseIcon from '../components/BaseIcon'
+import FooterBar from '../components/FooterBar'
+import FormField from '../components/FormField'
+import NavBar from '../components/NavBar'
+import NavBarItemPlain from '../components/NavBarItemPlain'
+import { menuList } from '../features/login/login.slice'
+import menuNavBar from '../menuNavBar'
+import { useAppDispatch, useAppSelector } from '../stores/hooks'
+import { setUser } from '../stores/mainSlice'
 type Props = {
   children: ReactNode
 }
 
 export default function LayoutAuthenticated({ children }: Props) {
   const dispatch = useAppDispatch()
-
+  const menuAside = useSelector(menuList)
   useEffect(() => {
     dispatch(
       setUser({

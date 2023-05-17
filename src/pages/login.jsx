@@ -18,6 +18,7 @@ import { UserType, getPageTitle } from '../config'
 import { isLoading, isLoggedin, isRejectedLogin, login } from "../features/login/login.slice"
 import { useAppDispatch } from '../stores/hooks'
 import { setStyle } from '../stores/styleSlice'
+import { instLoginFormValidation } from '../validation/form'
 
 export default function Error() {
   const router = useRouter()
@@ -33,7 +34,8 @@ export default function Error() {
   }
   const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
-    loginDispatch(login({ username: e.login, password: e.password, type: UserType.ADMIN }))
+    const { username, password } = e
+    loginDispatch(login({ username, password, type: UserType.ADMIN }))
 
   }
 
@@ -59,28 +61,31 @@ export default function Error() {
             <Image className='bg-cover w-3/4 h-3/4' src={title} alt='' />
           </div>
           <Formik
-            initialValues={{ login: 'admin', password: '3457', remember: true }}
+            initialValues={{ username: '', password: '', remember: true, userType: 0 }}
             onSubmit={(e) => handleSubmit(e)}
+            validationSchema={instLoginFormValidation}
           >
-            <Form className='z-50'>
-              <FormField label="نام کاربری" help="نام کاربری خود را وارد کنید">
-                <Field name="login" />
-              </FormField>
+            {({ errors }) => (
+              <Form className='z-50'>
+                <FormField label="نام کاربری" help={errors.username}>
+                  <Field name="username" />
+                </FormField>
 
-              <FormField label="رمز عبور" help="رمز عبور خود را وارد کنید">
-                <Field name="password" type="password" />
-              </FormField>
+                <FormField label="رمز عبور" help={errors.password}>
+                  <Field name="password" type="password" />
+                </FormField>
 
-              <FormCheckRadio type="checkbox" label="مرا به خاطر بسپار">
-                <Field type="checkbox" name="remember" />
-              </FormCheckRadio>
+                <FormCheckRadio type="checkbox" label="مرا به خاطر بسپار">
+                  <Field type="checkbox" name="remember" />
+                </FormCheckRadio>
 
-              <BaseDivider />
+                <BaseDivider />
 
-              <BaseButtons>
-                <BaseButton isLoading={isLoadingUserLogin} type="submit" label="ورود به سامانه" color="info" />
-              </BaseButtons>
-            </Form>
+                <BaseButtons>
+                  <BaseButton disabled={errors.username || errors.password} isLoading={isLoadingUserLogin} type="submit" label="ورود به سامانه" color="info" />
+                </BaseButtons>
+              </Form>
+            )}
           </Formik>
         </CardBox>
       </SectionFullScreen>

@@ -33,7 +33,7 @@ export default function Error() {
   }
   const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
-    loginDispatch(login({ username: e.login, password: e.password, type: UserType.ADMIN }))
+    loginDispatch(login({ username: e.login, password: e.password, type: UserType.INSTITUTION }))
 
   }
 
@@ -47,7 +47,7 @@ export default function Error() {
   return (
     <div style={{ fontFamily: 'Vazir' }}>
       <Head>
-        <title>{getPageTitle('Login')}</title>
+        <title>{getPageTitle('InstLogin')}</title>
       </Head>
       <div className='w-full h-full top-0 right-0 left-0 bottom-0 absolute'>
         <Image src={im} alt="" className='w-full h-full bg-cover' />

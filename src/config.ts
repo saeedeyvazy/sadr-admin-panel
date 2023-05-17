@@ -1,7 +1,7 @@
 
 import axios from 'axios'
 import Cookie from 'universal-cookie'
-import instMenuAside from './InstMenuAside'
+import instMenuAside from './instMenuAside'
 import menuAside from './menuAside'
 
 export const localStorageDarkModeKey = 'darkMode'
@@ -24,7 +24,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "BankMng": "بانک اطلاعاتی",
     "ClassReport": "گزارش کلاس ها",
     "LearnTree": "درخت آموزشی",
-    "Support": "دوره های حمایتی"
+    "Support": "دوره های حمایتی",
+    "InstLogin": "موسسات و خانه قرآنی"
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`

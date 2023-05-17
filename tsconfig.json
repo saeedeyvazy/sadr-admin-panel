@@ -27,7 +27,7 @@
     "src/pages/document.jsx",
     "src/pages/document.jsx",
     "src/pages/bankMng.jsx"
-  ],
+, "src/validation/form.js"  ],
   "exclude": [
     "node_modules"
   ]

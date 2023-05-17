@@ -12,8 +12,8 @@ const instMenuAside: MenuAsideItem[] = [
     label: 'test',
   },
   {
-    href: '/forms',
-    label: 'test 2',
+    href: '/institution/manager',
+    label: ' مدیرعامل',
     icon: mdiCardSearch,
   },
 

@@ -8,7 +8,7 @@ export async function callLoginApi({ username, password, type, userType }) {
         if (response.data.success) {
 
             new Cookies().set('token', response.data.data.token)
-            return { response, type }
+            return { response, type, username }
         }
     } catch (error) {
         return { error }

@@ -25,7 +25,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "ClassReport": "گزارش کلاس ها",
     "LearnTree": "درخت آموزشی",
     "Support": "دوره های حمایتی",
-    "InstLogin": "موسسات و خانه قرآنی"
+    "InstLogin": "موسسات و خانه قرآنی",
+    "Manager": "مدیرعامل"
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`
@@ -38,9 +39,7 @@ export const UserTypeMenu = new Map([
 ])
 
 const defaultOptions = {
-    headers: {
-        // 'Content-Type': 'application/json',
-    },
+    headers: {},
 }
 
 const iaxios = axios.create(defaultOptions)

@@ -4,6 +4,19 @@ export type UserPayloadObject = {
   avatar: string
 }
 
+export type Manager = {
+  pic: string
+  code_m_kh: string
+  code_p: string
+  tarikh_shoro: string
+  tarikh_payan: string
+  feli: boolean
+  feliName: string
+  fname: string
+  lname: string
+  id: number
+}
+
 export type MenuAsideItem = {
   label: string
   icon?: string

@@ -16,6 +16,7 @@ export const login = createAsyncThunk(
 const initialState = {
     status: 'idle',
     isLoggedin: false,
+    username: '',
     menu: []
 }
 
@@ -37,6 +38,7 @@ export const loginSlice = createSlice({
                 state.status = 'idle'
                 state.isLoggedin = true
                 state.menu = UserTypeMenu.get(action.payload.type)
+                state.username = action.payload.username
             })
     },
 })
@@ -45,4 +47,6 @@ export const isLoading = (state) => state?.login?.status === 'loading'
 export const isRejectedLogin = (state) => state?.login?.status === 'rejected'
 export const isLoggedin = state => state?.login?.isLoggedin
 export const menuList = state => state?.login?.menu
+export const username = state => state?.login?.username
+
 export default loginSlice.reducer

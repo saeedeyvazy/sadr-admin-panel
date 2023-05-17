@@ -10,6 +10,7 @@ import BaseDivider from '../components/BaseDivider'
 import CardBox from '../components/CardBox'
 import FormCheckRadio from '../components/FormCheckRadio'
 import FormField from '../components/FormField'
+import { InstUserType } from '../components/InstUserType'
 import SectionFullScreen from '../components/SectionFullScreen'
 import { UserType, getPageTitle } from '../config'
 import { isLoading, isLoggedin, isRejectedLogin, login } from "../features/login/login.slice"
@@ -31,7 +32,7 @@ export default function Error() {
   }
   const handleSubmit = async (e) => {
     handleStylePick(e, 'white')
-    loginDispatch(login({ username: e.login, password: e.password, type: UserType.INSTITUTION }))
+    loginDispatch(login({ username: e.username, password: e.password, userType: e.userType, type: UserType.INSTITUTION }))
 
   }
 
@@ -57,12 +58,15 @@ export default function Error() {
             {/* <Image className='bg-cover w-3/4 h-3/4' src={title} alt='' /> */}
           </div>
           <Formik
-            initialValues={{ username: '', password: '', remember: true }}
+            initialValues={{ username: '', password: '', remember: true, userType: '' }}
             onSubmit={(e) => handleSubmit(e)}
             validationSchema={instLoginFormValidation}
           >
             {({ errors }) => (
               <Form className='z-50'>
+                <FormField label=''>
+                  <InstUserType name='userType' label='نوع کاربری' help={errors.userType} />
+                </FormField>
                 <FormField label="نام کاربری" help={errors.username} >
                   <Field name="username" />
                 </FormField>
@@ -78,7 +82,7 @@ export default function Error() {
                 <BaseDivider />
 
                 <BaseButtons>
-                  <BaseButton disabled={errors.username || errors.password} isLoading={isLoadingUserLogin} type="submit" label="ورود به سامانه" color="info" />
+                  <BaseButton disabled={errors.username || errors.password || errors.userType} isLoading={isLoadingUserLogin} type="submit" label="ورود به سامانه" color="info" />
                 </BaseButtons>
               </Form>
             )}

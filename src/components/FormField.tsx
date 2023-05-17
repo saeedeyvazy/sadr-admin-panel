@@ -61,7 +61,7 @@ const FormField = ({ icons = [], ...props }: Props) => {
         ))}
       </div>
       {props.help && (
-        <div className="text-xs text-gray-500 dark:text-slate-400 mt-1">{props.help}</div>
+        <div className="text-xs text-red-500 dark:text-slate-400 mt-1">{props.help}</div>
       )}
     </div>
   )

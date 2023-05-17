@@ -3,30 +3,25 @@ import {
   mdiCartOutline,
   mdiChartPie,
   mdiChartTimelineVariant,
-  mdiGithub,
-  mdiReload,
+  mdiReload
 } from '@mdi/js'
 import Head from 'next/head'
-import React, { useState } from 'react'
 import type { ReactElement } from 'react'
+import React, { useState } from 'react'
 import BaseButton from '../components/BaseButton'
-import LayoutAuthenticated from '../layouts/Authenticated'
+import CardBox from '../components/CardBox'
+import CardBoxWidget from '../components/CardBoxWidget'
+import ChartLineSample from '../components/ChartLineSample'
+import { sampleChartData } from '../components/ChartLineSample/config'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
-import CardBoxWidget from '../components/CardBoxWidget'
-import { useSampleClients } from '../hooks/sampleData'
-import CardBox from '../components/CardBox'
-import { sampleChartData } from '../components/ChartLineSample/config'
-import ChartLineSample from '../components/ChartLineSample'
-import { getPageTitle } from '../config'
 import { TeacherTable } from '../components/TeacherTable'
+import { getPageTitle } from '../config'
 import { useTeacher } from '../hooks/useTeacher'
+import LayoutAuthenticated from '../layouts/Authenticated'
 
 const Dashboard = () => {
-  const { clients } = useSampleClients()
   const { data, error, isLoading } = useTeacher()
-
-  const clientsListed = clients.slice(0, 4)
 
   const [chartData, setChartData] = useState(sampleChartData())
 

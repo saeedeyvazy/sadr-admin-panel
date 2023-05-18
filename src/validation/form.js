@@ -11,3 +11,9 @@ export const changeManagerValidation = Yup.object().shape({
     name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),
     startDate: Yup.string().required('تاریخ شروع به کار اجباریست')
 })
+
+
+export const directorBoardValidation = Yup.object().shape({
+    nationalCode: Yup.string().required('کد ملی جباریست'),
+    name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),
+})

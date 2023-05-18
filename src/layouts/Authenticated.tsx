@@ -9,10 +9,11 @@ import FooterBar from '../components/FooterBar'
 import FormField from '../components/FormField'
 import NavBar from '../components/NavBar'
 import NavBarItemPlain from '../components/NavBarItemPlain'
-import { menuList } from '../features/login/login.slice'
+import { menuList, username } from '../features/login/login.slice'
 import menuNavBar from '../menuNavBar'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { setUser } from '../stores/mainSlice'
+import Cookies from 'universal-cookie'
 type Props = {
   children: ReactNode
 }
@@ -23,7 +24,7 @@ export default function LayoutAuthenticated({ children }: Props) {
   useEffect(() => {
     dispatch(
       setUser({
-        name: 'سعید عیوضی',
+        name: new Cookies().get('username'),
         email: 'john@example.com',
         avatar:
           'https://avatars.dicebear.com/api/avataaars/example.svg?options[top][]=shortHair&options[accessoriesChance]=93',

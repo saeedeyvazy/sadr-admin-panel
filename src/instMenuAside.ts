@@ -5,6 +5,7 @@ import {
   mdiResponsive
 } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
+import { labels } from './constants/labels'
 
 const instMenuAside: MenuAsideItem[] = [
   {
@@ -15,6 +16,11 @@ const instMenuAside: MenuAsideItem[] = [
   {
     href: '/institution/manager',
     label: ' مدیرعامل',
+    icon: mdiAccount,
+  },
+  {
+    href: '/institution/director-board',
+    label: labels.directorBoard,
     icon: mdiAccount,
   },
 

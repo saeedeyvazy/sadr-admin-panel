@@ -17,6 +17,17 @@ export type Manager = {
   id: number
 }
 
+export type Member = {
+  pic: string
+  code_m_kh: string
+  code_p: string
+  fname: string
+  lname: string
+  id: number,
+  ozviat: string
+}
+
+
 export type MenuAsideItem = {
   label: string
   icon?: string

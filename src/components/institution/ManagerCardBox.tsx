@@ -48,8 +48,12 @@ export const ManagerCardBox = (props: Props) => {
           <div className="text-center md:text-right overflow-hidden mx-2 space-y-1">
             <h4 className="text-xl text-ellipsis">{`${props.manager.fname} ${props.manager.lname}`}</h4>
             <p className="text-gray-500 text-sm whitespace-nowrap dark:text-slate-300">
+              {`کد ملی ${props.manager.code_p}`}
+            </p>
+            <p className="text-gray-500 text-sm whitespace-nowrap dark:text-slate-300">
               {`از ${startDate} تا ${endDate}`}
             </p>
+
           </div>
         </div>
         <PillTag className='whitespace-nowrap flex-row-reverse' color={pillColor()} icon={pillIcon} label={desc} />

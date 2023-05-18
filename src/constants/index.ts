@@ -35,3 +35,4 @@ export const API_SAVE_LEARN_TREE = `${API_PREFIX}/api/amozeshi-tree/save`
 export const API_MKH = `${API_PREFIX}/api/mkh`
 export const API_SUPPORT_SEARCH = `${API_PREFIX}/api/dorehaye_hemayati`
 export const API_MANAGER_LIST = `${API_PREFIX}/api/institute/modir-amel`
+export const API_SEARCH_MANAGER = `${API_PREFIX}/api/institute/teacher/search?page=0&size=20`

@@ -1,12 +1,12 @@
 import { useSnackbar } from "notistack"
 import { useEffect } from "react"
-import { API_MANAGER_LIST } from "../../../constants"
-import { username } from "../../../features/login/login.slice"
+import Cookies from "universal-cookie"
+import { iaxios } from "../../../config"
+import { API_MANAGER_LIST, API_SEARCH_MANAGER } from "../../../constants"
 import useAxios from "../../../hooks/useAxios"
-import { useSelector } from "react-redux"
 
 export function useManager() {
-    const loggedinUsername = useSelector(username)
+    const loggedinUsername = new Cookies().get('username')
     const { response, error, loading } = useAxios({ url: `${API_MANAGER_LIST}/${loggedinUsername}`, method: 'get' })
     const { enqueueSnackbar } = useSnackbar()
 
@@ -16,4 +16,13 @@ export function useManager() {
     }, [error])
 
     return { response, loading }
+}
+
+export async function searchByNatCode(values, setFieldValue) {
+    try {
+        const response = await iaxios.post(API_SEARCH_MANAGER, { nationalCode: values.nationalCode })
+        setFieldValue('name', `${response.data.data[0].fname} ${response.data.data[0].lname}`)
+    } catch (error) {
+        alert(error)
+    }
 }

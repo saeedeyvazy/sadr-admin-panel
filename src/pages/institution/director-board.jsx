@@ -47,6 +47,15 @@ const DirectorBoard = () => {
     }
   }
 
+  const deleteItem = async (id) => {
+    try {
+      iaxios.delete(`${API_DIRECOR_BOARD_LIST}/${id}`)
+      enqueueSnackbar(labels.succeed, { variant: "success" })
+    } catch (error) {
+      enqueueSnackbar(labels.unsucceed, { variant: "error" })
+    }
+  }
+
   return (
     <>
       <Head>
@@ -90,7 +99,7 @@ const DirectorBoard = () => {
         {loading && <Loading />}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           {managerData && managerData.length && managerData.map((item) => (
-            <DirectorBoardCardBox key={item.id} member={item} />
+            <DirectorBoardCardBox key={item.id} member={item} deleteItem={() => deleteItem(item.id)} />
           ))}
         </div>
 

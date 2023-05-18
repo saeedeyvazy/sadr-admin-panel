@@ -1,13 +1,13 @@
-import { mdiArrowLeft, mdiTrendingDown, mdiTrendingUp } from '@mdi/js'
+import { labels } from '../../constants/labels'
 import { Member } from '../../interfaces'
+import BaseButton from '../BaseButton'
 import CardBox from '../CardBox'
 import PillTag from '../PillTag'
 import UserAvatar from '../UserAvatar'
-import BaseButton from '../BaseButton'
-import { labels } from '../../constants/labels'
 
 type Props = {
-  member: Member
+  member: Member,
+  deleteItem: any
 }
 
 
@@ -27,7 +27,7 @@ export const DirectorBoardCardBox = (props: Props) => {
             <PillTag className='whitespace-nowrap flex-row-reverse' color="success" label={props.member.ozviat} />
           </div>
         </div>
-        <BaseButton label={labels.delete} color='danger' />
+        <BaseButton onClick={props.deleteItem} label={labels.delete} color='danger' type='button' />
       </div>
     </CardBox>
   )

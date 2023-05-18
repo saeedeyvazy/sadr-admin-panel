@@ -1,4 +1,5 @@
 import {
+  mdiAccount,
   mdiCardSearch,
   mdiMonitor,
   mdiResponsive
@@ -14,7 +15,7 @@ const instMenuAside: MenuAsideItem[] = [
   {
     href: '/institution/manager',
     label: ' مدیرعامل',
-    icon: mdiCardSearch,
+    icon: mdiAccount,
   },
 
   {

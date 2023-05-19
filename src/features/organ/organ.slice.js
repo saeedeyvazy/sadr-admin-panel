@@ -8,20 +8,6 @@ export const getOrganList = createAsyncThunk(
         return response
     }
 )
-// export const createorgan = createAsyncThunk(
-//     'organ/add-organ',
-//     async (organInfo) => {
-//         const response = await callCreateorganApi(organInfo)
-//         return response
-//     }
-// )
-// export const deleteorgan = createAsyncThunk(
-//     'organ/delete-organ',
-//     async (id) => {
-//         const response = await callDeleteorganApi(id)
-//         return response
-//     }
-// )
 
 const initialState = {
     status: 'idle',

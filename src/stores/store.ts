@@ -7,6 +7,7 @@ import bankSlice from '../features/bank/bank.slice'
 import subbankSlice from '../features/subbank/subbank.slice'
 import repairSlice from '../features/repair/repair.slice'
 import loginSlice from '../features/login/login.slice'
+import boardDirectorSlice from '../features/institution/director/director.slice'
 
 export const store = configureStore({
   reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
     bank: bankSlice,
     subbank: subbankSlice,
     repair: repairSlice,
-    login: loginSlice
+    login: loginSlice,
+    director: boardDirectorSlice
 
   },
 })

@@ -17,6 +17,7 @@ import { addFounder, deleteFounder, isLoading, memberList } from '../../features
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { directorBoardValidation } from '../../validation/form'
 import { searchByNatCode, useFounder } from './hooks/useFounder'
+import BaseDivider from '../../components/BaseDivider'
 
 const FounderGroup = () => {
   const dispatch = useDispatch()
@@ -70,8 +71,9 @@ const FounderGroup = () => {
             )}
           </Formik>
         </CardBox>
+        <BaseDivider />
+        <SectionTitleLineWithButton icon={null} title={labels.founderGroupMember} main></SectionTitleLineWithButton>
         <CardBox>
-          <SectionTitleLineWithButton icon={null} title={labels.founderGroupMember} main></SectionTitleLineWithButton>
           {loading && <Loading />}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
             {founderMemberList && founderMemberList.map((item) => (

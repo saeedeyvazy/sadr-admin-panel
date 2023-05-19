@@ -1,5 +1,6 @@
 export const labels = {
     managers: 'مدیران عامل',
+    lastManagers: ' مدیران عامل گذشته',
     date: 'انتخاب تاریخ',
     fullName: 'نام و نام خانوادگی',
     workStartDate: 'تاریخ شروع به کار',

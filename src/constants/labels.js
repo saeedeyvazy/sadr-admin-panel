@@ -17,5 +17,9 @@ export const labels = {
     founderGroupMember: 'اعضای هیئت موسس',
     delete: 'حذف',
     addDirector: 'افزودن فرد',
-    dataNotFound: 'نتیجه ای یافت نشد'
+    dataNotFound: 'نتیجه ای یافت نشد',
+    activity: 'فعالیت ها',
+    learning: 'آموزشی',
+    advertise: 'تبلیغی',
+    search: 'پژوهشی'
 }

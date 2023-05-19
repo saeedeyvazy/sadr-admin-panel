@@ -21,3 +21,13 @@ export const callDeleteBoardMember = async (id) => {
     }
 }
 
+export async function callAddDirectorBoardApi(values) {
+    try {
+        const response = await iaxios.post(API_DIRECOR_BOARD_LIST, { code_m_kh: new Cookies().get('username'), code_p: values.nationalCode, ozviat: "عضو" })
+    } catch (error) {
+        alert(error)
+        return { error }
+
+    }
+}
+

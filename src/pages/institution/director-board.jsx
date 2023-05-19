@@ -1,50 +1,34 @@
 import { mdiAccount, mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
-import { useSnackbar } from 'notistack'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
-import Cookies from 'universal-cookie'
+import { useDispatch, useSelector } from 'react-redux'
 import BaseButton from '../../components/BaseButton'
 import BaseButtons from '../../components/BaseButtons'
 import CardBox from '../../components/CardBox'
 import FormField from '../../components/FormField'
+import { Loading } from '../../components/Loading'
 import SectionMain from '../../components/SectionMain'
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton'
 import { DirectorBoardCardBox } from '../../components/institution/DirectorBoardCardBox'
-import { getPageTitle, iaxios } from '../../config'
-import { API_DIRECOR_BOARD_LIST } from '../../constants'
+import { getPageTitle } from '../../config'
 import { labels } from '../../constants/labels'
-import { deleteBoardMember, isLoading, memberList } from '../../features/institution/director/director.slice'
+import { addBoardMember, deleteBoardMember, isLoading, memberList } from '../../features/institution/director/director.slice'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { directorBoardValidation } from '../../validation/form'
 import { searchByNatCode, useDirectorBoard } from './hooks/useDirectorBoard'
-import { Loading } from '../../components/Loading'
-import { useDispatch } from 'react-redux'
 
 const DirectorBoard = () => {
   const dispatch = useDispatch()
   useDirectorBoard()
   const directorBoardMember = useSelector(memberList)
   const loading = useSelector(isLoading)
-  const { enqueueSnackbar } = useSnackbar()
-
-  async function addDirectorBoard(values) {
-    try {
-      const response = await iaxios.post(API_DIRECOR_BOARD_LIST, { code_m_kh: new Cookies().get('username'), code_p: values.nationalCode, ozviat: "عضو" })
-      enqueueSnackbar(labels.succeed, { variant: 'success' })
-    } catch (error) {
-      enqueueSnackbar(error.response.data.message || labels.unsucceed, { variant: 'error' })
-    }
-  }
+  const [isSearchLoading, setIsSearchLoading] = useState(false)
 
   async function search(values, setFieldValue) {
-    try {
-      const resp = await searchByNatCode(values, setFieldValue)
-
-    } catch (error) {
-      enqueueSnackbar(error.message, { variant: "error" })
-    }
+    setIsSearchLoading(true)
+    await searchByNatCode(values, setFieldValue)
+    setIsSearchLoading(false)
   }
 
   return (
@@ -59,16 +43,17 @@ const DirectorBoard = () => {
           <Formik
             initialValues={{
               nationalCode: '',
-              name: ''
+              name: '',
+              pic: ''
             }}
-            onSubmit={(values) => { addDirectorBoard(values) }}
+            onSubmit={(values) => { dispatch(addBoardMember(values)) }}
             validationSchema={directorBoardValidation}
           >
             {({ setFieldValue, errors, values }) => (
               <Form>
                 <FormField label={labels.searchItem} icons={[mdiAccount]} help={errors.nationalCode}>
                   <Field name="nationalCode" placeholder={labels.nationalCode} />
-                  <BaseButton onClick={() => search(values, setFieldValue)} type='button' color='info' label={labels.search} icon={mdiSearchWeb} outline />
+                  <BaseButton isLoading={isSearchLoading} onClick={() => search(values, setFieldValue)} type='button' color='info' label={labels.search} icon={mdiSearchWeb} outline />
                 </FormField>
 
                 <FormField label=''>

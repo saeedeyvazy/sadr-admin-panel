@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { callDeleteBoardMember, callFetchDirectorApi } from './director.api'
+import { callAddDirectorBoardApi, callDeleteBoardMember, callFetchDirectorApi } from './director.api'
 
 export const fetchDirectorBoard = createAsyncThunk(
     'institution/director',
@@ -10,9 +10,16 @@ export const fetchDirectorBoard = createAsyncThunk(
 )
 
 export const deleteBoardMember = createAsyncThunk(
-    'document/select-doc-status', (memberId) => {
+    'institution/delete-member', (memberId) => {
         callDeleteBoardMember(memberId)
         return memberId
+    }
+)
+
+export const addBoardMember = createAsyncThunk(
+    'institution/add-member', (request) => {
+        callAddDirectorBoardApi(request)
+        return request
     }
 )
 
@@ -47,6 +54,16 @@ export const directorSlice = createSlice({
             .addCase(deleteBoardMember.fulfilled, (state, action) => {
                 state.status = 'idle'
                 state.memberList = state.memberList.filter(member => member.id != action.payload)
+            })
+            .addCase(addBoardMember.pending, (state) => {
+                state.status = 'loading'
+            })
+            .addCase(addBoardMember.rejected, (state) => {
+                state.status = 'rejected'
+            })
+            .addCase(addBoardMember.fulfilled, (state, action) => {
+                state.status = 'idle'
+                state.memberList = [...state.memberList, action.payload]
             })
     },
 })

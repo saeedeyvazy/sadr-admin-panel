@@ -19,10 +19,9 @@ export function useDirectorBoard() {
 export async function searchByNatCode(values, setFieldValue) {
     try {
         const response = await iaxios.post(API_SEARCH_MANAGER, { nationalCode: values.nationalCode })
-        console.log(response)
         setFieldValue('name', `${response.data.data[0].fname} ${response.data.data[0].lname}`)
     } catch (error) {
-        throw new Error(error)
+        alert(error)
 
     }
 }

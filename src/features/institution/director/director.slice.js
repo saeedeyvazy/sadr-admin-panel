@@ -17,9 +17,8 @@ export const deleteBoardMember = createAsyncThunk(
 )
 
 export const addBoardMember = createAsyncThunk(
-    'institution/add-member', (request) => {
-        callAddDirectorBoardApi(request)
-        return request
+    'institution/add-member', async (request) => {
+        return await callAddDirectorBoardApi(request)
     }
 )
 

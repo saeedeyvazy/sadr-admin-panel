@@ -74,7 +74,7 @@ const DirectorBoard = () => {
         <SectionTitleLineWithButton icon={null} title={labels.directorBoardMember} main></SectionTitleLineWithButton>
         {loading && <Loading />}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {directorBoardMember && directorBoardMember.length && directorBoardMember.map((item) => (
+          {directorBoardMember && directorBoardMember.map((item) => (
             <DirectorBoardCardBox key={item.id} member={item} deleteItem={() => dispatch(deleteBoardMember(item.id))} />
           ))}
         </div>

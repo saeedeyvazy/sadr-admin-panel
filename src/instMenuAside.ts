@@ -1,44 +1,27 @@
 import {
   mdiAccount,
-  mdiCardSearch,
-  mdiMonitor,
-  mdiResponsive
+  mdiAccountMultipleOutline,
+  mdiAccountMultiplePlus
 } from '@mdi/js'
-import { MenuAsideItem } from './interfaces'
 import { labels } from './constants/labels'
+import { MenuAsideItem } from './interfaces'
 
 const instMenuAside: MenuAsideItem[] = [
   {
-    href: '/dashboard',
-    icon: mdiMonitor,
-    label: 'test',
-  },
-  {
     href: '/institution/manager',
-    label: ' مدیرعامل',
+    label: labels.manager,
     icon: mdiAccount,
   },
   {
     href: '/institution/director-board',
     label: labels.directorBoard,
-    icon: mdiAccount,
+    icon: mdiAccountMultipleOutline,
   },
-
   {
-    label: 'کاربران',
-    icon: mdiResponsive,
-    menu: [
-      {
-        label: 'مدیریت کاربران',
-        href: '/user',
-      },
-      {
-        label: 'ادارات شهرستان',
-        href: '/office'
-      },
-    ],
+    href: '/institution/founder-group',
+    label: labels.founderGroup,
+    icon: mdiAccountMultiplePlus,
   },
-
 ]
 
 export default instMenuAside

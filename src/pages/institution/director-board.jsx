@@ -17,6 +17,7 @@ import { addBoardMember, deleteBoardMember, isLoading, memberList } from '../../
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { directorBoardValidation } from '../../validation/form'
 import { searchByNatCode, useDirectorBoard } from './hooks/useDirectorBoard'
+import BaseDivider from '../../components/BaseDivider'
 
 const DirectorBoard = () => {
   const dispatch = useDispatch()
@@ -71,14 +72,16 @@ const DirectorBoard = () => {
             )}
           </Formik>
         </CardBox>
+        <BaseDivider />
         <SectionTitleLineWithButton icon={null} title={labels.directorBoardMember} main></SectionTitleLineWithButton>
-        {loading && <Loading />}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {directorBoardMember && directorBoardMember.map((item) => (
-            <DirectorBoardCardBox key={item.id} member={item} deleteItem={() => dispatch(deleteBoardMember(item.id))} />
-          ))}
-        </div>
-
+        <CardBox>
+          {loading && <Loading />}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {directorBoardMember && directorBoardMember.map((item) => (
+              <DirectorBoardCardBox key={item.id} member={item} deleteItem={() => dispatch(deleteBoardMember(item.id))} />
+            ))}
+          </div>
+        </CardBox>
       </SectionMain>
     </>
   )

@@ -46,9 +46,6 @@ export default function LayoutAuthenticated({ children }: Props) {
     }
 
     router.events.on('routeChangeStart', handleRouteChangeStart)
-
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
     return () => {
       router.events.off('routeChangeStart', handleRouteChangeStart)
     }
@@ -60,7 +57,7 @@ export default function LayoutAuthenticated({ children }: Props) {
     <div className={`${darkMode ? 'dark' : ''} overflow-hidden  lg:overflow-visible`} style={{ direction: "rtl", fontFamily: 'Vazir' || 'sans-serif' }}>
       <div
         className={`${layoutAsidePadding} ${isAsideMobileExpanded ? 'mr-60 lg:mr-0' : ''
-          } pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-50 dark:bg-slate-800 dark:text-slate-100`}
+          } pt-14 min-h-screen w-screen transition-position lg:w-auto bg-gray-100 dark:bg-slate-800 dark:text-slate-100`}
       >
         <NavBar
           menu={menuNavBar}

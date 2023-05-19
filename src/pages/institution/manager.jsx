@@ -19,12 +19,13 @@ import { labels } from '../../constants/labels'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { changeManagerValidation } from '../../validation/form'
 import { searchByNatCode, useManager } from './hooks/useManager'
+import BaseDivider from '../../components/BaseDivider'
 
 const ManagerPage = () => {
   const { response, loading } = useManager()
   const [managerData, setManagerData] = useState([])
 
-  useEffect(() => { 
+  useEffect(() => {
     setManagerData(response)
   }, [response])
   const { enqueueSnackbar } = useSnackbar()
@@ -85,14 +86,16 @@ const ManagerPage = () => {
             )}
           </Formik>
         </CardBox>
-        <SectionTitleLineWithButton icon={null} title={labels.managers} main></SectionTitleLineWithButton>
-        {loading && <Loading />}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-          {managerData && managerData.length && managerData.map((item) => (
-            <ManagerCardBox key={item.id} manager={item} />
-          ))}
-        </div>
-
+        <BaseDivider />
+        <SectionTitleLineWithButton icon={null} title={labels.lastManagers} main></SectionTitleLineWithButton>
+        <CardBox>
+          {loading && <Loading />}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {managerData && managerData.length && managerData.map((item) => (
+              <ManagerCardBox key={item.id} manager={item} />
+            ))}
+          </div>
+        </CardBox>
       </SectionMain>
     </>
   )

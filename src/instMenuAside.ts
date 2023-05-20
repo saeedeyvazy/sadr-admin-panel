@@ -32,7 +32,7 @@ const instMenuAside: MenuAsideItem[] = [
     menu: [
       { href: '/institution/learning-activity', label: labels.learning, icon: mdiPencil },
       { href: '/institution/advertise-activity', label: labels.advertise, icon: mdiRadioTower },
-      { href: '/institution/search-activity', label: labels.search, icon: mdiAccessPoint },
+      { href: '/institution/search-activity', label: labels.research, icon: mdiAccessPoint },
     ]
   },
 ]

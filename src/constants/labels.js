@@ -21,5 +21,13 @@ export const labels = {
     activity: 'فعالیت ها',
     learning: 'آموزشی',
     advertise: 'تبلیغی',
-    search: 'پژوهشی'
+    research: 'پژوهشی',
+    learningActivity: 'فعالیت های آموزشی',
+    trainingCourse: 'دوره های آموزشی',
+    courseTitle: 'عنوان دوره',
+    officeCode: 'کد موسسه',
+    addCoach: 'افزودن مربی',
+    validation: {
+        mandatory: 'این فیلد اجباریست'
+    }
 }

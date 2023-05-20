@@ -9,6 +9,7 @@ import repairSlice from '../features/repair/repair.slice'
 import loginSlice from '../features/login/login.slice'
 import boardDirectorSlice from '../features/institution/director/director.slice'
 import founderGroupSlice from '../features/institution/founder/founder.slice'
+import activitySlice from '../features/institution/activity/activity.slice'
 
 export const store = configureStore({
   reducer: {
@@ -21,7 +22,8 @@ export const store = configureStore({
     repair: repairSlice,
     login: loginSlice,
     director: boardDirectorSlice,
-    founder: founderGroupSlice
+    founder: founderGroupSlice,
+    activity: activitySlice
   },
 })
 

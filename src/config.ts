@@ -28,7 +28,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "InstLogin": "موسسات و خانه قرآنی",
     "Manager": "مدیرعامل",
     "DirectorBoard": "هیئت مدیره",
-    "FounderGroup": "هیئت موسس"
+    "FounderGroup": "هیئت موسس",
+    "LearningActivity": "قعالیت های آموزشی"
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`

@@ -44,12 +44,11 @@ const DirectorBoard = () => {
         <CardBox>
           <Formik
             initialValues={{
-              code_dore: '',
+              code_dore: 0,
               codemelli_morabi: '',
               code_m_kh: ''
 
             }}
-            onSubmit={(values) => { dispatch(addActivity(values)) }}
             validationSchema={learningActivityValidation}
           >
             {({ setFieldValue, errors, values }) => (
@@ -65,12 +64,12 @@ const DirectorBoard = () => {
 
                 <FormField help={errors.code_dore}>
                   <FormField label={labels.courseTitle} >
-                    <DoreSelect isMulti={false} name="t" signal={(selected) => { setFieldValue('code_dore', selected.value.id) }} />
+                    <DoreSelect isMulti={false} name="code_dore" signal={(selected) => { setFieldValue('code_dore', selected.value.id) }} />
                   </FormField>
                   <FormField label=''></FormField>
                 </FormField>
                 <BaseButtons>
-                  <BaseButton disabled={errors.code_dore || errors.codemelli_morabi} color='success' label={labels.addCoach} outline type='submit' />
+                  <BaseButton onClick={() => dispatch(addActivity(values))} disabled={errors.code_dore || errors.codemelli_morabi} color='success' label={labels.addCoach} outline type='submit' />
                 </BaseButtons>
               </Form>
             )}

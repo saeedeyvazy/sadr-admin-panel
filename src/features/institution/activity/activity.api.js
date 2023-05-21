@@ -23,8 +23,9 @@ export const callDeleteActivity = async (id) => {
 
 export async function callAddActivityApi(values) {
     try {
-        const response = await iaxios.post(API_ACTIVITY, { code_m_kh: new Cookies().get('username'), code_p: values.nationalCode, ozviat: "عضو" })
-        return response.data.data   
+        const { code_dore, codemelli_morabi } = values
+        const response = await iaxios.post(API_ACTIVITY, { code_dore, codemelli_morabi, code_m_kh: new Cookies().get('username') })
+        return response.data.data
     } catch (error) {
         alert(error)
         return { error }

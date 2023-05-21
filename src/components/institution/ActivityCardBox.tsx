@@ -18,7 +18,7 @@ export const ActivityCardBox = ({ title, deleteItem, subtitle, pic, pillDesc, al
     <CardBox className="mb-6 last:mb-0 shadow-md border border-gray-200 cursor-pointer hover:bg-gray-100 transition duration-500">
       <div className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex flex-col md:flex-row items-center justify-start mb-6 md:mb-0">
-          <Avatar className="w-16 h-16 md:mr-6 mb-6 md:mb-0 rounded-full border  bg-gray-200" avatar={pic} username={alt} />
+          {/* <Avatar className="w-16 h-16 md:mr-6 mb-6 md:mb-0 rounded-full border  bg-gray-200" avatar={pic} username={alt} /> */}
           <div className="text-center md:text-right overflow-hidden mx-2 space-y-1">
             <h4 className="text-xl text-ellipsis">{title}</h4>
             <p className="text-gray-500 text-sm whitespace-nowrap dark:text-slate-300">

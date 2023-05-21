@@ -20,7 +20,7 @@ export const directorBoardValidation = Yup.object().shape({
 })
 
 export const learningActivityValidation = Yup.object().shape({
-    codemelli_morabi: Yup.string().required(labels.validation.mandatory),
+    codemelli_morabi: Yup.string().max(10).min(10).required(labels.validation.mandatory),
     code_dore: Yup.string().required(labels.validation.mandatory),
     code_m_kh: Yup.string().required(labels.validation.mandatory),
 })

@@ -1,21 +1,20 @@
 import { mdiCardAccountDetails, mdiEye, mdiTrashCan } from '@mdi/js'
-import React, { useState } from 'react'
+import axios from 'axios'
+import { Form, Formik } from 'formik'
+import { useSnackbar } from 'notistack'
+import { useState } from 'react'
+import { useSelector } from 'react-redux'
+import { iaxios } from '../config'
+import { API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
+import { selectedSubBank } from '../features/subbank/subbank.slice'
+import { Bank } from './Bank/index'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
-import CardBoxModal from './CardBoxModal'
-import UserAvatar from './UserAvatar'
-import { Loading } from './Loading'
-import axios from 'axios'
-import { API_GENERAL_TEACHER_SEARCH, API_REPAIR } from '../constants'
 import BaseDivider from './BaseDivider'
-import { iaxios } from '../config'
-import { Bank } from './Bank/index'
+import CardBoxModal from './CardBoxModal'
+import { Loading } from './Loading'
 import { SubBank } from './SubBank/index'
-import { Form, Formik } from 'formik'
-import { useDispatch } from 'react-redux'
-import { useSnackbar } from 'notistack'
-import { useSelector } from 'react-redux'
-import { selectedSubBank } from '../features/subbank/subbank.slice'
+import UserAvatar from './UserAvatar'
 export const TeacherTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -148,8 +147,8 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.bankhaList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.bankhaList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.onvan}</td>
                   <td>{item.zir_onvan}</td>
                   <td>{item.id}</td>
@@ -288,7 +287,7 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
           </table>
         </div>
 
-      </CardBoxModal>
+      </CardBoxModal >
 
       <CardBoxModal
         title="حذف فرد انتخاب شده"
@@ -300,60 +299,61 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
       >
         <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
       </CardBoxModal>
-      {isLoading ? <Loading />
-        :
-        <table>
-          <thead>
-            <tr className='[&>*]:text-right'>
-              <th />
-              <th>نام و نام خانوادگی</th>
-              <th>کد ملی</th>
-              <th>جنسیت</th>
-              <th>محل صدور</th>
-              <th>شماره همراه</th>
-              <th />
-            </tr>
-          </thead>
-          <tbody>
-            {clientsPaginated.map((client) => (
-              <tr key={client.id} className='[&>*]:text-right'>
-                <td className="border-b-0 lg:w-6 before:hidden">
-                  <UserAvatar username={''} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
-                </td>
-                <td data-label="نام و نام خانوادگی">{`${client.fname} ${client.lname}`}</td>
-                <td data-label="کد ملی" className='text-sm'>{client.codemelli}</td>
-                <td data-label="جنسیت">{client.jensiyatName}</td>
-                <td data-label="محل صدور" className="lg:w-32">{client.mahalsodor}</td>
-                <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">{client.mob}</td>
-                <td className="before:hidden lg:w-1 whitespace-nowrap">
-                  <BaseButtons type="justify-start lg:justify-between" noWrap>
-                    <BaseButton
-                      color="info"
-                      icon={mdiEye}
-                      onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
-                      small
-                    />
-                    <BaseButton
-                      color="danger"
-                      icon={mdiTrashCan}
-                      onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
-                      small
-                    />
-                    <BaseButton
-                      color="info"
-                      icon={mdiCardAccountDetails}
-                      className='mr-3'
-                      onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
-                      small
-                    />
-                  </BaseButtons>
-
-                </td>
+      {
+        isLoading ? <Loading />
+          :
+          <table>
+            <thead>
+              <tr className='[&>*]:text-right'>
+                <th />
+                <th>نام و نام خانوادگی</th>
+                <th>کد ملی</th>
+                <th>جنسیت</th>
+                <th>محل صدور</th>
+                <th>شماره همراه</th>
+                <th />
               </tr>
-            ))
-            }
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {clientsPaginated.map((client) => (
+                <tr key={client.id} className='[&>*]:text-right'>
+                  <td className="border-b-0 lg:w-6 before:hidden">
+                    <UserAvatar username={''} className="w-24 h-24 mx-auto lg:w-6 lg:h-6" />
+                  </td>
+                  <td data-label="نام و نام خانوادگی">{`${client.fname} ${client.lname}`}</td>
+                  <td data-label="کد ملی" className='text-sm'>{client.codemelli}</td>
+                  <td data-label="جنسیت">{client.jensiyatName}</td>
+                  <td data-label="محل صدور" className="lg:w-32">{client.mahalsodor}</td>
+                  <td data-label="شماره همراه" className="lg:w-1 whitespace-nowrap text-sm">{client.mob}</td>
+                  <td className="before:hidden lg:w-1 whitespace-nowrap">
+                    <BaseButtons type="justify-start lg:justify-between" noWrap>
+                      <BaseButton
+                        color="info"
+                        icon={mdiEye}
+                        onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
+                        small
+                      />
+                      <BaseButton
+                        color="danger"
+                        icon={mdiTrashCan}
+                        onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
+                        small
+                      />
+                      <BaseButton
+                        color="info"
+                        icon={mdiCardAccountDetails}
+                        className='mr-3'
+                        onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
+                        small
+                      />
+                    </BaseButtons>
+
+                  </td>
+                </tr>
+              ))
+              }
+            </tbody>
+          </table>
       }
       <div className="p-3 lg:px-6 border-t border-gray-100 dark:border-slate-800">
         <div className="flex flex-col md:flex-row items-center justify-between py-3 md:py-0">

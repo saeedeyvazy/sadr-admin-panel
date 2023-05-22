@@ -12,7 +12,7 @@ import FormField from '../../components/FormField'
 import { Loading } from '../../components/Loading'
 import SectionMain from '../../components/SectionMain'
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton'
-import { ActivityCardBox } from '../../components/institution/ActivityCardBox'
+import { Table } from '../../components/institution/Table'
 import { getPageTitle } from '../../config'
 import { labels } from '../../constants/labels'
 import { addActivity, deleteActivity, isLoading, memberList } from '../../features/institution/activity/activity.slice'
@@ -78,18 +78,13 @@ const DirectorBoard = () => {
         <BaseDivider />
         <SectionTitleLineWithButton icon={null} title={labels.trainingCourse} main></SectionTitleLineWithButton>
         <CardBox>
-          {loading && <Loading />}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-            {teacherList && teacherList.map((item) => (
-              <ActivityCardBox
-                key={item.id}
-                title={`${item.fname} ${item.lname}`}
-                subtitle={`${labels.nationalCode} ${item.codemelli_morabi}`}
-                pillDesc={item.onvan_dore}
-                deleteItem={() => dispatch(deleteActivity(item.id))} />
-            ))}
-          </div>
+          {loading ? <Loading /> :
+            teacherList && teacherList.length ? <Table
+              rowData={teacherList.map((item, index) => ({ id: item.id, row: index + 1, fullname: `${item.fname} ${item.lname}`, nationalCode: item.codemelli_morabi, course: item.onvan_dore }))}
+              rowKey={'id'} titleList={[labels.rowNum, labels.fullName, labels.nationalCode, labels.courseTitle]}
+              danger={(id) => dispatch(deleteActivity(id))} /> : null}
         </CardBox>
+
       </SectionMain>
     </>
   )

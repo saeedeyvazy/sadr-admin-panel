@@ -11,7 +11,7 @@ export const localStorageStyleKey = 'style'
 export const containerMaxW = 'xl:max-w-6xl xl:mx-auto'
 
 export const appTitle = 'سامانه صدر'
-
+export const perPageSize = 5
 export const currentPageTitleMap: Record<string, string> = {
     "Profile": "پروفایل",
     "Dashboard": "داشبورد",

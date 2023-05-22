@@ -188,8 +188,8 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.sabeqeList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.sabeqeList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.onvan}</td>
                   <td>{item.onvan_dore}</td>
                   <td>{item.nam}</td>
@@ -215,8 +215,8 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.madrakList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.madrakList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td className='whitespace-nowrap'>{item.onvan_dore}</td>
                   <td>{item.saat}</td>
                   <td>{item.moadel}</td>
@@ -245,8 +245,8 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.eshteghalList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.eshteghalList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.noshoghl}</td>
                   <td>{item.nogharardad}</td>
                   <td>{item.mahalkar}</td>
@@ -272,8 +272,8 @@ export const TeacherTable = ({ clients, isLoading, error }) => {
               </tr>
             </thead>
             <tbody>
-              {teacherDetail?.tahsiliList?.map(item =>
-                <tr className='[&>*]:text-right'>
+              {teacherDetail?.tahsiliList?.map((item, index) =>
+                <tr key={index} className='[&>*]:text-right'>
                   <td>{item.maghta}</td>
                   <td>{item.reshte}</td>
                   <td>{item.moadel}</td>

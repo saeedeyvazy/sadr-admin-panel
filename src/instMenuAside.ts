@@ -5,7 +5,8 @@ import {
   mdiAccountMultiplePlus,
   mdiBookOpenVariant,
   mdiPencil,
-  mdiRadioTower
+  mdiRadioTower,
+  mdiTable
 } from '@mdi/js'
 import { labels } from './constants/labels'
 import { MenuAsideItem } from './interfaces'
@@ -25,6 +26,11 @@ const instMenuAside: MenuAsideItem[] = [
     href: '/institution/founder-group',
     label: labels.founderGroup,
     icon: mdiAccountMultiplePlus,
+  },
+  {
+    label: 'گزارش کلاسها',
+    icon: mdiTable,
+    href: '/institution/class-report'
   },
   {
     label: labels.activity,

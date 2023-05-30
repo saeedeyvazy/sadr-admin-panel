@@ -27,6 +27,8 @@ export const labels = {
     courseTitle: 'عنوان دوره',
     officeCode: 'کد موسسه',
     addCoach: 'افزودن مربی',
+    recentCertificate: 'سوابق گواهی',
+    printCert: 'صدور گواهی',
     validation: {
         mandatory: 'این فیلد اجباریست'
     }

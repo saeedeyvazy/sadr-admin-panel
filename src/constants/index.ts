@@ -39,3 +39,5 @@ export const API_SEARCH_MANAGER = `${API_PREFIX}/api/institute/teacher/search?pa
 export const API_DIRECOR_BOARD_LIST = `${API_PREFIX}/api/institute/h-modire`
 export const API_FOUNDER_GROUP = `${API_PREFIX}/api/institute/heat-moases`
 export const API_ACTIVITY = `${API_PREFIX}/api/institute/faaliat-amozeshi`
+export const API_INST_CERT_LIST = `${API_PREFIX}/api/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`
+export const API_INST_PRINT_CERT = `${API_PREFIX}/api/institute/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`

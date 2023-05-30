@@ -1,18 +1,19 @@
-import { mdiCardAccountDetails, mdiEye, mdiTrashCan, mdiUpdate } from '@mdi/js'
-import React, { useRef, useState } from 'react'
-import BaseButton from './BaseButton'
-import BaseButtons from './BaseButtons'
-import CardBoxModal from './CardBoxModal'
-import { Loading } from './Loading'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_GENERAL_TEACHER_SEARCH, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
-import BaseDivider from './BaseDivider'
-import { iaxios } from '../config'
+import { mdiCardAccountDetails, mdiEye, mdiUpdate } from '@mdi/js'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
-import FormField from './FormField'
+import { useRef, useState } from 'react'
+import { iaxios } from '../config'
+import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import BaseButton from './BaseButton'
+import BaseButtons from './BaseButtons'
+import BaseDivider from './BaseDivider'
+import CardBoxModal from './CardBoxModal'
 import { DoreSelect } from './DoreSelect'
-import { UserOffice } from './UserOffice'
+import FormField from './FormField'
+import { Loading } from './Loading'
 import { Mkh } from './Mkh'
+import { UserOffice } from './UserOffice'
+import { labels } from '@/constants/labels'
 export const ClassReportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -46,6 +47,9 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   const [isModalInfoActive, setIsModalInfoActive] = useState(false)
   const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
+  const [isModalTest, setIsModalTest] = useState(false)
+  const [certList, setCertList] = useState([{}])
+  const [certPrintData, setCertPrintData] = useState([{}])
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -96,6 +100,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   const handleCancelModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
+    setIsModalTest(false)
   }
 
   const handleCloseDetailModal = () => {
@@ -115,6 +120,30 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
       setClassInfo(classInfoResponse.data.data)
     } catch (error) {
       console.log(error)
+    }
+  }
+
+  async function fetchCertificateList(nationalCode) {
+    try {
+      const response = await iaxios.get(API_INST_CERT_LIST
+        .replace('{nationalCode}', nationalCode)
+        .replace('{classCode}', selectedClient.codek)
+      )
+      setCertList(response.data.data)
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  async function generateCertificate(nationalCode) {
+    try {
+      const response = await iaxios.get(API_INST_PRINT_CERT
+        .replace('{nationalCode}', nationalCode)
+        .replace('{classCode}', selectedClient.codek)
+      )
+      setCertPrintData(response.data.data)
+    } catch (error) {
+      alert(error)
     }
   }
 
@@ -193,6 +222,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                 <th>نمره پایانی</th>
                 <th>کد ملی</th>
                 <th>نتیجه</th>
+                <th />
               </tr>
             </thead>
             <tbody>
@@ -202,6 +232,12 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                   <td>{item.payani}</td>
                   <td>{item.codemelli}</td>
                   <td>{item.natije}</td>
+                  <td>
+                    <BaseButtons>
+                      <BaseButton onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
+                      <BaseButton onClick={() => generateCertificate(item.codemelli)}>{labels.printCert}</BaseButton>
+                    </BaseButtons>
+                  </td>
                 </tr>)
               }
             </tbody>
@@ -209,8 +245,36 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
         </div>
         <BaseDivider />
         <BaseDivider />
-      </CardBoxModal>
+      </CardBoxModal >
 
+      <CardBoxModal
+        title="به روزرسانی موسسه"
+        buttonColor="info"
+        buttonLabel="تایید"
+        isActive={isModalTest}
+        onConfirm={handleCancelModalAction}
+        onCancel={handleCancelModalAction}
+      >
+        <table>
+          <thead>
+            <tr className='[&>*]:text-right'>
+              <th>کد کلاس</th>
+              <th>نام موسسه</th>
+              <th>عنوان دوره</th>
+              <th>کد مربی</th>
+              <th />
+            </tr>
+          </thead>
+          <tbody>
+            {
+              certList.map((item, index) =>
+              (<tr key={index}>
+                <td>{item}</td>
+              </tr>))
+            }
+          </tbody>
+        </table>
+      </CardBoxModal>
       <CardBoxModal
         title="به روزرسانی موسسه"
         buttonColor="info"

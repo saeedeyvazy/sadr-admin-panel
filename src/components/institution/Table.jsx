@@ -37,13 +37,6 @@ export function Table({ titleList, rowData, rowKey, danger }) {
                                 onClick={() => { danger(client[rowKey]) }}
                                 small
                             />
-                            <BaseButton
-                                color="info"
-                                icon={mdiCardAccountDetails}
-                                className='mr-3'
-                                // onClick={() => { fetchDetail(client.id); setIsModalDetailActive(true) }}
-                                small
-                            />
                         </BaseButtons>
 
                     </td>

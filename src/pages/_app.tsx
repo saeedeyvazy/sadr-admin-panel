@@ -59,9 +59,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               <meta property="twitter:image:src" content={image} />
               <meta property="twitter:image:width" content={imageWidth} />
               <meta property="twitter:image:height" content={imageHeight} />
-
+              <link rel="preconnect" href="//fdn.fontcdn.ir" /><link rel="preconnect" href="//v1.fontapi.ir" />
+              <link href="https://v1.fontapi.ir/css/IranNastaliq" rel="stylesheet" />
               <link rel="icon" href="/admin-one-react-tailwind/favicon.png" />
               <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@v30.1.0/dist/font-face.css" rel="stylesheet" type="text/css" />
+
             </Head>
 
             <Script

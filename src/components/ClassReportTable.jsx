@@ -14,6 +14,7 @@ import { Loading } from './Loading'
 import { Mkh } from './Mkh'
 import { UserOffice } from './UserOffice'
 import { labels } from '@/constants/labels'
+import { useRouter } from 'next/router'
 export const ClassReportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -116,7 +117,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
       const response = await iaxios.get(API_CLASS_STUDENT_INFO + "?codek=" + id)
       const classInfoResponse = await iaxios.get(API_CLASS_INFO, { params: { codek: id } })
       setTeacherDetail(response.data.data)
-      console.group(classInfoResponse.data.data)
+
       setClassInfo(classInfoResponse.data.data)
     } catch (error) {
       console.log(error)
@@ -125,6 +126,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
 
   async function fetchCertificateList(nationalCode) {
     try {
+
       const response = await iaxios.get(API_INST_CERT_LIST
         .replace('{nationalCode}', nationalCode)
         .replace('{classCode}', selectedClient.codek)
@@ -134,14 +136,40 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
       alert(error)
     }
   }
-
+  const router = useRouter()
   async function generateCertificate(nationalCode) {
     try {
+
+      // const response = await iaxios.get(API_INST_PRINT_CERT
+      //   .replace('{nationalCode}', nationalCode)
+      //   .replace('{classCode}', selectedClient.codek)
+      // )
       const response = await iaxios.get(API_INST_PRINT_CERT
-        .replace('{nationalCode}', nationalCode)
-        .replace('{classCode}', selectedClient.codek)
+        .replace('{nationalCode}', "3750526370")
+        .replace('{classCode}', "58")
       )
-      setCertPrintData(response.data.data)
+      const responseData = response.data.data
+      router.push({
+        pathname: "/institution/cert-print",
+        query: {
+          title: responseData.onvan_govahi, subtitle: responseData.gerayesh,
+          flname: responseData.flname,
+          fthname: responseData.fthname,
+          nationalCode,
+          startDate: responseData.tsh,
+          endDate: responseData.tp,
+          province: responseData.ostan,
+          town: responseData.shahrestan,
+          officeTitle: responseData.onvan,
+          officeName: responseData.name,
+          hours: responseData.saat,
+          score: responseData.nahaii,
+          fname: responseData.fname,
+          lname: responseData.lname,
+          birthDate: responseData.ts,
+
+        }
+      })
     } catch (error) {
       alert(error)
     }
@@ -235,7 +263,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                   <td>
                     <BaseButtons>
                       <BaseButton onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
-                      <BaseButton onClick={() => generateCertificate(item.codemelli)}>{labels.printCert}</BaseButton>
+                      <BaseButton label={labels.printCert} onClick={() => generateCertificate(item.codemelli)}></BaseButton>
                     </BaseButtons>
                   </td>
                 </tr>)
@@ -342,7 +370,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                       <BaseButton
                         color="info"
                         icon={mdiCardAccountDetails}
-                        onClick={() => { fetchDetail(client.codek); setIsModalDetailActive(true) }}
+                        onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
                         small
                       />
                     </BaseButtons>

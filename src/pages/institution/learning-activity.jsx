@@ -9,6 +9,7 @@ import BaseDivider from '../../components/BaseDivider'
 import CardBox from '../../components/CardBox'
 import { DoreSelect } from "../../components/DoreSelect"
 import FormField from '../../components/FormField'
+import { InputWithButton } from '../../components/InputWithButton'
 import { Loading } from '../../components/Loading'
 import SectionMain from '../../components/SectionMain'
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton'
@@ -66,7 +67,7 @@ const DirectorBoard = () => {
                   <FormField label={labels.courseTitle} >
                     <DoreSelect isMulti={false} name="code_dore" signal={(selected) => { setFieldValue('code_dore', selected.value.id) }} />
                   </FormField>
-                  <FormField label=''></FormField>
+                  <FormField label=''><InputWithButton /></FormField>
                 </FormField>
                 <BaseButtons>
                   <BaseButton onClick={() => dispatch(addActivity(values))} disabled={errors.code_dore || errors.codemelli_morabi} color='success' label={labels.addCoach} outline type='submit' />

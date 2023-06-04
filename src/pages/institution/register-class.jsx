@@ -1,10 +1,16 @@
 import BaseButtons from '@/components/BaseButtons'
+import { ClassLevel } from '@/components/ClassLevel'
+import { Gender } from '@/components/Gender'
+import { Town } from '@/components/Town'
 import { labels } from '@/constants/labels'
-import { registerClassValidation } from '@/validation/form'
+import { regClassLoading, registerClass } from '@/features/institution/class/register/regClass.slice'
+import { addation } from '@/validation/form'
 import { mdiAccount, mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useState } from 'react'
+import { DatePicker } from 'react-advance-jalaali-datepicker'
+import { useDispatch, useSelector } from 'react-redux'
 import BaseButton from '../../components/BaseButton'
 import BaseDivider from '../../components/BaseDivider'
 import CardBox from '../../components/CardBox'
@@ -19,10 +25,6 @@ import { API_CLASS_REPORT } from '../../constants'
 import { useClassReport } from '../../hooks/useClassReport'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { searchByNatCode } from './hooks/useDirectorBoard'
-import { DatePicker } from 'react-advance-jalaali-datepicker'
-import { Town } from '@/components/Town'
-import { Gender } from '@/components/Gender'
-import { ClassLevel } from '@/components/ClassLevel'
 
 const FormsPage = () => {
     const { data, error, isLoading } = useClassReport()
@@ -30,7 +32,7 @@ const FormsPage = () => {
     const [searchResult, setSearchResult] = useState([{}])
     const [searchLoading, setSearchLoading] = useState(false)
     const [isSearchLoading, setIsSearchLoading] = useState(false)
-
+    const addading = useSelector(regClassLoading)
     async function search(values, setFieldValue) {
         setIsSearchLoading(true)
         await searchByNatCode(values, setFieldValue)
@@ -59,6 +61,19 @@ const FormsPage = () => {
             alert(error)
         }
     }
+    const dispatch = useDispatch()
+    function addClass(values) {
+        const request = {
+            onvan: values.onvan,
+            tedadsherkatkonande: values.memberNum,
+            shahrestan: values.town,
+            codeteacher: values.nationalCode,
+            jensiyat: values.gender,
+            ttf: new Date(),
+            id_hemayati: ''
+        }
+        dispatch(registerClass(request))
+    }
     return (
         <>
             <Head>
@@ -76,9 +91,10 @@ const FormsPage = () => {
                             memberNum: 10,
                             town: '',
                             gender: '',
-                            classLevel: ''
+                            classLevel: '',
+                            onvan: ''
                         }}
-                        validationSchema={registerClassValidation}
+                        validationSchema={addation}
                         onSubmit={(values) => handleSubmit(values)}
                     >
                         {({ values, setFieldValue, errors }) => (
@@ -100,22 +116,24 @@ const FormsPage = () => {
                                 <FormField label=''>
                                     <Town help={errors.town} name='town' label={labels.town} />
                                     <ClassLevel help={errors.classLevel} name='classLevel' label={labels.classLevel} />
-                                    <FormField label={labels.workStartDate} help={errors.startDate}>
-                                        <DatePicker
-                                            inputComponent={(props) => <Field name='startDate' className="popo" {...props} />}
-                                            placeholder="انتخاب تاریخ"
-                                            format="jYYYY/jMM/jDD"
-                                            onChange={(unix, formatted) => setFieldValue("startDate", formatted)}
-                                            id="datePicker"
-                                            preSelected="1402/03/25"
-                                            name='date'
-                                        />
+                                    <FormField label={labels.dore} help={errors.onvan}>
+                                        <DoreSelect isMulti={false} name='onvan' signal={(selected) => setFieldValue('onvan', selected.value.id)} />
                                     </FormField>
+
                                 </FormField>
-                                <FormField >
+                                <FormField label={labels.workStartDate} help={errors.startDate}>
+                                    <DatePicker
+                                        inputComponent={(props) => <Field name='startDate' className="popo" {...props} />}
+                                        placeholder="انتخاب تاریخ"
+                                        format="jYYYY/jMM/jDD"
+                                        onChange={(unix, formatted) => setFieldValue("startDate", formatted)}
+                                        id="datePicker"
+                                        preSelected="1402/03/25"
+                                        name='date'
+                                    />
                                 </FormField>
                                 <BaseButtons>
-                                    <BaseButton disabled={errors.name || errors.nationalCode} color='success' label={labels.registerClass} outline type='submit' />
+                                    <BaseButton isLoading={addading} onClick={() => addClass(values)} disabled={errors.name || errors.nationalCode} color='success' label={labels.registerClass} outline type='button' />
                                 </BaseButtons>
                             </Form>)}
                     </Formik>

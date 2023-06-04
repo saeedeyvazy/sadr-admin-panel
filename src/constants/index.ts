@@ -26,6 +26,7 @@ export const API_SUB_BANK_LIST = `${API_PREFIX}/api/ziranavinbankha`
 export const API_REPAIR = `${API_PREFIX}/api/sazmandehi`
 export const API_CLASS_REPORT = `${API_PREFIX}/api/kelas-report`
 export const API_CLASS_STUDENT_INFO = `${API_PREFIX}/api/kelas-report/kelas-student`
+export const API_INST_CLASS_STUDENT_INFO = `${API_PREFIX}/api/institute/kelas/list/student`
 export const API_CLASS_INFO = `${API_PREFIX}/api/kelas-report/kelas-student-amar`
 export const API_UPDATE_CLASS_ONVAN_DORE = `${API_PREFIX}/api/kelas-report/kelas-onvan`
 export const API_UPDATE_CLASS_MOASSESE = `${API_PREFIX}/api/kelas-report/kelas-moassese`
@@ -40,5 +41,7 @@ export const API_DIRECOR_BOARD_LIST = `${API_PREFIX}/api/institute/h-modire`
 export const API_FOUNDER_GROUP = `${API_PREFIX}/api/institute/heat-moases`
 export const API_ACTIVITY = `${API_PREFIX}/api/institute/faaliat-amozeshi`
 export const API_REG_CLASS = `${API_PREFIX}/api/institute/kelas`
+export const API_SET_SCORE = `${API_PREFIX}/api/institute/kelas/add/student/nomrat`
+export const API_ADD_STUDENT = `${API_PREFIX}/api/institute/kelas/add/student`
 export const API_INST_CERT_LIST = `${API_PREFIX}/api/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`
 export const API_INST_PRINT_CERT = `${API_PREFIX}/api/institute/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`

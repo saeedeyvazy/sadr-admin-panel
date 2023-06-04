@@ -1,13 +1,14 @@
 import { labels } from '@/constants/labels'
 import { deleteClass } from '@/features/institution/class/register/regClass.slice'
 import { mdiCardAccountDetails, mdiDelete, mdiEye } from '@mdi/js'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useRef, useState } from 'react'
+import { DatePicker } from 'react-advance-jalaali-datepicker'
 import { useDispatch } from 'react-redux'
 import { iaxios } from '../config'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import { API_ADD_STUDENT, API_CLASS_INFO, API_INST_CERT_LIST, API_INST_CLASS_STUDENT_INFO, API_INST_PRINT_CERT, API_SET_SCORE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import BaseDivider from './BaseDivider'
@@ -21,6 +22,7 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [teacherDetail, setTeacherDetail] = useState()
   const [classInfo, setClassInfo] = useState()
+  const [isActiveAddStudent, setIsActiveAddStudent] = useState(false)
 
   const [selectedClient, setSelectedClient] = useState({
     id: 0,
@@ -50,6 +52,7 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
   const [isModalTest, setIsModalTest] = useState(false)
   const [certList, setCertList] = useState([{}])
+  const [selectedStudent, setSelectedStudent] = useState({})
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -68,21 +71,61 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
       setIsModalDetailActive(false)
     }
   }
-  const handleSubmitMoassese = async (values) => {
+  const handleSubmitScore = async (values) => {
     try {
-
-      await iaxios.put(API_UPDATE_CLASS_MOASSESE, { codek: selectedClient.codek, codemoassese: values.codemoassese, codequran: values.mkh })
+      const { miyandore, payani, date } = values
+      const sal = date.split('/')[0]
+      const mah = date.split('/')[1]
+      const roz = date.split('/')[2]
+      console.log({
+        codek: selectedClient.codek,
+        id: selectedStudent.id,
+        miyandore,
+        payani,
+        sal,
+        mah,
+        roz,
+        codemelli: selectedStudent.codemelli
+      })
+      await iaxios.post(API_SET_SCORE, {
+        codek: selectedClient.codek,
+        id: selectedStudent.id,
+        miyandore,
+        payani,
+        sal,
+        mah,
+        roz,
+        codemelli: selectedStudent.codemelli
+      })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => window.location.reload(), 1000)
+
     } catch (error) {
       console.log(error)
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }
     finally {
-      setIsModalInfoActive(false)
-      setIsModalDetailActive(false)
+      setIsActiveScoreModal(false)
     }
   }
+  const handleSubmitStudent = async (values) => {
+    try {
+      const { codemelli } = values
+
+      await iaxios.post(API_ADD_STUDENT, {
+        codek: selectedClient.codek,
+        codemelli_list: [{ name: codemelli }]
+      })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+
+    } catch (error) {
+      console.log(error)
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+    finally {
+      setIsActiveAddStudent(false)
+    }
+  }
+
 
   const handleModalAction = () => {
     if (updatePassFormRef.current) {
@@ -91,12 +134,7 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
     handleCancelModalAction()
   }
 
-  const handleMoasseseModalAction = () => {
-    if (updateMoasseseFormRef.current) {
-      updateMoasseseFormRef.current.handleSubmit()
-    }
-    handleCancelModalAction()
-  }
+
   const handleCancelModalAction = () => {
     setIsModalInfoActive(false)
     setIsModalTrashActive(false)
@@ -109,15 +147,19 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
     setIsModalDetailActive(false)
   }
   const updatePassFormRef = useRef()
-  const updateMoasseseFormRef = useRef()
+  const setScoreRef = useRef()
+  const addStudentRef = useRef()
+
+  const [isActiveScoreModal, setIsActiveScoreModal] = useState(false)
 
   async function fetchDetail(id) {
     try {
-      const response = await iaxios.get(API_CLASS_STUDENT_INFO + "?codek=" + id)
+      const response = await iaxios.get(API_INST_CLASS_STUDENT_INFO, { params: { codek: id, page: 0, size: 30 } })
       const classInfoResponse = await iaxios.get(API_CLASS_INFO, { params: { codek: id } })
-      setTeacherDetail(response.data.data)
+      setTeacherDetail(response.data.data.content)
 
       setClassInfo(classInfoResponse.data.data)
+
     } catch (error) {
       console.log(error)
     }
@@ -137,6 +179,14 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
   }
   const router = useRouter()
   const dispatch = useDispatch()
+  function confirmScore() {
+    setScoreRef.current.handleSubmit()
+    setIsActiveScoreModal(false)
+  }
+  function confirmAddStudent() {
+    addStudentRef.current.handleSubmit()
+    setIsActiveAddStudent(false)
+  }
   async function generateCertificate(nationalCode) {
     try {
       const response = await iaxios.get(API_INST_PRINT_CERT
@@ -199,6 +249,7 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
           }
         </Formik >
       </CardBoxModal >
+
       <CardBoxModal
         title="جزییات"
         buttonColor="info"
@@ -236,7 +287,10 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
         </div>
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
+        <div className='flex justify-between items-center'>
+          <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
+          <BaseButton label={labels.addStudent} color='success' outeline onClick={() => setIsActiveAddStudent(true)} />
+        </div>
         <div className='bg-blue-200'>
           <table className='text-sm'>
             <thead>
@@ -257,8 +311,9 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
                   <td>{item.natije}</td>
                   <td>
                     <BaseButtons>
-                      <BaseButton onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
+                      {/* <BaseButton onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton> */}
                       <BaseButton label={labels.printCert} onClick={() => generateCertificate(item.codemelli)}></BaseButton>
+                      <BaseButton label={labels.setScore} onClick={() => { setIsActiveScoreModal(true); console.log(item); setSelectedStudent(item) }}></BaseButton>
                     </BaseButtons>
                   </td>
                 </tr>)
@@ -308,6 +363,79 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
       >
         <p>آیا از انجام عملیات مورد نظر اطمینان دارید؟</p>
       </CardBoxModal>
+      <CardBoxModal
+        title={labels.setScore}
+        buttonColor="info"
+        buttonLabel="تایید"
+        isActive={isActiveScoreModal}
+        onConfirm={() => { confirmScore() }}
+        onCancel={() => setIsActiveScoreModal(false)}
+        innerModalClassName=''
+      >
+        <BaseDivider />
+        <Formik
+          initialValues={{
+            miyandore: '',
+            payani: '',
+            date: ''
+          }}
+          onSubmit={handleSubmitScore}
+          innerRef={setScoreRef}
+        >
+          {({ values, setFieldValue }) => (
+            <Form className="p-5" >
+              <FormField label="" >
+                <FormField label={labels.midScore}>
+                  <Field name='miyandore' />
+                </FormField>
+                <FormField label={labels.finalScore}>
+                  <Field name='payani' />
+                </FormField>
+              </FormField>
+              <FormField label={labels.date}>
+                <DatePicker
+                  inputComponent={(props) => <Field name='date' className="popo" {...props} />}
+                  placeholder="انتخاب تاریخ"
+                  format="jYYYY/jMM/jDD"
+                  onChange={(unix, formatted) => setFieldValue("date", formatted)}
+                  id="datePicker"
+                  preSelected=""
+                  name='datepick'
+                />
+              </FormField>
+            </Form >)
+          }
+        </Formik >
+      </CardBoxModal>
+
+
+      <CardBoxModal
+        title={labels.addStudent}
+        buttonColor="info"
+        buttonLabel="تایید"
+        isActive={isActiveAddStudent}
+        onConfirm={() => { confirmAddStudent() }}
+        onCancel={() => setIsActiveAddStudent(false)}
+        innerModalClassName=''
+      >
+        <BaseDivider />
+        <Formik
+          initialValues={{
+            codemelli: ''
+          }}
+          onSubmit={handleSubmitStudent}
+          innerRef={addStudentRef}
+        >
+          {({ values, setFieldValue }) => (
+            <Form className="p-5" >
+              <FormField label={labels.nationalCode}>
+                <Field name='codemelli' />
+              </FormField>
+            </Form >)
+          }
+        </Formik >
+      </CardBoxModal>
+
       {
         isLoading ? <Loading />
           :

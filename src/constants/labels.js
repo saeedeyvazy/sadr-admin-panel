@@ -38,5 +38,9 @@ export const labels = {
     town: "شهرستان",
     gender: 'جنسیت',
     classLevel: 'سطح کلاس',
-    dore: "دوره"
+    dore: "دوره",
+    setScore: "ثبت نمره",
+    midScore: 'نمره میان دوره',
+    finalScore: 'نمره  پایانی',
+    addStudent: 'افزودن دانش آموز'
 }

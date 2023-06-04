@@ -1,6 +1,7 @@
 import BaseButtons from '@/components/BaseButtons'
 import { ClassLevel } from '@/components/ClassLevel'
 import { Gender } from '@/components/Gender'
+import { RegClassReportTable } from '@/components/RegClassReportTable'
 import { Town } from '@/components/Town'
 import { labels } from '@/constants/labels'
 import { regClassLoading, registerClass } from '@/features/institution/class/register/regClass.slice'
@@ -14,7 +15,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import BaseButton from '../../components/BaseButton'
 import BaseDivider from '../../components/BaseDivider'
 import CardBox from '../../components/CardBox'
-import { ClassReportTable } from '../../components/ClassReportTable'
 import { DoreSelect } from '../../components/DoreSelect'
 import FormField from '../../components/FormField'
 import SectionMain from '../../components/SectionMain'
@@ -22,12 +22,12 @@ import SectionTitleLineWithButton from '../../components/SectionTitleLineWithBut
 import { UserOffice } from '../../components/UserOffice'
 import { getPageTitle, iaxios } from '../../config'
 import { API_CLASS_REPORT } from '../../constants'
-import { useClassReport } from '../../hooks/useClassReport'
+import { useRegClassReport } from '../../hooks/useRegClassReport'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { searchByNatCode } from './hooks/useDirectorBoard'
 
 const FormsPage = () => {
-    const { data, error, isLoading } = useClassReport()
+    const { data, error, isLoading } = useRegClassReport()
     const [specificSearch, setSpecificSearch] = useState(false)
     const [searchResult, setSearchResult] = useState([{}])
     const [searchLoading, setSearchLoading] = useState(false)
@@ -180,9 +180,9 @@ const FormsPage = () => {
                                 <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
                                 <CardBox hasTable>
-                                    {!specificSearch ? <ClassReportTable clients={data} isLoading={isLoading} error={error} />
+                                    {!specificSearch ? <RegClassReportTable clients={data} isLoading={isLoading} error={error} />
                                         :
-                                        <ClassReportTable clients={searchResult} isLoading={searchLoading} error={error} />
+                                        <RegClassReportTable clients={searchResult} isLoading={searchLoading} error={error} />
                                     }
                                 </CardBox>
 

@@ -12,14 +12,14 @@ import { iaxios } from '../../../../config'
 //     }
 // }
 
-// export const callDeleteBoardMember = async (id) => {
-//     try {
-//         iaxios.delete(`${API_DIRECOR_BOARD_LIST}/${id}`)
-//     } catch (error) {
-//         alert(error)
-//         return { error }
-//     }
-// }
+export const callDeleteClass = async (id) => {
+    try {
+        iaxios.delete(`${API_REG_CLASS}/${id}`)
+    } catch (error) {
+        alert(error)
+        return { error }
+    }
+}
 
 export async function callAddClassApi(values) {
     try {

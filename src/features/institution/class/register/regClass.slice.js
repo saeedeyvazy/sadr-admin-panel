@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { callAddClassApi } from './regClass.api'
+import { callAddClassApi, callDeleteClass } from './regClass.api'
 
 
 export const registerClass = createAsyncThunk(
@@ -12,6 +12,12 @@ export const registerClass = createAsyncThunk(
     }
 )
 
+export const deleteClass = createAsyncThunk(
+    'institution/delete-class', (classCode) => {
+        callDeleteClass(classCode)
+        return classCode
+    }
+)
 
 const initialState = {
     status: 'idle',

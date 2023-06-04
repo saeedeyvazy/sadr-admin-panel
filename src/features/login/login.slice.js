@@ -7,7 +7,7 @@ export const login = createAsyncThunk(
     async (user, { rejectWithValue }) => {
         const response = await callLoginApi(user)
         if (response.error)
-            rejectWithValue(error)
+            rejectWithValue(response.error)
         else
             return response
     }

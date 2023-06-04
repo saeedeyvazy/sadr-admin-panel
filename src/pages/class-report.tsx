@@ -42,7 +42,7 @@ const FormsPage = () => {
       setSpecificSearch(true)
       setSearchResult(response.data.data.content)
     } catch (error) {
-
+      alert(error)
     }
   }
   return (

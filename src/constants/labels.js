@@ -37,5 +37,6 @@ export const labels = {
     memberNum: "تعداد",
     town: "شهرستان",
     gender: 'جنسیت',
-    classLevel: 'سطح کلاس'
+    classLevel: 'سطح کلاس',
+    dore: "دوره"
 }

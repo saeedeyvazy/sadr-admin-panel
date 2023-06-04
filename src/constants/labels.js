@@ -31,5 +31,11 @@ export const labels = {
     printCert: 'صدور گواهی',
     validation: {
         mandatory: 'این فیلد اجباریست'
-    }
+    },
+    teacherNatCode: "کد ملی مربی",
+    registerClass: "ثبت کلاس",
+    memberNum: "تعداد",
+    town: "شهرستان",
+    gender: 'جنسیت',
+    classLevel: 'سطح کلاس'
 }

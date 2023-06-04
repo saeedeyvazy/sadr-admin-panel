@@ -41,12 +41,13 @@ export default function CertificationPrint() {
                 </div>
                 <img src="http://samanesadr.ir/Styles/Logo/10720293663.jpg" className="w-20 h-20" />
             </div>
+            <br />
             <label className="text-lg" style={{ fontFamily: "Iran Nastaliq, sans-serif" }}>گواهی میشود</label>
             <br />
             <br />
             <span>
                 <label className="ml-40">{` جناب آقای /سرکار خانم `}</label>
-                <label className="font-bold">{flname}</label>
+                <label className="font-bold">{` ${flname} `}</label>
             </span>
             <span>
                 <label className="mr-20 ml-20">{`فرزند`}</label>
@@ -67,20 +68,20 @@ export default function CertificationPrint() {
                 <label className="font-bold">{` ${title} `}</label>
             </span>
             <span>
-                <label className="mr-10 ml-10">{`از تاریخ`}</label>
+                <label className="mr-10 ml-10">{` از تاریخ `}</label>
                 <label className="font-bold">{startDate}</label>
             </span>
             <span>
-                <label className="mr-10 ml-10">{`تا تاریخ`}</label>
+                <label className="mr-10 ml-10">{` تا تاریخ `}</label>
                 <label className="font-bold">{endDate}</label>
             </span>
             <span>
-                <label className="mr-10 ml-10">{`در استان`}</label>
-                <label className="font-bold">{province}</label>
+                <label className="mr-10 ml-10">{` در استان `}</label>
+                <label className="font-bold">{` ${province} `}</label>
             </span>
             <span>
-                <label className="mr-10 ml-10">{`شهرستان`}</label>
-                <label className="font-bold">{town}</label>
+                <label className="mr-10 ml-10">{` شهرستان `}</label>
+                <label className="font-bold">{` ${town} `}</label>
             </span>
             <br />
             <br />

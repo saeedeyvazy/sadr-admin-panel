@@ -6,7 +6,8 @@ import {
   mdiBookOpenVariant,
   mdiPencil,
   mdiRadioTower,
-  mdiTable
+  mdiTable,
+  mdiTelevision
 } from '@mdi/js'
 import { labels } from './constants/labels'
 import { MenuAsideItem } from './interfaces'
@@ -31,6 +32,11 @@ const instMenuAside: MenuAsideItem[] = [
     label: 'گزارش کلاسها',
     icon: mdiTable,
     href: '/institution/class-report'
+  },
+  {
+    label: 'ثبت کلاس',
+    icon: mdiTelevision,
+    href: '/institution/register-class'
   },
   {
     label: labels.activity,

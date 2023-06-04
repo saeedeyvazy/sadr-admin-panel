@@ -3,10 +3,10 @@ import FormField from "./FormField"
 import useAxios from "../hooks/useAxios"
 import { API_TOWN_LIST } from "../constants"
 
-export function Town({ name, label }) {
+export function Town({ name, label, help }) {
     const { response, error, loading } = useAxios({ url: API_TOWN_LIST, method: 'get' })
     return (
-        <FormField label={label} labelFor={name}>
+        <FormField label={label} labelFor={name} help={help}>
             <Field style={{ textAlign: 'center' }} name={name} id={name} component="select">
                 <option value='0'>هیچکدام</option>
                 {

@@ -50,7 +50,6 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
   const [isModalTest, setIsModalTest] = useState(false)
   const [certList, setCertList] = useState([{}])
-  const [certPrintData, setCertPrintData] = useState([{}])
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
@@ -139,14 +138,9 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
   const router = useRouter()
   async function generateCertificate(nationalCode) {
     try {
-
-      // const response = await iaxios.get(API_INST_PRINT_CERT
-      //   .replace('{nationalCode}', nationalCode)
-      //   .replace('{classCode}', selectedClient.codek)
-      // )
       const response = await iaxios.get(API_INST_PRINT_CERT
-        .replace('{nationalCode}', "3750526370")
-        .replace('{classCode}', "58")
+        .replace('{nationalCode}', nationalCode)
+        .replace('{classCode}', selectedClient.codek)
       )
       const responseData = response.data.data
       router.push({

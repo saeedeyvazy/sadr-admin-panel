@@ -8,14 +8,14 @@ export const instLoginFormValidation = Yup.object().shape({
 })
 
 export const changeManagerValidation = Yup.object().shape({
-    nationalCode: Yup.string().required('کد ملی جباریست'),
+    nationalCode: Yup.string().required(labels.validation.mandatory),
     name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),
-    startDate: Yup.string().required('تاریخ شروع به کار اجباریست')
+    startDate: Yup.string().required(labels.validation.mandatory)
 })
 
 
 export const directorBoardValidation = Yup.object().shape({
-    nationalCode: Yup.string().required('کد ملی جباریست'),
+    nationalCode: Yup.string().required(labels.validation.mandatory),
     name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),
 })
 
@@ -23,4 +23,14 @@ export const learningActivityValidation = Yup.object().shape({
     codemelli_morabi: Yup.string().max(10).min(10).required(labels.validation.mandatory),
     code_dore: Yup.string().required(labels.validation.mandatory),
     code_m_kh: Yup.string().required(labels.validation.mandatory),
+})
+
+export const registerClassValidation = Yup.object().shape({
+    nationalCode: Yup.string().required(labels.validation.mandatory),
+    name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),
+    memberNum: Yup.string().required(labels.validation.mandatory),
+    startDate: Yup.string().required(labels.validation.mandatory),
+    gender: Yup.string().required(labels.validation.mandatory),
+    classLevel: Yup.string().required(labels.validation.mandatory),
+    town: Yup.string().required(labels.validation.mandatory),
 })

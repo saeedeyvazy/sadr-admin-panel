@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { iaxios } from "../config"
 import { API_CLASS_REPORT } from "../constants"
+import Cookies from "universal-cookie"
 
 export function useClassReport() {
     const [data, setData] = useState([{}])
@@ -13,7 +14,7 @@ export function useClassReport() {
             try {
                 setIsLoading(true)
                 const response = await iaxios.post(API_CLASS_REPORT, {
-                    "codequran": "",
+                    "codequran": new Cookies().get('username'),
                     "tshs": "",
                     "lname": "",
                     "onvan_dore": "",

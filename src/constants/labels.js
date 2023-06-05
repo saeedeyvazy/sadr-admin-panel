@@ -52,5 +52,8 @@ export const labels = {
     endClassMinute: 'دقیقه پایان کلاس',
     update: 'به روزرسانی',
     confirm: 'تایید ',
-    insurance: 'بیمه فعالان قرآنی'
+    insurance: 'بیمه فعالان قرآنی',
+    changePass: 'تغییر رمز عبور',
+    currentPass: 'رمز عبور فعلی',
+    newPass: 'رمز عبور جدید'
 }

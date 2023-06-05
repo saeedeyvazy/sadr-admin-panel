@@ -8,7 +8,7 @@ import {
 } from '@mdi/js'
 import { Formik, Form, Field } from 'formik'
 import Head from 'next/head'
-import type { ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
 import BaseButton from '../components/BaseButton'
 import BaseButtons from '../components/BaseButtons'
 import BaseDivider from '../components/BaseDivider'
@@ -22,8 +22,13 @@ import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import UserCard from '../components/UserCard'
 import type { UserForm } from '../interfaces'
-import { getPageTitle } from '../config'
+import { getPageTitle, iaxios } from '../config'
 import { useAppSelector } from '../stores/hooks'
+import { changePassValidation } from '@/validation/form'
+import { labels } from '@/constants/labels'
+import { useSnackbar } from 'notistack'
+import { API_CHANGE_PASSWORD } from '@/constants'
+import Cookies from 'universal-cookie'
 
 const ProfilePage = () => {
   const userName = useAppSelector((state) => state.main.userName)
@@ -33,7 +38,27 @@ const ProfilePage = () => {
     name: userName,
     email: userEmail,
   }
+  const { enqueueSnackbar } = useSnackbar()
+  const [isLoading, setIsLoading] = useState(false)
+  async function handleSubmit(request) {
+    try {
+      setIsLoading(true)
+      console.log(request)
+      await iaxios.put(API_CHANGE_PASSWORD,
+        {
+          username: new Cookies().get('username'),
+          oldpassword: request.current,
+          newpassword: request.new
+        })
+      setIsLoading(false)
+      enqueueSnackbar(labels.succeed, { variant: 'success' })
+    } catch (error) {
+      setIsLoading(false)
+      enqueueSnackbar(labels.unsucceed, { variant: 'error' })
+      alert(error)
 
+    }
+  }
   return (
     <>
       <Head>
@@ -63,105 +88,40 @@ const ProfilePage = () => {
               </FormField>
             </CardBox>
 
-            <CardBox className="flex-1" hasComponentLayout>
-              <Formik
-                initialValues={userForm}
-                onSubmit={(values: UserForm) => alert(JSON.stringify(values, null, 2))}
-              >
-                <Form className="flex flex-col flex-1">
-                  <CardBoxComponentBody>
-                    <FormField
-                      label="نام"
-                      help="این فیلد اجباریست"
-                      labelFor="name"
-                      icons={[mdiAccount]}
-                    >
-                      <Field name="name" id="name" placeholder="نام کاربر" />
-                    </FormField>
-                    <FormField
-                      label="ایمیل"
-                      help="این فیلد اجباریست"
-                      labelFor="email"
-                      icons={[mdiMail]}
-                    >
-                      <Field name="email" id="email" placeholder="ایمیل کاربر" />
-                    </FormField>
-                  </CardBoxComponentBody>
-                  <CardBoxComponentFooter>
-                    <BaseButtons>
-                      <BaseButton color="info" type="submit" label="تایید نهایی" />
-                    </BaseButtons>
-                  </CardBoxComponentFooter>
-                </Form>
-              </Formik>
-            </CardBox>
           </div>
-
-          <CardBox hasComponentLayout>
+          <CardBox className="flex-1" hasComponentLayout>
             <Formik
               initialValues={{
-                currentPassword: '',
-                newPassword: '',
-                newPasswordConfirmation: '',
+                current: '',
+                new: ''
               }}
-              onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
+              validationSchema={changePassValidation}
             >
-              <Form className="flex flex-col flex-1">
-                <CardBoxComponentBody>
-                  <FormField
-                    label="رمز عبور فعلی"
-                    help="این فیلد اجباریست"
-                    labelFor="currentPassword"
-                    icons={[mdiAsterisk]}
-                  >
-                    <Field
-                      name="currentPassword"
-                      id="currentPassword"
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                  </FormField>
+              {({ errors, values }) => (
+                <Form className="flex flex-col flex-1">
+                  <CardBoxComponentBody>
 
-                  <BaseDivider />
+                    <FormField label={labels.currentPass} help={errors.current} >
+                      <Field name="current" type="password" component="input"></Field>
+                    </FormField>
+                    <FormField label={labels.newPass} help={errors.new} >
+                      <Field name="new" type="password" />
+                    </FormField>
 
-                  <FormField
-                    label="رمز عبور جدید"
-                    help="این فیلد اجباریست"
-                    labelFor="newPassword"
-                    icons={[mdiFormTextboxPassword]}
-                  >
-                    <Field
-                      name="newPassword"
-                      id="newPassword"
-                      type="password"
-                      autoComplete="new-password"
-                    />
-                  </FormField>
-
-                  <FormField
-                    label="تکرار رمز عبور جدید"
-                    help="این فیلد اجباریست"
-                    labelFor="newPasswordConfirmation"
-                    icons={[mdiFormTextboxPassword]}
-                  >
-                    <Field
-                      name="newPasswordConfirmation"
-                      id="newPasswordConfirmation"
-                      type="password"
-                      autoComplete="new-password"
-                    />
-                  </FormField>
-                </CardBoxComponentBody>
-
-                <CardBoxComponentFooter>
-                  <BaseButtons>
-                    <BaseButton color="info" type="submit" label="تایید نهایی" />
-                  </BaseButtons>
-                </CardBoxComponentFooter>
-              </Form>
+                    <CardBoxComponentFooter>
+                      <BaseButtons>
+                        <BaseButton isLoading={isLoading} onClick={() => { handleSubmit(values) }} disabled={errors.current || errors.new} color='info' label={labels.changePass} type='submit' />
+                      </BaseButtons>
+                    </CardBoxComponentFooter>
+                  </CardBoxComponentBody>
+                </Form>
+              )}
             </Formik>
+
           </CardBox>
+
         </div>
+
       </SectionMain>
     </>
   )

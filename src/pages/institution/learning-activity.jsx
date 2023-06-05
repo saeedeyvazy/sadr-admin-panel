@@ -1,6 +1,5 @@
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
-import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Cookies from "universal-cookie"
 import BaseButton from '../../components/BaseButton'
@@ -19,20 +18,13 @@ import { labels } from '../../constants/labels'
 import { addActivity, deleteActivity, isLoading, memberList } from '../../features/institution/activity/activity.slice'
 import LayoutAuthenticated from '../../layouts/Authenticated'
 import { learningActivityValidation } from '../../validation/form'
-import { searchByNatCode, useLearnActivity } from './hooks/useLearnActivity'
+import { useLearnActivity } from './hooks/useLearnActivity'
 
 const DirectorBoard = () => {
   const dispatch = useDispatch()
   useLearnActivity()
   const teacherList = useSelector(memberList)
   const loading = useSelector(isLoading)
-  const [isSearchLoading, setIsSearchLoading] = useState(false)
-
-  async function search(values, setFieldValue) {
-    setIsSearchLoading(true)
-    await searchByNatCode(values, setFieldValue)
-    setIsSearchLoading(false)
-  }
 
   return (
     <>

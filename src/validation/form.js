@@ -25,6 +25,11 @@ export const learningActivityValidation = Yup.object().shape({
     code_m_kh: Yup.string().required(labels.validation.mandatory),
 })
 
+export const changePassValidation = Yup.object().shape({
+    new: Yup.string().required(labels.validation.mandatory),
+    current: Yup.string().required(labels.validation.mandatory),
+})
+
 export const registerClassValidation = Yup.object().shape({
     nationalCode: Yup.string().required(labels.validation.mandatory),
     name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),

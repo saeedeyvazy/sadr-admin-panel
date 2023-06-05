@@ -1,10 +1,10 @@
-import { mdiCardAccountDetails, mdiTrashCan } from "@mdi/js"
+import { mdiTrashCan, mdiUpdate } from "@mdi/js"
 import { useState } from "react"
 import { perPageSize } from "../../config"
 import BaseButton from "../BaseButton"
 import BaseButtons from "../BaseButtons"
 
-export function Table({ titleList, rowData, rowKey, danger }) {
+export function Table({ titleList, rowData, rowKey, danger, info }) {
     const [currentPage, setCurrentPage] = useState(0)
     const clientsPaginated = rowData.slice(perPageSize * currentPage, perPageSize * (currentPage + 1))
     const numPages = Math.ceil(rowData.length / perPageSize)
@@ -31,12 +31,22 @@ export function Table({ titleList, rowData, rowKey, danger }) {
                     {keyList.filter(key => key != rowKey).map((key, index) => <td key={index}>{client[key]}</td>)}
                     <td className="before:hidden lg:w-1 whitespace-nowrap">
                         <BaseButtons type="justify-start lg:justify-between" noWrap>
-                            <BaseButton
-                                color="danger"
-                                icon={mdiTrashCan}
-                                onClick={() => { danger(client[rowKey]) }}
-                                small
-                            />
+                            {danger &&
+                                <BaseButton
+                                    color="danger"
+                                    icon={mdiTrashCan}
+                                    onClick={() => { danger(client[rowKey]) }}
+                                    small
+                                />
+                            }
+                            {
+                                info && <BaseButton
+                                    color="info"
+                                    icon={mdiUpdate}
+                                    onClick={() => { info(client[rowKey]) }}
+                                    small
+                                />
+                            }
                         </BaseButtons>
 
                     </td>

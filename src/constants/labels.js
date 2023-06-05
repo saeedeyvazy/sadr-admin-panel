@@ -42,5 +42,15 @@ export const labels = {
     setScore: "ثبت نمره",
     midScore: 'نمره میان دوره',
     finalScore: 'نمره  پایانی',
-    addStudent: 'افزودن دانش آموز'
+    addStudent: 'افزودن دانش آموز',
+    mobile: 'شماره همراه',
+    endCoWorkDate: 'تاریخ پایان همکاری',
+    startCoWorkDate: 'تاریخ آغاز همکاری',
+    startClassHour: 'ساعت شروع کلاس',
+    startClassMinute: 'دقیقه شروع کلاس',
+    endClassHour: 'ساعت پایان کلاس',
+    endClassMinute: 'دقیقه پایان کلاس',
+    update: 'به روزرسانی',
+    confirm: 'تایید ',
+    insurance: 'بیمه فعالان قرآنی'
 }

@@ -45,3 +45,4 @@ export const API_SET_SCORE = `${API_PREFIX}/api/institute/kelas/add/student/nomr
 export const API_ADD_STUDENT = `${API_PREFIX}/api/institute/kelas/add/student`
 export const API_INST_CERT_LIST = `${API_PREFIX}/api/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`
 export const API_INST_PRINT_CERT = `${API_PREFIX}/api/institute/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`
+export const API_INSURANCE = `${API_PREFIX}/api/institute/tadris`

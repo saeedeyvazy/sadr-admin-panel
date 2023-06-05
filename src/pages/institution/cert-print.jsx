@@ -1,6 +1,7 @@
 import { useRouter } from "next/router"
 import besmellah from "../../assets/images/besmellah.jpg"
 import Image from "next/image"
+import Cookies from "universal-cookie"
 export default function CertificationPrint() {
     const router = useRouter()
     const { title,
@@ -27,7 +28,7 @@ export default function CertificationPrint() {
         <div className="w-screen h-screen p-11" style={{ fontFamily: "Vazir" }}>
             <div className="flex flex-row justify-around">
                 <div className="flex flex-col justify-start">
-                    <img src="http://samanesadr.ir/Styles/Logo/10720293663.jpg" className="w-20 h-20" />
+                    <img src={`http://samanesadr.ir/Styles/Logo/${new Cookies().get('username')}.jpg`} className="w-20 h-20" />
                     <label>تاریخ</label>
                     <label>شماره</label>
                 </div>
@@ -39,7 +40,7 @@ export default function CertificationPrint() {
                     <label>{subtitle}</label>
 
                 </div>
-                <img src="http://samanesadr.ir/Styles/Logo/10720293663.jpg" className="w-20 h-20" />
+                <img src={`data:image/jpeg;base64,${pic}`} className="w-20 h-20" />
             </div>
             <br />
             <label className="text-lg" style={{ fontFamily: "Iran Nastaliq, sans-serif" }}>گواهی میشود</label>

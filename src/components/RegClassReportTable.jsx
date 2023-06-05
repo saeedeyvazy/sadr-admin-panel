@@ -212,6 +212,7 @@ export const RegClassReportTable = ({ clients, isLoading }) => {
           fname: responseData.fname,
           lname: responseData.lname,
           birthDate: responseData.ts,
+          pic: responseData.pic
 
         }
       })

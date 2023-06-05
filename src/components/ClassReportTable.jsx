@@ -161,6 +161,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
           fname: responseData.fname,
           lname: responseData.lname,
           birthDate: responseData.ts,
+          pic: responseData.pic
 
         }
       })

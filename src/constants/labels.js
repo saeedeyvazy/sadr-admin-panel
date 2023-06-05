@@ -80,6 +80,7 @@ export const labels = {
     email: 'ایمیل',
     web: 'تارنما',
     social: 'شبکه اجتماعی',
-    socialAddress: 'آدرس صفحه'
+    socialAddress: 'آدرس صفحه',
+    upload: 'بارگذاری'
 
 }

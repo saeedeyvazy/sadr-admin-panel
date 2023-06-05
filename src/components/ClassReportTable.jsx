@@ -257,7 +257,7 @@ export const ClassReportTable = ({ clients, isLoading, error }) => {
                   <td>{item.natije}</td>
                   <td>
                     <BaseButtons>
-                      <BaseButton onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
+                      <BaseButton label={labels.fetchCertificateList} onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
                       <BaseButton label={labels.printCert} onClick={() => generateCertificate(item.codemelli)}></BaseButton>
                     </BaseButtons>
                   </td>

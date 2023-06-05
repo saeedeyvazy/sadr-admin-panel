@@ -81,6 +81,7 @@ export const labels = {
     web: 'تارنما',
     social: 'شبکه اجتماعی',
     socialAddress: 'آدرس صفحه',
-    upload: 'بارگذاری'
+    upload: 'بارگذاری',
+    fetchCertificateList: 'سوابق گواهی'
 
 }

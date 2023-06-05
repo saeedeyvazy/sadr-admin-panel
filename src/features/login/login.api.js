@@ -10,6 +10,7 @@ export async function callLoginApi({ username, password, type, userType }) {
             new Cookies().set('token', response.data.data.token)
             new Cookies().set('username', username)
             new Cookies().set('userType', userType)
+            new Cookies().set('menuType', type)
             return { response, type, username }
         }
     } catch (error) {

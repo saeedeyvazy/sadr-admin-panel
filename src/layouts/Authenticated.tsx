@@ -14,6 +14,7 @@ import menuNavBar from '../menuNavBar'
 import { useAppDispatch, useAppSelector } from '../stores/hooks'
 import { setUser } from '../stores/mainSlice'
 import Cookies from 'universal-cookie'
+import { UserTypeMenu } from '@/config'
 type Props = {
   children: ReactNode
 }
@@ -21,6 +22,11 @@ type Props = {
 export default function LayoutAuthenticated({ children }: Props) {
   const dispatch = useAppDispatch()
   const menuAside = useSelector(menuList)
+  const [imenu, setImenu] = useState([])
+
+  useEffect(() => {
+    setImenu(menuAside.length == 0 ? UserTypeMenu.get(Number(new Cookies().get('menuType'))) : menuAside)
+  }, [menuAside])
   useEffect(() => {
     dispatch(
       setUser({
@@ -93,7 +99,7 @@ export default function LayoutAuthenticated({ children }: Props) {
         <AsideMenu
           isAsideMobileExpanded={isAsideMobileExpanded}
           isAsideLgActive={isAsideLgActive}
-          menu={menuAside}
+          menu={imenu}
           onAsideLgClose={() => setIsAsideLgActive(false)}
         />
         {children}

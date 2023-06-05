@@ -21,12 +21,12 @@ import LayoutAuthenticated from '../../layouts/Authenticated'
 const OfficeInfo = () => {
   const { enqueueSnackbar } = useSnackbar()
   const [officeInfo, setOfficeInfo] = useState({})
-  const [type, setType] = useState('')
+  const [type, setType] = useState(undefined)
   const [isPageLoading, setIsPageLoading] = useState(false)
   const [isUploadLoading, setIsUploadLoading] = useState(false)
   const [isLoadingSubmitForm, setIsLoadingSubmitForm] = useState(false)
 
-  const [file, setFile] = useState({ name: '', type: '' })
+  const [file, setFile] = useState(undefined)
 
   async function fetchOfficeInfo() {
     try {
@@ -49,7 +49,6 @@ const OfficeInfo = () => {
 
   async function handleSubmit(values) {
     try {
-      console.log(values)
       setIsLoadingSubmitForm(true)
       await iaxios.put(API_UPDATE_OFFICE, values)
       setIsLoadingSubmitForm(false)
@@ -221,13 +220,20 @@ const OfficeInfo = () => {
                       />
                     </div>
                   </div>
-
                   <BaseButton isLoading={isLoadingSubmitForm} color='info' type='button' onClick={() => handleSubmit(values)} label={labels.confirm} />
-
+                </Form >)
+              }
+            </Formik >
+            <Formik initialValues={officeInfo}
+              validationSchema={addPersonValidation}
+              onSubmit={handleSubmit}
+            >
+              {({ values, setFieldValue, errors }) => (
+                <Form>
                   <CardBox>
                     <SectionTitleLineWithButton icon={null} title='آپلود تصاویر' ></SectionTitleLineWithButton>
                     <FormField>
-                      <Field style={{ textAlign: 'center' }} value={type} onChange={(e) => setType(e.target.value)} component="select">
+                      <Field name='file' style={{ textAlign: 'center' }} value={type} onChange={(e) => setType(e.target.value)} component="select">
                         <option value='0'>هیچکدام</option>
                         <option value='1'>آرم موسسه</option>
                         <option value='2'>روزنامه رسمی</option>
@@ -238,11 +244,11 @@ const OfficeInfo = () => {
                     </FormField>
                     <input type="file" onChange={(e) => setFile(e.target.files[0])} />
                     <div>{file && `${file.name} - ${file.type}`}</div>
-                    <BaseButton isLoading={isUploadLoading} color='info' label={labels.upload} type='button' onClick={handleUploadClick} />
+                    <BaseButton disabled={file == undefined || type == undefined} isLoading={isUploadLoading} color='info' label={labels.upload} type='button' onClick={handleUploadClick} />
                   </CardBox>
-                </Form >)
-              }
-            </Formik >
+                </Form>
+              )}
+            </Formik>
           </CardBox>
         }
       </SectionMain>

@@ -59,6 +59,27 @@ export const labels = {
     fname: 'نام',
     lname: 'نام خانوادگی',
     fthname: 'نام پدر',
-    addPerson: 'افزودن فرد'
+    addPerson: 'افزودن فرد',
+    officeInfo: 'مشخصات اولیه',
+    regCode: 'شماره ثبت',
+    shp: 'شماره پروانه',
+    officeName: 'نام موسسه',
+    tell: 'شماره تلفن',
+    fax: 'فکس',
+    officeType: 'نوع موسسه',
+    province: 'استان',
+    city: 'شهر',
+    postalCode: 'کد پستی',
+    year: 'سال',
+    day: 'روز',
+    month: 'ماه',
+    address: 'آدرس',
+    bank: 'بانک',
+    account: 'شماره حساب',
+    iban: 'شماره شبا',
+    email: 'ایمیل',
+    web: 'تارنما',
+    social: 'شبکه اجتماعی',
+    socialAddress: 'آدرس صفحه'
 
 }

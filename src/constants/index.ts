@@ -21,6 +21,7 @@ export const API_USER = `${API_PREFIX}/api/user`
 export const API_USER_PASSWORD = `${API_USER}/password`
 export const API_USER_TYPE_LIST = `${API_PREFIX}/api/user/type`
 export const API_USER_OFFICE_LIST = `${API_PREFIX}/api/m-avvaliye/summary`
+export const API_OFFICE_INFO = `${API_PREFIX}/api/institute/m-avvaliye`
 export const API_USER_ROLE_LIST = `${API_PREFIX}/api/user/role`
 export const API_SUB_BANK_LIST = `${API_PREFIX}/api/ziranavinbankha`
 export const API_REPAIR = `${API_PREFIX}/api/sazmandehi`

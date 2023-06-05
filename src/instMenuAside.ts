@@ -6,6 +6,7 @@ import {
   mdiAccountPlus,
   mdiBookOpenVariant,
   mdiHelp,
+  mdiInformation,
   mdiPencil,
   mdiRadioTower,
   mdiTable,
@@ -15,6 +16,11 @@ import { labels } from './constants/labels'
 import { MenuAsideItem } from './interfaces'
 
 const instMenuAside: MenuAsideItem[] = [
+  {
+    label: labels.officeInfo,
+    icon: mdiInformation,
+    href: '/institution/office-info'
+  },
   {
     href: '/institution/manager',
     label: labels.manager,

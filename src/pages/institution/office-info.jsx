@@ -3,7 +3,7 @@
 import BaseButton from '@/components/BaseButton'
 import BaseDivider from '@/components/BaseDivider'
 import { Loading } from '@/components/Loading'
-import { API_ADD_PERSON, API_OFFICE_INFO, API_UPLOAD_PIC } from '@/constants'
+import { API_OFFICE_INFO, API_UPDATE_OFFICE, API_UPLOAD_PIC } from '@/constants'
 import { addPersonValidation } from '@/validation/form'
 import FormField from '@component/FormField'
 import { Field, Form, Formik } from 'formik'
@@ -24,6 +24,8 @@ const OfficeInfo = () => {
   const [type, setType] = useState('')
   const [isPageLoading, setIsPageLoading] = useState(false)
   const [isUploadLoading, setIsUploadLoading] = useState(false)
+  const [isLoadingSubmitForm, setIsLoadingSubmitForm] = useState(false)
+
   const [file, setFile] = useState({ name: '', type: '' })
 
   async function fetchOfficeInfo() {
@@ -47,10 +49,14 @@ const OfficeInfo = () => {
 
   async function handleSubmit(values) {
     try {
-      await iaxios.post(API_ADD_PERSON)
+      console.log(values)
+      setIsLoadingSubmitForm(true)
+      await iaxios.put(API_UPDATE_OFFICE, values)
+      setIsLoadingSubmitForm(false)
       enqueueSnackbar(labels.succeed, { variant: 'success' })
     } catch (error) {
       enqueueSnackbar(labels.unsucceed, { variant: 'error' })
+      setIsLoadingSubmitForm(false)
       console.log(error)
     }
   }
@@ -216,7 +222,7 @@ const OfficeInfo = () => {
                     </div>
                   </div>
 
-                  <BaseButton disabled={errors.fname || errors.lname || errors.fthname || errors.codemelli || errors.mob} color='info' type='submit' label={labels.confirm} />
+                  <BaseButton isLoading={isLoadingSubmitForm} color='info' type='button' onClick={() => handleSubmit(values)} label={labels.confirm} />
 
                   <CardBox>
                     <SectionTitleLineWithButton icon={null} title='آپلود تصاویر' ></SectionTitleLineWithButton>

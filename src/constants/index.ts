@@ -50,3 +50,4 @@ export const API_INSURANCE = `${API_PREFIX}/api/institute/tadris`
 export const API_CHANGE_PASSWORD = `${API_PREFIX}/api/change-password`
 export const API_ADD_PERSON = `${API_PREFIX}/api/institute/teacher`
 export const API_UPLOAD_PIC = `${API_PREFIX}/api/institute/m-avvaliye/upload`
+export const API_UPDATE_OFFICE = `${API_PREFIX}/api/institute/m-avvaliye`

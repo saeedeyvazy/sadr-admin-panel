@@ -55,5 +55,10 @@ export const labels = {
     insurance: 'بیمه فعالان قرآنی',
     changePass: 'تغییر رمز عبور',
     currentPass: 'رمز عبور فعلی',
-    newPass: 'رمز عبور جدید'
+    newPass: 'رمز عبور جدید',
+    fname: 'نام',
+    lname: 'نام خانوادگی',
+    fthname: 'نام پدر',
+    addPerson: 'افزودن فرد'
+
 }

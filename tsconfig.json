@@ -17,7 +17,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
   },
   "include": [
     "next-env.d.ts",
@@ -26,8 +26,12 @@
     "src/components/MultiSelect/index.jsx",
     "src/pages/document.jsx",
     "src/pages/document.jsx",
-    "src/pages/bankMng.jsx"
-, "src/validation/form.js"  ],
+    "src/pages/bankMng.jsx",
+    "src/validation/form.js",
+    "src",
+    // "craco.config.js"
+  ],
+  "extends": "./tsconfig.paths.json",
   "exclude": [
     "node_modules"
   ]

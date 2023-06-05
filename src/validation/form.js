@@ -30,6 +30,16 @@ export const changePassValidation = Yup.object().shape({
     current: Yup.string().required(labels.validation.mandatory),
 })
 
+export const addPersonValidation = Yup.object().shape({
+    fname: Yup.string().required(labels.validation.mandatory),
+    lname: Yup.string().required(labels.validation.mandatory),
+    fthname: Yup.string().required(labels.validation.mandatory),
+    date: Yup.string().required(labels.validation.mandatory),
+    codemelli: Yup.string().required(labels.validation.mandatory),
+    mob: Yup.string().required(labels.validation.mandatory),
+    jensiyat: Yup.string().required(labels.validation.mandatory),
+})
+
 export const registerClassValidation = Yup.object().shape({
     nationalCode: Yup.string().required(labels.validation.mandatory),
     name: Yup.string().required('نام اجباریست و توسط سیستم پر میشود'),

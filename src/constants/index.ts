@@ -47,3 +47,4 @@ export const API_INST_CERT_LIST = `${API_PREFIX}/api/kelas/student-madrak?codek=
 export const API_INST_PRINT_CERT = `${API_PREFIX}/api/institute/kelas/student-madrak?codek={classCode}&codemelli={nationalCode}`
 export const API_INSURANCE = `${API_PREFIX}/api/institute/tadris`
 export const API_CHANGE_PASSWORD = `${API_PREFIX}/api/change-password`
+export const API_ADD_PERSON = `${API_PREFIX}/api/institute/teacher`

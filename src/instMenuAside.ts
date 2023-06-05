@@ -3,6 +3,7 @@ import {
   mdiAccount,
   mdiAccountMultipleOutline,
   mdiAccountMultiplePlus,
+  mdiAccountPlus,
   mdiBookOpenVariant,
   mdiHelp,
   mdiPencil,
@@ -38,6 +39,11 @@ const instMenuAside: MenuAsideItem[] = [
     label: 'ثبت کلاس',
     icon: mdiTelevision,
     href: '/institution/register-class'
+  },
+  {
+    label: 'افزودن فرد',
+    icon: mdiAccountPlus,
+    href: '/institution/add-person'
   },
   {
     label: 'بیمه فعالان قرآنی',

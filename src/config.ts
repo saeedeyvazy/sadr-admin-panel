@@ -3,6 +3,7 @@ import axios from 'axios'
 import Cookie from 'universal-cookie'
 import instMenuAside from './instMenuAside'
 import menuAside from './menuAside'
+import { labels } from './constants/labels'
 
 export const localStorageDarkModeKey = 'darkMode'
 
@@ -34,7 +35,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "Insurance": "بیمه فعالان قرآنی",
     "ChangePassword": "تغییر رمز",
     "AddPerson": 'افزودن فرد جدید',
-    "OfficeInfo": 'مشخصات اولیه'
+    "OfficeInfo": 'مشخصات اولیه',
+    "LearnConstraint": labels.learningConstraint
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`

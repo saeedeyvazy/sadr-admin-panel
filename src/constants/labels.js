@@ -82,6 +82,8 @@ export const labels = {
     social: 'شبکه اجتماعی',
     socialAddress: 'آدرس صفحه',
     upload: 'بارگذاری',
-    fetchCertificateList: 'سوابق گواهی'
+    fetchCertificateList: 'سوابق گواهی',
+    learningConstraint: 'محدودیت آموزشی',
+    learningConstraintCourseList: 'لیست دوره های دارای محدودیت'
 
 }

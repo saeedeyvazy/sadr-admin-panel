@@ -13,6 +13,7 @@ import {
   mdiTelevisionGuide
 } from '@mdi/js'
 import { MenuAsideItem } from './interfaces'
+import { labels } from './constants/labels'
 
 const menuAside: MenuAsideItem[] = [
   {
@@ -88,6 +89,11 @@ const menuAside: MenuAsideItem[] = [
     label: 'درخت آموزشی',
     icon: mdiInformation,
     href: '/learning-tree'
+  },
+  {
+    label: labels.learningConstraint,
+    icon: mdiInformation,
+    href: '/learning-constraint'
   },
   {
     href: '',

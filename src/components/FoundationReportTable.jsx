@@ -1,9 +1,11 @@
+import { labels } from '@/constants/labels'
 import { mdiCardAccountDetails, mdiEye, mdiUpdate } from '@mdi/js'
 import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useRef, useState } from 'react'
 import { iaxios } from '../config'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import { API_CLASS_INFO, API_FOUNDATION_LIST, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import BaseDivider from './BaseDivider'
@@ -13,8 +15,7 @@ import FormField from './FormField'
 import { Loading } from './Loading'
 import { Mkh } from './Mkh'
 import { UserOffice } from './UserOffice'
-import { labels } from '@/constants/labels'
-import { useRouter } from 'next/router'
+import SectionTitleLineWithButton from './SectionTitleLineWithButton'
 export const FoundationReportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -34,7 +35,8 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
     pic: '',
     mahalsodor: '',
     ttmoalem: '',
-    tkmelli: ''
+    tkmelli: '',
+
   })
 
   const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
@@ -56,7 +58,7 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
   const handleSubmitOnvanDore = async (values) => {
     try {
 
-      await iaxios.put(API_UPDATE_CLASS_ONVAN_DORE, { codek: selectedClient.codek, onvan: values.onvan_dore })
+      await iaxios.put(API_UPDATE_CLASS_ONVAN_DORE, { codek: selectedClient.codek, onvan: classInfo.onvan_dore })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
       setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
@@ -71,7 +73,7 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
   const handleSubmitMoassese = async (values) => {
     try {
 
-      await iaxios.put(API_UPDATE_CLASS_MOASSESE, { codek: selectedClient.codek, codemoassese: values.codemoassese, codequran: values.mkh })
+      await iaxios.put(API_UPDATE_CLASS_MOASSESE, { codek: selectedClient.codek, codemoassese: classInfo.codemoassese, codequran: classInfo.mkh })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
       setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
@@ -113,8 +115,8 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
 
   async function fetchDetail(id) {
     try {
-      const response = await iaxios.get(API_CLASS_STUDENT_INFO + "?codek=" + id)
-      const classInfoResponse = await iaxios.get(API_CLASS_INFO, { params: { codek: id } })
+      const response = await iaxios.get(API_FOUNDATION_LIST + "/" + id)
+      const classInfoResponse = await iaxios.get(API_FOUNDATION_LIST + "/" + id)
       setTeacherDetail(response.data.data)
 
       setClassInfo(classInfoResponse.data.data)
@@ -210,61 +212,100 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
       >
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>آمار کلاس</span>
+        <span className='font-bold text-blue-800'>جزییات موسسه / خانه قرآنی</span>
         <div className='bg-blue-200'>
           <table className='text-sm'>
             <thead>
               <tr className='[&>*]:text-right'>
-                <th>شهرستان</th>
-                <th>کد</th>
+                <th>آرم موسسه</th>
                 <th>نام</th>
-                <th>تاریخ تاسیس</th>
+                <th>شماره ثبت</th>
+                <th>شماره پروانه</th>
+                <th>فاکس</th>
+                <th>استان</th>
+                <th>کد پستی</th>
               </tr>
             </thead>
             <tbody>
-              {classInfo?.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{item.codek}</td>
-                  <td>{item.count}</td>
-                  <td>{item.natije}</td>
-                  <td>{`${item.fname} ${item.lname}`}</td>
-                  <td>{item.onvan_dore}</td>
-                </tr>)}
+              <tr className='[&>*]:text-right'>
+                <td>
+                  {classInfo?.logo ? <img src={`data:image/jpeg;base64,${classInfo.logo}`} alt='' className='w-24 h-24' /> : 'تصویر ندارد'}
+                </td>
+                <td>{classInfo?.nam}</td>
+                <td>{classInfo?.shs}</td>
+                <td>{classInfo?.sh_p}</td>
+                <td>{classInfo?.fax}</td>
+                <td>{classInfo?.ostan}</td>
+                <td>{classInfo?.codeposti}</td>
+              </tr>
             </tbody>
           </table>
         </div>
+        <SectionTitleLineWithButton icon={null} title='تصاویر مربوطه' main></SectionTitleLineWithButton>
+        <BaseDivider />
+        <div className='grid grid-cols-5 w-full'>
+          <div className="grid grid-cols-1 text-center gap-y-4">
+            <span className='font-bold'>آرم موسسه</span>
+            {classInfo?.logo ?
+              <img
+                alt="test"
+                src={`data:image/png;base64,${classInfo?.logo}`}
+                className="rounded-sm shadow-lg block  max-w-full bg-gray-100 dark:bg-slate-800"
+              />
+              : 'تصویر ندارد'}
+          </div>
+          <div className="grid grid-cols-1 text-center gap-y-4">
+            <span className='font-bold'>روزنامه رسمی</span>
+            {classInfo?.rozname_rasmi ?
+              <img
+                src={`data:image/png;base64,${classInfo?.rozname_rasmi}`}
+                className="rounded-smshadow-lg block  max-w-full bg-gray-100 dark:bg-slate-800"
+              /> : 'تصویر ندارد'
+            }
+          </div>
+          <div className="grid grid-cols-1 text-center gap-y-4">
+            <span className='font-bold'>روزنامه محلی</span>
+            {classInfo?.rozname_mahali ?
+              < img
+                src={`data:image/png;base64,${classInfo?.rozname_mahali}`}
+                className="rounded-smshadow-lg block  max-w-full bg-gray-100 dark:bg-slate-800"
+              /> : 'تصویر ندارد'}
+          </div>
+          <div className="grid grid-cols-1 text-center gap-y-4">
+            <span className='font-bold'>آگهی تاسیس</span>
+            {classInfo?.agahi_tasis ?
+              <img
+                src={`data:image/png;base64,${classInfo?.agahi_tasis}`}
+                className="rounded-smshadow-lg block  max-w-full bg-gray-100 dark:bg-slate-800"
+              /> : 'تصویر ندارد'}
+          </div>
+          <div className="grid grid-cols-1 text-center gap-y-4">
+            <span className='font-bold'>پروانه فعالیت</span>
+            {classInfo?.parvane_faaliat ?
+              <img
+                src={`data:image/png;base64,${classInfo?.parvane_faaliat}`}
+                className="rounded-smshadow-lg block  max-w-full bg-gray-100 dark:bg-slate-800"
+              /> : 'تصویر ندارد'}
+          </div>
+        </div>
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
+        <span className='font-bold text-blue-800'>اطلاعات آدرس</span>
         <div className='bg-blue-200'>
           <table className='text-sm'>
             <thead>
               <tr className='[&>*]:text-right'>
-                <th>نام</th>
-                <th>نمره پایانی</th>
-                <th>کد ملی</th>
-                <th>نتیجه</th>
-                <th />
+                <th>آدرس دقیق</th>
               </tr>
             </thead>
             <tbody>
-              {teacherDetail && teacherDetail.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{`${item.fname} ${item.lname}`}</td>
-                  <td>{item.payani}</td>
-                  <td>{item.codemelli}</td>
-                  <td>{item.natije}</td>
-                  <td>
-                    <BaseButtons>
-                      <BaseButton label={labels.fetchCertificateList} onClick={() => fetchCertificateList(item.codemelli)}>{labels.recentCertificate}</BaseButton>
-                      <BaseButton label={labels.printCert} onClick={() => generateCertificate(item.codemelli)}></BaseButton>
-                    </BaseButtons>
-                  </td>
-                </tr>)
-              }
+              <tr className='[&>*]:text-right'>
+                <td>{classInfo?.daqiq}</td>
+              </tr>
             </tbody>
           </table>
         </div>
+
         <BaseDivider />
         <BaseDivider />
       </CardBoxModal >
@@ -345,8 +386,8 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
                   <td data-label="کد کلاس">{client.shahrestan}</td>
                   <td data-label="نام موسسه">{client.code}</td>
                   <td data-label="کد قرآن" className='text-sm'>{client.name}</td>
-                  <td className='text-sm'>{client.tell.trim().length == 0 ? 'ندارد' : client.tell}</td>
-                  <td data-label="کد مربی" className="lg:w-32">{client.tarikhTasis.trim().length < 3 ? 'ندارد' : client.tarikhTasis}</td>
+                  <td className='text-sm'>{client?.tell?.trim().length == 0 ? 'ندارد' : client.tell}</td>
+                  <td data-label="کد مربی" className="lg:w-32">{client?.tarikhTasis?.trim().length < 3 ? 'ندارد' : client.tarikhTasis}</td>
                   <td className="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-between" noWrap>
                       <BaseButton
@@ -364,7 +405,7 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
                       <BaseButton
                         color="info"
                         icon={mdiCardAccountDetails}
-                        onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
+                        onClick={() => { fetchDetail(client.code); setSelectedClient(client); setIsModalDetailActive(true) }}
                         small
                       />
                     </BaseButtons>

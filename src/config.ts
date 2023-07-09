@@ -36,7 +36,8 @@ export const currentPageTitleMap: Record<string, string> = {
     "ChangePassword": "تغییر رمز",
     "AddPerson": 'افزودن فرد جدید',
     "OfficeInfo": 'مشخصات اولیه',
-    "LearnConstraint": labels.learningConstraint
+    "LearnConstraint": labels.learningConstraint,
+    "Foundation": labels.foundation
 }
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`

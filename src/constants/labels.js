@@ -84,6 +84,7 @@ export const labels = {
     upload: 'بارگذاری',
     fetchCertificateList: 'سوابق گواهی',
     learningConstraint: 'محدودیت آموزشی',
-    learningConstraintCourseList: 'لیست دوره های دارای محدودیت'
+    learningConstraintCourseList: 'لیست دوره های دارای محدودیت',
+    foundation: 'موسسات و خانه قرآنی'
 
 }

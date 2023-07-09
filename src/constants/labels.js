@@ -85,6 +85,7 @@ export const labels = {
     fetchCertificateList: 'سوابق گواهی',
     learningConstraint: 'محدودیت آموزشی',
     learningConstraintCourseList: 'لیست دوره های دارای محدودیت',
-    foundation: 'موسسات و خانه قرآنی'
+    foundation: 'موسسات و خانه قرآنی',
+    addFoundation: 'افزودن موسسات و خانه قرآنی'
 
 }

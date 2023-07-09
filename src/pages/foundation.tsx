@@ -1,8 +1,8 @@
 import { FoundationReportTable } from '@/components/FoundationReportTable'
 import { InstUserType } from '@/components/InstUserType'
 import { labels } from '@/constants/labels'
-import { mdiSearchWeb } from '@mdi/js'
-import { Form, Formik } from 'formik'
+import { mdiBallotOutline, mdiSearchWeb } from '@mdi/js'
+import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import BaseButton from '../components/BaseButton'
@@ -15,6 +15,8 @@ import { getPageTitle, iaxios } from '../config'
 import { API_FOUNDATION_LIST } from '../constants'
 import { useClassReport } from '../hooks/useClassReport'
 import LayoutAuthenticated from '../layouts/Authenticated'
+import { addFoundationValidation } from '@/validation/form'
+import { useSnackbar } from 'notistack'
 
 const FormsPage = () => {
   const { data, error, isLoading } = useClassReport()
@@ -39,6 +41,16 @@ const FormsPage = () => {
       alert(error)
     }
   }
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  async function addFoundation(values) {
+    try {
+      await iaxios.post(API_FOUNDATION_LIST, { values })
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      console.log(error.response.data.message)
+      enqueueSnackbar(error.response.data.message, { variant: 'error' })
+    }
+  }
   return (
     <>
       <Head>
@@ -46,6 +58,44 @@ const FormsPage = () => {
       </Head>
 
       <SectionMain>
+        <SectionTitleLineWithButton icon={mdiBallotOutline} title={labels.addFoundation} main>
+        </SectionTitleLineWithButton>
+
+        <CardBox>
+          <Formik
+            initialValues={{
+              mkh: '',
+              code: '',
+              name: '',
+              shs: ''
+            }}
+            validationSchema={addFoundationValidation}
+            onSubmit={(values) => { addFoundation(values) }}
+          >
+            {({ errors }) => (
+              <Form>
+                <FormField label=''>
+                  <InstUserType name='mkh' label='نوع کاربری' help={errors.mkh} />
+                  <FormField label='شناسه ملی' help={errors.code}>
+                    <Field name='code' label='' />
+                  </FormField>
+                </FormField>
+                <FormField label=''>
+                  <FormField label='شماره ثبت' help={errors.shs}>
+                    <Field name='shs' label='' />
+                  </FormField>
+                  <FormField label='نام کامل' help={errors.name}>
+                    <Field name='name' label='' />
+                  </FormField>
+                </FormField>
+
+                <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
+                  <BaseButton type="submit" color="info" label="افزودن" disabled={errors.name || errors.shs || errors.code || errors.mkh} />
+                </div>
+                <BaseDivider />
+              </Form>)}
+          </Formik>
+        </CardBox>
 
         <SectionTitleLineWithButton icon={null} title={labels.search} main>
         </SectionTitleLineWithButton>

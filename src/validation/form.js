@@ -30,6 +30,13 @@ export const changePassValidation = Yup.object().shape({
     current: Yup.string().required(labels.validation.mandatory),
 })
 
+export const addFoundationValidation = Yup.object().shape({
+    shs: Yup.string().required(labels.validation.mandatory),
+    code: Yup.string().required(labels.validation.mandatory),
+    name: Yup.string().required(labels.validation.mandatory),
+    mkh: Yup.string().required(labels.validation.mandatory),
+})
+
 export const addPersonValidation = Yup.object().shape({
     fname: Yup.string().required(labels.validation.mandatory),
     lname: Yup.string().required(labels.validation.mandatory),

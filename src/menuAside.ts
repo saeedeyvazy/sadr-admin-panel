@@ -96,10 +96,9 @@ const menuAside: MenuAsideItem[] = [
     href: '/learning-constraint'
   },
   {
-    href: '',
-    label: 'موسسات قرآنی',
+    label: 'موسسات و خانه قرآنی',
     icon: mdiOfficeBuilding,
-    target: '_blank',
+    href: '/foundation',
   },
   {
     href: '',

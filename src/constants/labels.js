@@ -86,6 +86,9 @@ export const labels = {
     learningConstraint: 'محدودیت آموزشی',
     learningConstraintCourseList: 'لیست دوره های دارای محدودیت',
     foundation: 'موسسات و خانه قرآنی',
-    addFoundation: 'افزودن موسسات و خانه قرآنی'
+    addFoundation: 'افزودن موسسات و خانه قرآنی',
+    teachingLicense: 'تعیین مجوزهای تدریس',
+    association: 'انجمن ها',
+    nothing: 'ندارد'
 
 }

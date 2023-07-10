@@ -27,8 +27,8 @@ const menuAside: MenuAsideItem[] = [
     icon: mdiCardSearch,
   },
   {
-    href: '/tables',
-    label: 'آخرین دوره ها',
+    href: '/association',
+    label: labels.association,
     icon: mdiTelevisionGuide,
   },
   {
@@ -101,10 +101,9 @@ const menuAside: MenuAsideItem[] = [
     href: '/foundation',
   },
   {
-    href: '',
-    label: 'گزارشات',
+    href: '/teaching-license',
+    label: 'مجوزهای ندریس',
     icon: mdiTable,
-    target: '_blank',
   },
 ]
 

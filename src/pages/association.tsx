@@ -23,6 +23,7 @@ const FormsPage = () => {
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
   const [createLoading, setCreateLoading] = useState(false)
+  const [editLoading, setEditLoading] = useState(false)
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   async function handleSubmit(values) {
     try {
@@ -42,8 +43,23 @@ const FormsPage = () => {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }
   }
-  function handleEdit(values) {
-    return
+  async function handleEdit(values) {
+    setEditLoading(true)
+    try {
+      const request = { ...values, onvan_anjoman: values.onvan_anjoman_edit }
+      delete request.onvan_anjoman_edit
+      console.log(request)
+      await iaxios.put(API_ASSOSIATION, {
+        ...request, namayesh: 1
+      })
+      setEditLoading(false)
+
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      console.log(error)
+      setEditLoading(false)
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
   }
   function handleChange(selected, setFieldValue) {
     setFieldValue('onvan_anjoman', selected.value.onvan_anjoman)
@@ -51,6 +67,7 @@ const FormsPage = () => {
     setFieldValue('address_group', selected.value.address_group)
     setFieldValue('address_group_b', selected.value.address_group_b)
     setFieldValue('address_group_kh', selected.value.address_group_kh)
+    setFieldValue('id', selected.value.id)
   }
   return (
     <>
@@ -69,7 +86,8 @@ const FormsPage = () => {
               onvan_anjoman_edit: '',
               address_group: '',
               address_group_b: '',
-              address_group_kh: ''
+              address_group_kh: '',
+              id: 0
 
             }}
             validationSchema={assosiationValidation}
@@ -83,6 +101,7 @@ const FormsPage = () => {
                   </FormField>
                   <FormField label={`${labels.edit} ${labels.title}`} help={errors.onvan_anjoman_edit}>
                     <Field name="onvan_anjoman_edit" />
+                    <Field style={{ visibility: 'hidden', width: 0 }} name="id" />
                   </FormField>
                 </FormField>
                 <FormField label={`${labels.address} ${labels.group}`} help={errors.address_group}>
@@ -98,7 +117,7 @@ const FormsPage = () => {
                 </FormField>
                 <div className='grid grid-cols-6 gap-x-2'>
                   <BaseButton isLoading={createLoading} type="submit" color="success" label="ایجاد انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman} />
-                  <BaseButton type="button" onClick={handleEdit} color="warning" label="ویرایش انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman || errors.onvan_anjoman_edit} />
+                  <BaseButton type="button" isLoading={editLoading} onClick={() => handleEdit(values)} color="warning" label="ویرایش انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman || errors.onvan_anjoman_edit} />
                 </div>
                 <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 

@@ -89,6 +89,11 @@ export const labels = {
     addFoundation: 'افزودن موسسات و خانه قرآنی',
     teachingLicense: 'تعیین مجوزهای تدریس',
     association: 'انجمن ها',
-    nothing: 'ندارد'
+    nothing: 'ندارد',
+    title: 'عنوان',
+    group: 'گروه',
+    brothers: ' برادران',
+    sisters: 'خواهران'
+
 
 }

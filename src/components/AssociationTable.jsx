@@ -331,11 +331,11 @@ export const AssociationTable = ({ clients, isLoading }) => {
           :
           <table>
             <thead>
-              <tr className='[&>*]:text-right'>
+              <tr className='[&>*]:text-right whitespace-nowrap'>
                 <th>عنوان انجمن</th>
                 <th>آدرس گروه</th>
-                <th className='whitespace-nowrap'>آدرس گروه برادران</th>
-                <th className='whitespace-nowrap'>آدرس گروه خواهران</th>
+                <th>آدرس گروه برادران</th>
+                <th>آدرس گروه خواهران</th>
                 <th />
               </tr>
             </thead>
@@ -343,7 +343,7 @@ export const AssociationTable = ({ clients, isLoading }) => {
               {clientsPaginated.map((client) => (
                 <tr key={client.id} className='[&>*]:text-right whitespace-nowrap'>
                   <td data-label="کد کلاس">{client.onvan_anjoman}</td>
-                  <td className='whitespace-nowrap' data-label="نام موسسه">{!client.address_group ? labels.nothing : client.address_group}</td>
+                  <td data-label="نام موسسه">{!client.address_group ? labels.nothing : client.address_group}</td>
                   <td data-label="کد قرآن" className='text-sm'>{!client.address_group_b ? labels.nothing : client.address_group_b}</td>
                   <td data-label="کد مربی" className="lg:w-32">{!client.address_group_kh ? labels.nothing : client.address_group_kh}</td>
 

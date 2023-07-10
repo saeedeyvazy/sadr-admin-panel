@@ -1,12 +1,13 @@
 import { AssociationTable } from '@/components/AssociationTable'
+import FormField from '@/components/FormField'
 import { labels } from '@/constants/labels'
 import { useAssosiationReport } from '@/hooks/useAssosiationReport'
+import { assosiationValidation } from '@/validation/form'
 import { mdiSearchWeb } from '@mdi/js'
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import BaseButton from '../components/BaseButton'
-import BaseDivider from '../components/BaseDivider'
 import CardBox from '../components/CardBox'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
@@ -56,20 +57,34 @@ const FormsPage = () => {
         <CardBox>
           <Formik
             initialValues={{
-              codequran: '',
-              tshs: '',
-              lname: '',
-              onvan_dore: '',
-              codemelli: '',
-              codek: ''
+              onvan_anjoman: '',
+              address_group: '',
+              address_group_b: '',
+              address_group_kh: ''
+
             }}
+            validationSchema={assosiationValidation}
             onSubmit={(values) => handleSubmit(values)}
           >
-            {({ values, setFieldValue }) => (
+            {({ values, setFieldValue, errors }) => (
               <Form>
-                <BaseButton type="submit" color="info" label="جستجو" />
-                <BaseDivider />
-                <BaseDivider />
+                <FormField>
+                  <FormField label={labels.title} help={errors.onvan_anjoman}>
+                    <Field name="onvan_anjoman" />
+                  </FormField>
+                  <FormField label={`${labels.address} ${labels.group}`} help={errors.address_group}>
+                    <Field name="address_group" />
+                  </FormField>
+                </FormField>
+                <FormField>
+                  <FormField label={`${labels.address} ${labels.group} ${labels.brothers}`} help={errors.address_group_b}>
+                    <Field name="address_group_b" />
+                  </FormField>
+                  <FormField label={`${labels.address} ${labels.group} ${labels.sisters}`} help={errors.address_group_kh}>
+                    <Field name="address_group_kh" />
+                  </FormField>
+                </FormField>
+                <BaseButton type="submit" color="success" label="ایجاد انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman} />
                 <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
                 <CardBox hasTable>

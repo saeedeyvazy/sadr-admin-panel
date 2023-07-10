@@ -1,4 +1,5 @@
 import { AssociationTable } from '@/components/AssociationTable'
+import { AssosiationSelect } from '@/components/Assosiation'
 import FormField from '@/components/FormField'
 import { labels } from '@/constants/labels'
 import { useAssosiationReport } from '@/hooks/useAssosiationReport'
@@ -6,13 +7,14 @@ import { assosiationValidation } from '@/validation/form'
 import { mdiSearchWeb } from '@mdi/js'
 import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
+import { useSnackbar } from 'notistack'
 import { ReactElement, useState } from 'react'
 import BaseButton from '../components/BaseButton'
 import CardBox from '../components/CardBox'
 import SectionMain from '../components/SectionMain'
 import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
 import { getPageTitle, iaxios } from '../config'
-import { API_CLASS_REPORT } from '../constants'
+import { API_ASSOSIATION } from '../constants'
 import LayoutAuthenticated from '../layouts/Authenticated'
 
 const FormsPage = () => {
@@ -20,29 +22,35 @@ const FormsPage = () => {
   const [specificSearch, setSpecificSearch] = useState(false)
   const [searchResult, setSearchResult] = useState([{}])
   const [searchLoading, setSearchLoading] = useState(false)
-
+  const [createLoading, setCreateLoading] = useState(false)
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
   async function handleSubmit(values) {
     try {
-      setSearchLoading(true)
-      const response = await iaxios.post(API_CLASS_REPORT, {
-        codequran: values.codequran == '0' ? '' : values.codequran,
-        tshs: values.tshs,
-        lname: values.lname,
-        onvan_dore: values.onvan_dore,
-        codemelli: values.codemelli,
-        codek: values.codek
-      }, {
-        params: {
-          page: 0,
-          size: 40
-        }
+      setCreateLoading(true)
+
+      const request = { ...values, onvan_anjoman: values.onvan_anjoman_edit }
+      delete request.onvan_anjoman_edit
+      await iaxios.post(API_ASSOSIATION, {
+        ...request, namayesh: 1
       })
-      setSearchLoading(false)
-      setSpecificSearch(true)
-      setSearchResult(response.data.data.content)
+      setCreateLoading(false)
+      // setSpecificSearch(true)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
-      alert(error)
+      console.log(error)
+      setCreateLoading(false)
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
     }
+  }
+  function handleEdit(values) {
+    return
+  }
+  function handleChange(selected, setFieldValue) {
+    setFieldValue('onvan_anjoman', selected.value.onvan_anjoman)
+    setFieldValue('onvan_anjoman_edit', selected.value.onvan_anjoman)
+    setFieldValue('address_group', selected.value.address_group)
+    setFieldValue('address_group_b', selected.value.address_group_b)
+    setFieldValue('address_group_kh', selected.value.address_group_kh)
   }
   return (
     <>
@@ -58,6 +66,7 @@ const FormsPage = () => {
           <Formik
             initialValues={{
               onvan_anjoman: '',
+              onvan_anjoman_edit: '',
               address_group: '',
               address_group_b: '',
               address_group_kh: ''
@@ -70,11 +79,14 @@ const FormsPage = () => {
               <Form>
                 <FormField>
                   <FormField label={labels.title} help={errors.onvan_anjoman}>
-                    <Field name="onvan_anjoman" />
+                    <AssosiationSelect name="onvan_anjoman" signal={(selected) => { handleChange(selected, setFieldValue) }} isMulti={false} />
                   </FormField>
-                  <FormField label={`${labels.address} ${labels.group}`} help={errors.address_group}>
-                    <Field name="address_group" />
+                  <FormField label={`${labels.edit} ${labels.title}`} help={errors.onvan_anjoman_edit}>
+                    <Field name="onvan_anjoman_edit" />
                   </FormField>
+                </FormField>
+                <FormField label={`${labels.address} ${labels.group}`} help={errors.address_group}>
+                  <Field name="address_group" />
                 </FormField>
                 <FormField>
                   <FormField label={`${labels.address} ${labels.group} ${labels.brothers}`} help={errors.address_group_b}>
@@ -84,7 +96,10 @@ const FormsPage = () => {
                     <Field name="address_group_kh" />
                   </FormField>
                 </FormField>
-                <BaseButton type="submit" color="success" label="ایجاد انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman} />
+                <div className='grid grid-cols-6 gap-x-2'>
+                  <BaseButton isLoading={createLoading} type="submit" color="success" label="ایجاد انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman} />
+                  <BaseButton type="button" onClick={handleEdit} color="warning" label="ویرایش انجمن" disabled={errors.address_group || errors.address_group_b || errors.address_group_kh || errors.onvan_anjoman || errors.onvan_anjoman_edit} />
+                </div>
                 <SectionTitleLineWithButton icon={mdiSearchWeb} title="نتیجه جستجو" main />
 
                 <CardBox hasTable>

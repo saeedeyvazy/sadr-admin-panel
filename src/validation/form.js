@@ -32,6 +32,7 @@ export const changePassValidation = Yup.object().shape({
 
 export const assosiationValidation = Yup.object().shape({
     onvan_anjoman: Yup.string().required(labels.validation.mandatory),
+    onvan_anjoman_edit: Yup.string().required(labels.validation.mandatory_for_edit),
     address_group: Yup.string().required(labels.validation.mandatory),
     address_group_b: Yup.string().required(labels.validation.mandatory),
     address_group_kh: Yup.string().required(labels.validation.mandatory),

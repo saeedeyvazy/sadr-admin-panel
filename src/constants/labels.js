@@ -30,7 +30,8 @@ export const labels = {
     recentCertificate: 'سوابق گواهی',
     printCert: 'صدور گواهی',
     validation: {
-        mandatory: 'این فیلد اجباریست'
+        mandatory: 'این فیلد اجباریست',
+        mandatory_for_edit: 'این فیلد برای ویرایش اجباریست'
     },
     teacherNatCode: "کد ملی مربی",
     registerClass: "ثبت کلاس",
@@ -93,7 +94,8 @@ export const labels = {
     title: 'عنوان',
     group: 'گروه',
     brothers: ' برادران',
-    sisters: 'خواهران'
+    sisters: 'خواهران',
+    edit: 'ویرایش',
 
 
 }

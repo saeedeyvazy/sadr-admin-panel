@@ -1,4 +1,3 @@
-import { labels } from '@/constants/labels'
 import { mdiCardAccountDetails, mdiEye, mdiUpdate } from '@mdi/js'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
@@ -278,9 +277,9 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
                 <th>نام و نام خانوادگی</th>
                 <th>کد ملی</th>
                 <th>شماره همراه</th>
-                <th>جنسیت</th>
                 <th>وضعیت</th>
                 <th>تاریخ</th>
+                <th>تصویر</th>
                 <th />
               </tr>
             </thead>
@@ -291,10 +290,10 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
                   <td >{`${client.fname} ${client.lname}`}</td>
                   <td className='text-sm'>{client.codemelli}</td>
                   <td className="lg:w-32">{client.mob}</td>
-                  <td className="lg:w-32">{client.jensiyatName}</td>
                   <td className="lg:w-32">{client.vaziatName}</td>
                   <td className="lg:w-32">{client.tarikh}</td>
-
+                  <td>
+                    {client.pic ? <img src={`data:image/jpeg;base64,${client.pic}`} alt='' className='w-24 h-12 rounded-full' /> : 'ندارد'}</td>
                   <td className="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-between" noWrap>
                       <BaseButton

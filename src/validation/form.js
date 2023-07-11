@@ -38,6 +38,12 @@ export const assosiationValidation = Yup.object().shape({
     address_group_kh: Yup.string().required(labels.validation.mandatory),
 })
 
+export const assosiationStatusValidation = Yup.object().shape({
+    status: Yup.string().required(labels.validation.mandatory),
+    id_anjoman: Yup.string().required(labels.validation.mandatory),
+
+})
+
 export const addFoundationValidation = Yup.object().shape({
     shs: Yup.string().required(labels.validation.mandatory),
     code: Yup.string().required(labels.validation.mandatory),

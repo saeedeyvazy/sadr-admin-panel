@@ -96,6 +96,7 @@ export const labels = {
     brothers: ' برادران',
     sisters: 'خواهران',
     edit: 'ویرایش',
-
+    status: 'وضعیت',
+    membership: 'عضویت'
 
 }

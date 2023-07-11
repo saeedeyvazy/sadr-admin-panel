@@ -105,6 +105,11 @@ const menuAside: MenuAsideItem[] = [
     label: 'مجوزهای تدریس',
     icon: mdiTable,
   },
+  {
+    href: '/assosiation-status',
+    label: `${labels.membership} ${labels.association}`,
+    icon: mdiTable,
+  },
 ]
 
 export default menuAside

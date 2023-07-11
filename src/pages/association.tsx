@@ -53,7 +53,9 @@ const FormsPage = () => {
         ...request, namayesh: 1
       })
       setEditLoading(false)
-
+      setSpecificSearch(true)
+      console.log(data.map(item => item.id == values.id ? request : item))
+      setSearchResult(data => data.map(item => item.id == values.id ? request : item))
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
       console.log(error)

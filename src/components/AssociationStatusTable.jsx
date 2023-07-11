@@ -1,4 +1,4 @@
-import { mdiCardAccountDetails } from '@mdi/js'
+import { mdiCardAccountDetails, mdiTrashCan } from '@mdi/js'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import { useRef, useState } from 'react'
@@ -81,6 +81,16 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
     }
   }
 
+  async function deleteItem(id) {
+    try {
+      await iaxios.delete(`${API_ASSOSIATION_MEMBERSHIP}/${id}`)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      console.log(error)
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+  }
+
 
   return (
     <>
@@ -143,12 +153,15 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
                   <td className="lg:w-32">{client.tarikh}</td>
 
                   <td className="before:hidden lg:w-1 whitespace-nowrap">
-                    <BaseButton
-                      color="info"
-                      icon={mdiCardAccountDetails}
-                      onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
-                      small
-                    />
+                    <BaseButtons className="justify-start lg:justify-between" noWrap>
+                      <BaseButton onClick={() => deleteItem(client.id)} small color='danger' icon={mdiTrashCan} />
+                      <BaseButton
+                        color="info"
+                        icon={mdiCardAccountDetails}
+                        onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
+                        small
+                      />
+                    </BaseButtons>
                   </td>
                 </tr>
               ))

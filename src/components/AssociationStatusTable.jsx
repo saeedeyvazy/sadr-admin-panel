@@ -1,18 +1,16 @@
-import { mdiCardAccountDetails, mdiEye, mdiUpdate } from '@mdi/js'
+import { mdiCardAccountDetails } from '@mdi/js'
 import { Form, Formik } from 'formik'
 import { useSnackbar } from 'notistack'
 import { useRef, useState } from 'react'
 import { iaxios } from '../config'
-import { API_CLASS_INFO, API_CLASS_STUDENT_INFO, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import { API_ASSOSIATION_MEMBERSHIP, API_CLASS_INFO, API_CLASS_STUDENT_INFO } from '../constants'
+import { AssosiationStatus } from './AssosiationStatus/AssosiationStatus'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import BaseDivider from './BaseDivider'
 import CardBoxModal from './CardBoxModal'
-import { DoreSelect } from './DoreSelect'
 import FormField from './FormField'
 import { Loading } from './Loading'
-import { Mkh } from './Mkh'
-import { UserOffice } from './UserOffice'
 export const AssociationStatusTable = ({ clients, isLoading }) => {
 
   const perPage = 5
@@ -43,70 +41,22 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
     pagesList.push(i)
   }
 
-  const [isModalInfoActive, setIsModalInfoActive] = useState(false)
-  const [isModalTrashActive, setIsModalTrashActive] = useState(false)
   const [isModalDetailActive, setIsModalDetailActive] = useState(false)
-  const [isModalTest, setIsModalTest] = useState(false)
-
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar()
 
-  const handleSubmitOnvanDore = async (values) => {
-    try {
 
-      await iaxios.put(API_UPDATE_CLASS_ONVAN_DORE, { codek: selectedClient.codek, onvan: values.onvan_dore })
-      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => window.location.reload(), 1000)
-    } catch (error) {
-      console.log(error)
-      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
-    }
-    finally {
-      setIsModalInfoActive(false)
-      setIsModalDetailActive(false)
-    }
-  }
-  const handleSubmitMoassese = async (values) => {
-    try {
-
-      await iaxios.put(API_UPDATE_CLASS_MOASSESE, { codek: selectedClient.codek, codemoassese: values.codemoassese, codequran: values.mkh })
-      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => window.location.reload(), 1000)
-    } catch (error) {
-      console.log(error)
-      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
-    }
-    finally {
-      setIsModalInfoActive(false)
-      setIsModalDetailActive(false)
-    }
-  }
-
-  const handleModalAction = () => {
-    if (updatePassFormRef.current) {
-      updatePassFormRef.current.handleSubmit()
-    }
-    handleCancelModalAction()
-  }
-
-  const handleMoasseseModalAction = () => {
-    if (updateMoasseseFormRef.current) {
+  const handleSubmitMoassese = async () => {
+    if (updateMoasseseFormRef.current)
       updateMoasseseFormRef.current.handleSubmit()
-    }
-    handleCancelModalAction()
+    handleCloseDetailModal()
   }
-  const handleCancelModalAction = () => {
-    setIsModalInfoActive(false)
-    setIsModalTrashActive(false)
-    setIsModalTest(false)
-  }
+
 
   const handleCloseDetailModal = () => {
-    setTeacherDetail()
-    setClassInfo()
     setIsModalDetailActive(false)
   }
-  const updatePassFormRef = useRef()
+
   const updateMoasseseFormRef = useRef()
 
   async function fetchDetail(id) {
@@ -120,7 +70,16 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
       console.log(error)
     }
   }
-
+  async function handleSubmit(values) {
+    try {
+      const response = await iaxios.put(API_ASSOSIATION_MEMBERSHIP, { id: selectedClient.id, vaziat: values.status })
+      setTeacherDetail(response.data.data)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+    } catch (error) {
+      console.log(error)
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+    }
+  }
 
 
   return (
@@ -129,144 +88,34 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
         title="جزییات"
         buttonColor="info"
         buttonLabel="تایید"
-        isActive={isModalInfoActive}
-        onConfirm={handleModalAction}
-        onCancel={handleCancelModalAction}
-      >
-        <Formik
-          initialValues={{
-            name: selectedClient.name,
-            onvan_dore: selectedClient.onvan_dore
-          }}
-          onSubmit={handleSubmitOnvanDore}
-          innerRef={updatePassFormRef}
-        >
-          {({ values, setFieldValue }) => (
-            <Form className="md:min-w-[300px] md:min-h-[300px]" >
-              <FormField label="" >
-                <FormField label="عنوان دوره" >
-                  <DoreSelect isMulti={true} name="onvan_dore" signal={(selected) => { setFieldValue('onvan_dore', selected[0]?.value) }} />
-                </FormField>
-              </FormField>
-            </Form >)
-          }
-        </Formik >
-      </CardBoxModal >
-      <CardBoxModal
-        title="جزییات"
-        buttonColor="info"
-        buttonLabel="تایید"
         isActive={isModalDetailActive}
-        onConfirm={handleCloseDetailModal}
+        onConfirm={handleSubmitMoassese}
         onCancel={handleCloseDetailModal}
-        innerModalClassName='md:w-11/12'
+        innerModalClassName='md:w-6/12'
       >
         <BaseDivider />
         <BaseDivider />
-        <span className='font-bold text-blue-800'>آمار کلاس</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>کد کلاس</th>
-                <th>تعداد</th>
-                <th>نتیجه</th>
-                <th>نام</th>
-                <th>عنوان دوره</th>
-              </tr>
-            </thead>
-            <tbody>
-              {classInfo?.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{item.codek}</td>
-                  <td>{item.count}</td>
-                  <td>{item.natije}</td>
-                  <td>{`${item.fname} ${item.lname}`}</td>
-                  <td>{item.onvan_dore}</td>
-                </tr>)}
-            </tbody>
-          </table>
-        </div>
-        <BaseDivider />
-        <BaseDivider />
-        <span className='font-bold text-blue-800'>اطلاعات دانش آموزان</span>
-        <div className='bg-blue-200'>
-          <table className='text-sm'>
-            <thead>
-              <tr className='[&>*]:text-right'>
-                <th>نام</th>
-                <th>نمره پایانی</th>
-                <th>کد ملی</th>
-                <th>نتیجه</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {teacherDetail && teacherDetail.map((item, index) =>
-                <tr key={index} className='[&>*]:text-right'>
-                  <td>{`${item.fname} ${item.lname}`}</td>
-                  <td>{item.payani}</td>
-                  <td>{item.codemelli}</td>
-                  <td>{item.natije}</td>
-
-                </tr>)
-              }
-            </tbody>
-          </table>
-        </div>
-        <BaseDivider />
-        <BaseDivider />
-      </CardBoxModal >
-
-      <CardBoxModal
-        title="به روزرسانی موسسه"
-        buttonColor="info"
-        buttonLabel="تایید"
-        isActive={isModalTest}
-        onConfirm={handleCancelModalAction}
-        onCancel={handleCancelModalAction}
-      >
-        <table>
-          <thead>
-            <tr className='[&>*]:text-right'>
-              <th>کد کلاس</th>
-              <th>نام موسسه</th>
-              <th>عنوان دوره</th>
-              <th>کد مربی</th>
-              <th />
-            </tr>
-          </thead>
-
-        </table>
-      </CardBoxModal>
-      <CardBoxModal
-        title="به روزرسانی موسسه"
-        buttonColor="info"
-        buttonLabel="تایید"
-        isActive={isModalTrashActive}
-        onConfirm={handleMoasseseModalAction}
-        onCancel={handleCancelModalAction}
-      >
         <Formik
           initialValues={{
-            codemoassese: selectedClient.name,
-            mkh: ''
+            status: '',
           }}
-          onSubmit={handleSubmitMoassese}
           innerRef={updateMoasseseFormRef}
+          onSubmit={(values) => handleSubmit(values)}
         >
           {({ values, setFieldValue }) => (
             <Form>
-              <FormField label="" >
-                <FormField label="نوع" >
-                  <Mkh name='mkh' />
+              {selectedClient.pic ? <img src={`data:image/jpeg;base64,${selectedClient.pic}`} alt='' className='w-24 h-24' /> : 'تصویر ندارد'}
+              <FormField>
+                <FormField  >
+                  <AssosiationStatus name='status' setFieldValue={setFieldValue} />
                 </FormField>
-                <UserOffice name='codemoassese' label='موسسه' />
+                <FormField />
               </FormField>
-            </Form >)
-          }
-        </Formik >
-      </CardBoxModal>
+            </Form>)}
+        </Formik>
+        <BaseDivider />
+        <BaseDivider />
+      </CardBoxModal >
       {
         isLoading ? <Loading />
           :
@@ -279,7 +128,7 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
                 <th>شماره همراه</th>
                 <th>وضعیت</th>
                 <th>تاریخ</th>
-                <th>تصویر</th>
+
                 <th />
               </tr>
             </thead>
@@ -292,30 +141,14 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
                   <td className="lg:w-32">{client.mob}</td>
                   <td className="lg:w-32">{client.vaziatName}</td>
                   <td className="lg:w-32">{client.tarikh}</td>
-                  <td>
-                    {client.pic ? <img src={`data:image/jpeg;base64,${client.pic}`} alt='' className='w-24 h-12 rounded-full' /> : 'ندارد'}</td>
-                  <td className="before:hidden lg:w-1 whitespace-nowrap">
-                    <BaseButtons type="justify-start lg:justify-between" noWrap>
-                      <BaseButton
-                        color="info"
-                        icon={mdiEye}
-                        onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
-                        small
-                      />
-                      <BaseButton
-                        color="info"
-                        icon={mdiUpdate}
-                        onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
-                        small
-                      />
-                      <BaseButton
-                        color="info"
-                        icon={mdiCardAccountDetails}
-                        onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
-                        small
-                      />
-                    </BaseButtons>
 
+                  <td className="before:hidden lg:w-1 whitespace-nowrap">
+                    <BaseButton
+                      color="info"
+                      icon={mdiCardAccountDetails}
+                      onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
+                      small
+                    />
                   </td>
                 </tr>
               ))

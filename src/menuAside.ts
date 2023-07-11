@@ -102,7 +102,7 @@ const menuAside: MenuAsideItem[] = [
   },
   {
     href: '/teaching-license',
-    label: 'مجوزهای ندریس',
+    label: 'مجوزهای تدریس',
     icon: mdiTable,
   },
 ]

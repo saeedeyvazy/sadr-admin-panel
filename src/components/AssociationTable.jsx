@@ -348,27 +348,6 @@ export const AssociationTable = ({ clients, isLoading }) => {
                   <td data-label="کد مربی" className="lg:w-32">{!client.address_group_kh ? labels.nothing : client.address_group_kh}</td>
 
                   <td className="before:hidden lg:w-1 whitespace-nowrap">
-                    <BaseButtons type="justify-start lg:justify-between" noWrap>
-                      <BaseButton
-                        color="info"
-                        icon={mdiEye}
-                        onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
-                        small
-                      />
-                      <BaseButton
-                        color="info"
-                        icon={mdiUpdate}
-                        onClick={() => { setIsModalTrashActive(true); setSelectedClient(client) }}
-                        small
-                      />
-                      <BaseButton
-                        color="info"
-                        icon={mdiCardAccountDetails}
-                        onClick={() => { fetchDetail(client.codek); setSelectedClient(client); setIsModalDetailActive(true) }}
-                        small
-                      />
-                    </BaseButtons>
-
                   </td>
                 </tr>
               ))

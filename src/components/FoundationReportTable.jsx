@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useSnackbar } from 'notistack'
 import { useRef, useState } from 'react'
 import { iaxios } from '../config'
-import { API_CLASS_INFO, API_FOUNDATION_LIST, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
+import { API_CLASS_INFO, API_FOUNDATION_LIST, API_INST_CERT_LIST, API_INST_PRINT_CERT, API_UPDATE_ASSOSIATION_STATE, API_UPDATE_CLASS_MOASSESE, API_UPDATE_CLASS_ONVAN_DORE } from '../constants'
 import BaseButton from './BaseButton'
 import BaseButtons from './BaseButtons'
 import BaseDivider from './BaseDivider'
@@ -16,6 +16,7 @@ import { Loading } from './Loading'
 import { Mkh } from './Mkh'
 import { UserOffice } from './UserOffice'
 import SectionTitleLineWithButton from './SectionTitleLineWithButton'
+import { AssosiationStatus } from './AssosiationStatus/AssosiationStatus'
 export const FoundationReportTable = ({ clients, isLoading, error }) => {
 
   const perPage = 5
@@ -73,9 +74,8 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
   const handleSubmitMoassese = async (values) => {
     try {
 
-      await iaxios.put(API_UPDATE_CLASS_MOASSESE, { codek: selectedClient.codek, codemoassese: classInfo.codemoassese, codequran: classInfo.mkh })
+      await iaxios.put(API_UPDATE_ASSOSIATION_STATE, { code: selectedClient.id, vaziat: values.newStatus })
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
-      setTimeout(() => window.location.reload(), 1000)
     } catch (error) {
       console.log(error)
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
@@ -339,7 +339,7 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
         </table>
       </CardBoxModal>
       <CardBoxModal
-        title="به روزرسانی موسسه"
+        title="به روزرسانی"
         buttonColor="info"
         buttonLabel="تایید"
         isActive={isModalTrashActive}
@@ -348,19 +348,17 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
       >
         <Formik
           initialValues={{
-            codemoassese: selectedClient.name,
-            mkh: ''
+            newStatus: ''
           }}
           onSubmit={handleSubmitMoassese}
           innerRef={updateMoasseseFormRef}
         >
           {({ values, setFieldValue }) => (
-            <Form>
+            <Form className='md:min-w-[300px] md:min-h-[100px]'>
               <FormField label="" >
-                <FormField label="نوع" >
-                  <Mkh name='mkh' />
+                <FormField label="" >
+                  <AssosiationStatus setFieldValue={setFieldValue} name='newStatus' />
                 </FormField>
-                <UserOffice name='codemoassese' label='موسسه' />
               </FormField>
             </Form >)
           }
@@ -390,12 +388,6 @@ export const FoundationReportTable = ({ clients, isLoading, error }) => {
                   <td data-label="کد مربی" className="lg:w-32">{client?.tarikhTasis?.trim().length < 3 ? 'ندارد' : client.tarikhTasis}</td>
                   <td className="before:hidden lg:w-1 whitespace-nowrap">
                     <BaseButtons type="justify-start lg:justify-between" noWrap>
-                      <BaseButton
-                        color="info"
-                        icon={mdiEye}
-                        onClick={() => { setIsModalInfoActive(true); setSelectedClient(client) }}
-                        small
-                      />
                       <BaseButton
                         color="info"
                         icon={mdiUpdate}

@@ -72,6 +72,7 @@ export const AssociationStatusTable = ({ clients, isLoading }) => {
   }
   async function handleSubmit(values) {
     try {
+      console.log('test')
       const response = await iaxios.put(API_ASSOSIATION_MEMBERSHIP, { id: selectedClient.id, vaziat: values.status })
       setTeacherDetail(response.data.data)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })

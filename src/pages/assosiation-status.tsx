@@ -17,7 +17,7 @@ import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton
 import { getPageTitle, iaxios } from '../config'
 import { API_ASSOSIATION, API_ASSOSIATION_MEMBERSHIP } from '../constants'
 import LayoutAuthenticated from '../layouts/Authenticated'
-import { assosiationStatusValidation } from '@/validation/form'
+
 
 const FormsPage = () => {
   const { data, isLoading } = useAssosiationReport()
@@ -32,8 +32,10 @@ const FormsPage = () => {
 
       setSearchLoading(true)
 
-      const response = await iaxios.get(API_ASSOSIATION_MEMBERSHIP, { params: { vaziat: values.status, id_anjoman: values.id_anjoman, page: 0, size: 1000 } }
+      const response = await iaxios.get(API_ASSOSIATION_MEMBERSHIP, { params: { vaziat: values.status, id_anjoman: values.id_anjoman == 0 ? '' : values.id_anjoman, page: 0, size: 1000 } }
       )
+      console.log("asdhasjdh")
+      console.log(typeof response.data)
       setSpecificSearch(true)
       setSearchResult(response.data.data.content)
       setSearchLoading(false)
@@ -82,7 +84,7 @@ const FormsPage = () => {
           <Formik
             initialValues={{
               status: '',
-              id_anjoman: 0,
+              id_anjoman: '',
               anjoman: ''
 
             }}

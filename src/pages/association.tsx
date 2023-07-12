@@ -90,7 +90,6 @@ const FormsPage = () => {
               address_group_b: '',
               address_group_kh: '',
               id: 0
-
             }}
             validationSchema={assosiationValidation}
             onSubmit={(values) => handleSubmit(values)}

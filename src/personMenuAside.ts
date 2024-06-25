@@ -22,8 +22,8 @@ const personMenuAside: MenuAsideItem[] = [
     href: '/person-info'
   },
   {
-    href: '/institution/manager',
-    label: labels.manager,
+    href: '/person/academic-info',
+    label: 'اطلاعات تحصیلی',
     icon: mdiAccount,
   },
 

@@ -63,3 +63,4 @@ export const API_PERSON_REGISTRATION = `${API_PREFIX}/api/institute/teacher/crea
 export const API_UPLOAD_PIC = `${API_PREFIX}/api/institute/m-avvaliye/upload`
 export const API_UPDATE_OFFICE = `${API_PREFIX}/api/institute/m-avvaliye`
 export const API_UPLOAD_PERSON_NAT_CARD = `${API_PREFIX}/api/institute/teacher/upload`
+export const API_PERSON_ACADEMIC_INFO = `${API_PREFIX}/api/institute/tahsil`

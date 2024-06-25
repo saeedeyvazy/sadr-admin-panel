@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik'
+import { Field, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import BaseDivider from '../../components/BaseDivider'
@@ -12,6 +12,12 @@ import LayoutAuthenticated from '../../layouts/Authenticated'
 import Cookies from 'universal-cookie'
 import { usePersonAcademic } from '@/hooks/usePersonAcademic'
 import { PersonAcademicTable } from '@/components/PersonAcademicTable'
+import { mdiBallotOutline } from '@mdi/js'
+import BaseButton from '@/components/BaseButton'
+import { InstUserType } from '@/components/InstUserType'
+import FormField from '@/components/FormField'
+import { useSnackbar } from 'notistack'
+import { academicInfoValidation } from '@/validation/form'
 
 const FormsPage = () => {
   const { data, error, isLoading, totalTeacherLength } = usePersonAcademic()
@@ -36,12 +42,78 @@ const FormsPage = () => {
       console.log(error)
     }
   }
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar()
+  const addAcademicInfo = async (formData) => {
+    try {
+
+      await iaxios.post(API_PERSON_ACADEMIC_INFO, { ...formData, id_teacher: new Cookies().get('username') })
+
+      setSearchLoading(false)
+      setSpecificSearch(true)
+      enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
+
+      setTimeout(() => { window.location.reload() }, 1200)
+
+    } catch (error) {
+      enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })
+
+    }
+  }
   return (
     <>
       <Head>
         <title>{getPageTitle('Forms')}</title>
       </Head>
+      <SectionMain>
+        <SectionTitleLineWithButton icon={mdiBallotOutline} title='افزودن اطلاعات تحصیلی' main>
+        </SectionTitleLineWithButton>
 
+        <CardBox>
+          <Formik
+            initialValues={{
+              maghta: '',
+              reshte: '',
+              moadel: '',
+              sal_akhz: '',
+              id_teacher: new Cookies().get('username'),
+
+            }}
+            validationSchema={academicInfoValidation}
+            onSubmit={(values) => addAcademicInfo(values)}
+          >
+            {({ errors, values }) => (
+              <Form>
+                <FormField label=''>
+                  <FormField label='مقطع تحصیلی' help={errors.maghta}>
+                    <Field name='maghta' label='' />
+                  </FormField>
+                  <FormField label='رشته تحصیلی' help={errors.reshte}>
+                    <Field name='reshte' label='' />
+                  </FormField>
+                  <FormField label='معدل' help={errors.moadel}>
+                    <Field name='moadel' label='' type='number' />
+                  </FormField>
+                </FormField>
+                <FormField label=''>
+                  <FormField label='سال اخذ' help={errors.sal_akhz}>
+                    <Field name='sal_akhz' label='' type='number' />
+                  </FormField>
+                  <FormField label='کد استاد' help={errors.id_teacher}>
+
+                    <Field name='id_teacher' disabled label='' type='number' />
+
+                  </FormField>
+                </FormField>
+
+                <div className='grid gap-y-3 md:grid-cols-6 md:gap-x-3'>
+                  <BaseButton type="submit" color="info" label="افزودن"
+                    disabled={errors.id_teacher || errors.maghta || errors.moadel || errors.reshte || errors.sal_akhz} />
+                </div>
+                <BaseDivider />
+              </Form>)}
+          </Formik>
+        </CardBox>
+      </SectionMain>
       <SectionMain>
         <CardBox>
           <Formik

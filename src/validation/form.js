@@ -70,3 +70,10 @@ export const registerClassValidation = Yup.object().shape({
     classLevel: Yup.string().required(labels.validation.mandatory),
     town: Yup.string().required(labels.validation.mandatory),
 })
+
+export const academicInfoValidation = Yup.object().shape({
+
+    reshte: Yup.string().required(labels.validation.mandatory),
+    moadel: Yup.string().required(labels.validation.mandatory),
+
+})

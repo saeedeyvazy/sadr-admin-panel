@@ -70,7 +70,7 @@ export default function Error() {
                   {/* <InstUserType name='userType' label='نوع کاربری' help={errors.userType} /> */}
                   <FormField label="ورود به پنل اشخاص"  ></FormField>
                 </FormField>
-                <FormField label="نام کاربری" help={errors.username} >
+                <FormField label=" (کد ملی) نام کاربری" help={errors.username} >
                   <Field name="username" />
                 </FormField>
 

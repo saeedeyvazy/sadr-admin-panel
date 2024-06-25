@@ -17,6 +17,7 @@ import SectionTitleLineWithButton from '../../components/SectionTitleLineWithBut
 import { getPageTitle, iaxios } from '../../config'
 import { labels } from '../../constants/labels'
 import LayoutAuthenticated from '../../layouts/Authenticated'
+import { Gender } from '@/components/Gender'
 
 const PersonInfo = () => {
   const { enqueueSnackbar } = useSnackbar()
@@ -144,24 +145,23 @@ const PersonInfo = () => {
                       <Field name='notahsilat' />
                     </FormField>
                   </FormField>
+
+                  <FormField>
+                    <FormField label={labels.mobile}>
+                      <Field name='mob'></Field>
+                    </FormField>
+                    <FormField label={labels.tell}>
+                      <Field name='tell'></Field>
+                    </FormField>
+                    <Gender name='jensiyat' label={labels.gender} help={errors.jensiyat} />
+                  </FormField>
+
                   <FormField label="" >
                     <FormField label='تابعیت' help={errors.tabiyatfeli}>
                       <Field name='tabiyatfeli' />
                     </FormField>
                     <FormField label='سطح تحصیلات' help={errors.tahsilatclassic}>
                       <Field name='tahsilatclassic' />
-                    </FormField>
-                  </FormField>
-
-                  <FormField>
-                    <FormField label={labels.mobile}>
-                      <Field name='mob'></Field>
-                    </FormField>
-                    <FormField label={labels.web}>
-                      <Field name='web'></Field>
-                    </FormField>
-                    <FormField label={labels.socialAddress}>
-                      <Field name='social_address'></Field>
                     </FormField>
                   </FormField>
                   <BaseDivider />

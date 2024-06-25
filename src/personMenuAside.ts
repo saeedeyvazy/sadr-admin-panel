@@ -19,7 +19,7 @@ const personMenuAside: MenuAsideItem[] = [
   {
     label: labels.officeInfo,
     icon: mdiInformation,
-    href: '/person/person-info'
+    href: '/person-info'
   },
   {
     href: '/institution/manager',

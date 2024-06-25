@@ -43,7 +43,7 @@ export default function Error() {
   }, [isLoggedinUser, isRejected])
 
   const redirectToPersonRegistration = () => {
-    router.push('person/person-registeration')
+    router.push('person-registeration')
   }
 
   return (

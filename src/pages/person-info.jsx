@@ -3,7 +3,7 @@
 import BaseButton from '@/components/BaseButton'
 import BaseDivider from '@/components/BaseDivider'
 import { Loading } from '@/components/Loading'
-import { API_OFFICE_INFO, API_SEARCH_MANAGER, API_UPDATE_OFFICE, API_UPLOAD_PIC } from '@/constants'
+import { API_ADD_PERSON, API_OFFICE_INFO, API_SEARCH_MANAGER, API_UPDATE_OFFICE, API_UPLOAD_PERSON_NAT_CARD, API_UPLOAD_PIC } from '@/constants'
 import { addPersonValidation } from '@/validation/form'
 import FormField from '@component/FormField'
 import { Field, Form, Formik } from 'formik'
@@ -11,12 +11,12 @@ import Head from 'next/head'
 import { useSnackbar } from 'notistack'
 import { useEffect, useState } from 'react'
 import Cookies from 'universal-cookie'
-import CardBox from '../../components/CardBox'
-import SectionMain from '../../components/SectionMain'
-import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton'
-import { getPageTitle, iaxios } from '../../config'
-import { labels } from '../../constants/labels'
-import LayoutAuthenticated from '../../layouts/Authenticated'
+import CardBox from '../components/CardBox'
+import SectionMain from '../components/SectionMain'
+import SectionTitleLineWithButton from '../components/SectionTitleLineWithButton'
+import { getPageTitle, iaxios } from '../config'
+import { labels } from '../constants/labels'
+import LayoutAuthenticated from '../layouts/Authenticated'
 import { Gender } from '@/components/Gender'
 
 const PersonInfo = () => {
@@ -52,7 +52,7 @@ const PersonInfo = () => {
   async function handleSubmit(values) {
     try {
       setIsLoadingSubmitForm(true)
-      await iaxios.put(API_UPDATE_OFFICE, values)
+      await iaxios.put(API_ADD_PERSON, values)
       setIsLoadingSubmitForm(false)
       enqueueSnackbar(labels.succeed, { variant: 'success' })
     } catch (error) {
@@ -70,10 +70,10 @@ const PersonInfo = () => {
       bodyFormData.append('type', type)
       bodyFormData.append('code', new Cookies().get('username'))
 
-      await iaxios.post(API_UPLOAD_PIC, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
+      await iaxios.post(API_UPLOAD_PERSON_NAT_CARD, bodyFormData, { headers: { "Content-Type": "multipart/form-data" } })
       enqueueSnackbar(labels.succeed, { variant: 'success' })
       setIsUploadLoading(false)
-      setTimeout(() => window.location.reload(), 2000)
+      setTimeout(() => window.location.reload(), 1200)
     } catch (error) {
       enqueueSnackbar(labels.unsucceed, { variant: 'error' })
       setIsUploadLoading(false)
@@ -102,13 +102,13 @@ const PersonInfo = () => {
                 <Form>
                   <FormField label="" >
                     <FormField label={labels.fname}>
-                      <Field name='fname' disabled />
+                      <Field name='fname' />
                     </FormField>
                     <FormField label={labels.lname} help={errors.lname}>
                       <Field name='lname' />
                     </FormField>
                     <FormField label={labels.fthname} help={errors.fthname}>
-                      <Field name='fthname' disabled />
+                      <Field name='fthname' />
                     </FormField>
                   </FormField>
 
@@ -128,15 +128,15 @@ const PersonInfo = () => {
                       <Field name='taholName' />
                     </FormField>
                     <FormField label='وضعین نظام وظیفه' help={errors.vaziyatnezamName}>
-                      <Field name='vaziyatnezamName' disabled />
+                      <Field name='vaziyatnezamName' />
                     </FormField>
                     <FormField label='محل سکونت' help={errors.shahr_sokonat}>
-                      <Field name='shahr_sokonat' disabled />
+                      <Field name='shahr_sokonat' />
                     </FormField>
                   </FormField>
                   <FormField label="" >
                     <FormField label='شماره شناسنامه' help={errors.shsh}>
-                      <Field name='shsh' disabled />
+                      <Field name='shsh' />
                     </FormField>
                     <FormField label='وضعیت جسمانی' help={errors.vjesmaniName}>
                       <Field name='vjesmaniName' />
@@ -173,7 +173,7 @@ const PersonInfo = () => {
 
             <Formik initialValues={officeInfo}
               validationSchema={addPersonValidation}
-              onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             >
               {({ values, setFieldValue, errors }) => (
                 <Form>
@@ -212,7 +212,7 @@ const PersonInfo = () => {
                       <div className='flex flex-col justify-between space-y-1'>
                         <input type="file" onChange={(e) => setFile(e.target.files[0])} />
                         <div>{file && `${file.name} - ${file.type}`}</div>
-                        <BaseButton disabled={file == undefined || type == undefined} isLoading={isUploadLoading} color='info' label={labels.upload} type='button' onClick={handleUploadClick} />
+                        <BaseButton disabled={file == undefined} isLoading={isUploadLoading} color='info' label={labels.upload} type='button' onClick={handleUploadClick} />
                       </div>
 
                     </div>

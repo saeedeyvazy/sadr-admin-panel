@@ -11,6 +11,7 @@ export async function callLoginApi({ username, password, type, userType }) {
             new Cookies().set('username', username)
             new Cookies().set('userType', userType)
             new Cookies().set('menuType', type)
+            console.log("*********************")
             return { response, type, username }
         }
     } catch (error) {

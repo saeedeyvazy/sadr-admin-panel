@@ -35,7 +35,6 @@ const FormsPage = () => {
         ...request, namayesh: 1
       })
       setCreateLoading(false)
-      // setSpecificSearch(true)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
     } catch (error) {
       console.log(error)

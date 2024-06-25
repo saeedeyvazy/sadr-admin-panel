@@ -16,6 +16,12 @@ const nextConfig = {
         destination: '/admin/inst-login',
         basePath: false,
         permanent: false
+      },
+      {
+        source: '/person',
+        destination: '/admin/person-login',
+        basePath: false,
+        permanent: false
       }
     ]
   },

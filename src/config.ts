@@ -2,6 +2,7 @@
 import axios from 'axios'
 import Cookie from 'universal-cookie'
 import instMenuAside from './instMenuAside'
+import personMenuAside from './personMenuAside'
 import menuAside from './menuAside'
 import { labels } from './constants/labels'
 
@@ -36,6 +37,7 @@ export const currentPageTitleMap: Record<string, string> = {
     "ChangePassword": "تغییر رمز",
     "AddPerson": 'افزودن فرد جدید',
     "OfficeInfo": 'مشخصات اولیه',
+    "PersonRegisteration": 'ثبت نام اشخاص',
     "LearnConstraint": labels.learningConstraint,
     "Foundation": labels.foundation,
     "TeachingLicense": labels.teachingLicense,
@@ -45,11 +47,12 @@ export const currentPageTitleMap: Record<string, string> = {
 
 export const getPageTitle = (currentPageTitle: string) => `${currentPageTitleMap[currentPageTitle]} — ${appTitle}`
 
-export enum UserType { ADMIN, INSTITUTION }
+export enum UserType { ADMIN, INSTITUTION, PERSON }
 
 export const UserTypeMenu = new Map([
     [UserType.ADMIN, menuAside],
     [UserType.INSTITUTION, instMenuAside],
+    [UserType.PERSON, personMenuAside],
 ])
 
 const defaultOptions = {

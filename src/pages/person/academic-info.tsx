@@ -5,7 +5,6 @@ import BaseDivider from '../../components/BaseDivider'
 import CardBox from '../../components/CardBox'
 import SectionMain from '../../components/SectionMain'
 import SectionTitleLineWithButton from '../../components/SectionTitleLineWithButton'
-import { TeacherTable } from '../../components/TeacherTable'
 import { getPageTitle, iaxios } from '../../config'
 import { API_PERSON_ACADEMIC_INFO } from '../../constants'
 import LayoutAuthenticated from '../../layouts/Authenticated'
@@ -14,7 +13,6 @@ import { usePersonAcademic } from '@/hooks/usePersonAcademic'
 import { PersonAcademicTable } from '@/components/PersonAcademicTable'
 import { mdiBallotOutline } from '@mdi/js'
 import BaseButton from '@/components/BaseButton'
-import { InstUserType } from '@/components/InstUserType'
 import FormField from '@/components/FormField'
 import { useSnackbar } from 'notistack'
 import { academicInfoValidation } from '@/validation/form'
@@ -27,17 +25,21 @@ const FormsPage = () => {
 
   async function handleSubmit(values) {
     try {
-      setSearchLoading(true)
-      const response = await iaxios.post(`${API_PERSON_ACADEMIC_INFO}`, {
-        params: {
-          page: 0,
-          size: 5,
-          code: new Cookies().get('username')
-        }
-      })
-      setSearchLoading(false)
-      setSpecificSearch(true)
-      setSearchResult(response.data.data)
+      console.log("handle submit function")
+      setTimeout(async () => {
+        setSearchLoading(true)
+        const response = await iaxios.get(`${API_PERSON_ACADEMIC_INFO}`, {
+          params: {
+            page: 0,
+            size: 5,
+            code: new Cookies().get('username')
+          }
+        })
+        setSearchLoading(false)
+        setSpecificSearch(true)
+        setSearchResult(response.data.data.content)
+      }, 2000)
+
     } catch (error) {
       console.log(error)
     }
@@ -52,7 +54,21 @@ const FormsPage = () => {
       setSpecificSearch(true)
       enqueueSnackbar('عملیات با موفقیت انجام شد', { variant: 'success' })
 
-      setTimeout(() => { window.location.reload() }, 1200)
+
+      setSearchLoading(true)
+      const response = await iaxios.get(`${API_PERSON_ACADEMIC_INFO}`, {
+        params: {
+          page: 0,
+          size: 5,
+          code: new Cookies().get('username')
+        }
+      })
+      setSearchLoading(false)
+      setSpecificSearch(true)
+      setSearchResult(response.data.data.content)
+
+      // setTimeout(() => { window.location.reload() }, 1200)
+
 
     } catch (error) {
       enqueueSnackbar('خطا در انجام عملیات', { variant: 'error' })

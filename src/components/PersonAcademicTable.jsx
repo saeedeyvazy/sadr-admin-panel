@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { iaxios } from '../config'
-import { API_GENERAL_TEACHER_SEARCH, API_PERSON_ACADEMIC_INFO, API_REPAIR } from '../constants'
+import { API_PERSON_ACADEMIC_INFO, API_REPAIR } from '../constants'
 import { selectedSubBank } from '../features/subbank/subbank.slice'
 import { Bank } from './Bank/index'
 import BaseButton from './BaseButton'
@@ -14,7 +14,6 @@ import BaseDivider from './BaseDivider'
 import CardBoxModal from './CardBoxModal'
 import { Loading } from './Loading'
 import { SubBank } from './SubBank/index'
-import UserAvatar from './UserAvatar'
 
 export const PersonAcademicTable = ({ clients, isLoading, error }) => {
 
@@ -37,8 +36,8 @@ export const PersonAcademicTable = ({ clients, isLoading, error }) => {
     tkmelli: ''
   })
 
-  const clientsPaginated = clients.slice(perPage * currentPage, perPage * (currentPage + 1))
-  const numPages = Math.ceil(clients.length / perPage)
+  const clientsPaginated = clients?.slice(perPage * currentPage, perPage * (currentPage + 1))
+  const numPages = Math.ceil(clients?.length / perPage)
   const pagesList = []
 
   for (let i = 0; i < numPages; i++) {
@@ -92,17 +91,17 @@ export const PersonAcademicTable = ({ clients, isLoading, error }) => {
 
   const handleDelModalAction = async () => {
     try {
-      await iaxios.delete(API_GENERAL_TEACHER_SEARCH + "/" + selectedClient.id)
+      await iaxios.delete(API_PERSON_ACADEMIC_INFO + "/" + selectedClient.id)
       setIsModalTrashActive(false)
+
     } catch (error) {
-      alert(error)
       console.log(error)
     }
   }
 
   async function fetchDetail(id) {
     try {
-      const response = await axios.get(API_GENERAL_TEACHER_SEARCH + "/" + id)
+      const response = await axios.get(API_PERSON_ACADEMIC_INFO + "/" + id)
       setTeacherDetail(response.data.data)
     } catch (error) {
       console.log(error)
@@ -328,10 +327,11 @@ export const PersonAcademicTable = ({ clients, isLoading, error }) => {
                   <td data-label="محل صدور" className="text-sm">{client.sal_akhz}</td>
                   <td data-label="شماره همراه" className="text-sm">{client.id_teacher}</td>
                   <td data-label="شماره همراه" className="nowrap text-sm">
-                    <img
+                    {client.tasvir ? <img
                       src={`data:image/png;base64,${client.tasvir}`}
                       className="rounded-smshadow-lg block  w-full bg-gray-100 h-full dark:bg-slate-800"
-                    />
+                    /> : 'ندارد'}
+
 
                   </td>
 

@@ -12,6 +12,12 @@ const nextConfig = {
         permanent: false
       },
       {
+        source: '/landing',
+        destination: '/admin/landing',
+        basePath: false,
+        permanent: false
+      },
+      {
         source: '/institution',
         destination: '/admin/inst-login',
         basePath: false,

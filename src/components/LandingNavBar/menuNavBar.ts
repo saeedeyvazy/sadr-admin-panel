@@ -37,7 +37,7 @@ export const landingMenuNavBar: MenuNavBarItem[] = [
   {
     icon: mdiDatabase,
     label: 'بانک های اطلاعات',
-    href: '/admin',
+    href: '/login',
   },
 
   {

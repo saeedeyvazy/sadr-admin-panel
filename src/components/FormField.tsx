@@ -10,6 +10,7 @@ type Props = {
   isTransparent?: boolean
   hasTextareaHeight?: boolean
   children: ReactNode
+  border?: string
 }
 
 const FormField = ({ icons = [], ...props }: Props) => {
@@ -26,11 +27,12 @@ const FormField = ({ icons = [], ...props }: Props) => {
   }
 
   const controlClassName = [
-    'px-3 py-2 max-w-full border-gray-700 rounded w-full dark:placeholder-gray-400',
+    props.border ? props.border : 'border-gray-400', 'px-3 py-2 max-w-full  rounded w-full dark:placeholder-gray-400',
     'focus:ring focus:ring-blue-600 focus:border-blue-600 focus:outline-none',
     props.hasTextareaHeight ? 'h-24' : 'h-12',
     props.isBorderless ? 'border-0' : 'border',
     props.isTransparent ? 'bg-transparent' : 'bg-white dark:bg-slate-800',
+
   ].join(' ')
 
   return (

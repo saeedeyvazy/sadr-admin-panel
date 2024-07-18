@@ -70,6 +70,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
               strategy="afterInteractive"
             />
 
+
             <Script id="google-analytics" strategy="afterInteractive">
               {`
               window.dataLayer = window.dataLayer || [];

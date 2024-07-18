@@ -352,10 +352,11 @@ export default function Landing() {
                         </NavBarItemPlain>
                         <NavBarItemPlain >
                             <div className='flex space-x-3 justify-center items-center'>
-                                <label onClick={() => setIsCalculateSalary(true)}>محاسبه حق الزحمه</label>
-                                <label className='text-black text-xs mr-3' id='demo'></label>
+                                <label onClick={() => setIsCalculateSalary(true)}>محاسبه حق الزحمه مربیان</label>
                             </div>
-
+                        </NavBarItemPlain>
+                        <NavBarItemPlain>
+                            <label className='text-black text-xs mr-3' id='demo'></label>
                         </NavBarItemPlain>
                     </NavBar>
                 </div>

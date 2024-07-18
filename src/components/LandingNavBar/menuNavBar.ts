@@ -1,14 +1,8 @@
 import {
   mdiMenu,
   mdiClockOutline,
-  mdiCloud,
   mdiAccount,
-  mdiCogOutline,
-  mdiEmail,
-  mdiLogout,
-  mdiThemeLightDark,
   mdiDatabase,
-  mdiCalculator,
   mdiNewspaper,
   mdiOfficeBuilding,
 
@@ -23,7 +17,7 @@ export const landingMenuNavBar: MenuNavBarItem[] = [
       {
         icon: mdiAccount,
         label: 'مدیریت سامانه',
-        href: '/person-login'
+        href: '/login'
       },
       {
         icon: mdiClockOutline,
@@ -43,23 +37,13 @@ export const landingMenuNavBar: MenuNavBarItem[] = [
   {
     icon: mdiDatabase,
     label: 'بانک های اطلاعات',
-    href: '/',
+    href: '/admin',
   },
-  {
-    icon: mdiCalculator,
-    label: 'محاسبه حق الزحمه مربیان',
-    href: '/'
-  },
+
   {
     icon: mdiNewspaper,
     label: 'اخبار',
-    href: '/'
-  },
-  {
-    icon: mdiThemeLightDark,
-    label: 'Light/Dark',
-    isDesktopNoLabel: true,
-    isToggleLightDark: true,
+    href: '/login'
   },
 
 ]
